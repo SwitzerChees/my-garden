@@ -48,4 +48,4 @@ const parseBody = async (req: any): Promise<{ fields: formidable.Fields; photos:
   return result as any
 }
 
-export default parseBody
+export { parseBody }
