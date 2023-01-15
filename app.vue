@@ -1,23 +1,16 @@
 <template>
-  <div class="flex flex-col w-screen h-screen bg-slate-800 text-gray-50">
-    <Header class="p-2" />
-    <ScrollPanel class="grow p-4 overflow-hidden overflow-y-auto">
-      <div class="flex flex-col gap-4">
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-        <Plant />
-      </div>
-    </ScrollPanel>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+</style>

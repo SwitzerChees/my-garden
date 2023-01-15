@@ -6,12 +6,18 @@
     <h1 class="truncate">My Garden</h1>
     <div class="grow"></div>
     <div>
-      <Button class="p-button-text">
+      <Button class="p-button-text" @click="navigateNewPlant">
         <div class="flex items-center gap-1">
-            <Icon name="material-symbols:add" size="1.5rem" />
-            <span class="font-bold text-sm whitespace-nowrap">New Plant</span>
+          <Icon name="material-symbols:add" size="1.5rem" />
+          <span class="font-bold text-sm whitespace-nowrap">New Plant</span>
         </div>
       </Button>
     </div>
   </div>
 </template>
+
+<script setup>
+const navigateNewPlant = () => {
+  navigateTo('/details')
+}
+</script>

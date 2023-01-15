@@ -10,7 +10,7 @@
   --primary-color-dark: hsl(127, 60%, 38%);
   --primary-color-darker: hsl(127, 59%, 32%);
   --primary-color-text: #1c2127;
-  --primary-box-shadow: hsl(343, 93%, 50%, 0.7);
+  --primary-box-shadow: hsl(127, 59%, 22%);
   --highlight-bg: rgba(147, 197, 253, 0.16);
   --highlight-bg-focus: rgba(147, 197, 253, 0.24);
   --background-color: rgb(15 23 42);

@@ -13,4 +13,7 @@ export default defineNuxtConfig({
   experimental: {
     reactivityTransform: true,
   },
+  app: {
+    pageTransition: { name: 'fade', mode: 'default' }
+  },
 })
