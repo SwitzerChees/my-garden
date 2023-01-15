@@ -1,0 +1,25 @@
+@import './_theme.light.css' (prefers-color-scheme: light);
+@import './_theme.dark.css' (prefers-color-scheme: dark);
+@import './styles.css';
+
+:root {
+  --font-family: 'Montserrat', Arial, sans-serif;
+  /* dark theme specific css */
+  --primary-color: hsl(127, 63%, 53%);
+  --primary-color-light: hsl(127, 89%, 65%);
+  --primary-color-dark: hsl(127, 60%, 38%);
+  --primary-color-darker: hsl(127, 59%, 32%);
+  --primary-color-text: #1c2127;
+  --primary-box-shadow: hsl(343, 93%, 50%, 0.7);
+  --highlight-bg: rgba(147, 197, 253, 0.16);
+  --highlight-bg-focus: rgba(147, 197, 253, 0.24);
+  --background-color: rgb(15 23 42);
+  --background-color-secondary: #1e293b;
+  --divider-background: var(--background-color-secondary);
+  --divider-line-color: #ffffff;
+  color-scheme: dark;
+  background: var(--background-color);
+
+  --scrollbar-thumb: #0b213f;
+  --scrollbar-thumb-hover: #555;
+}

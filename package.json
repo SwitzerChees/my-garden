@@ -8,12 +8,18 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "^3.0.0"
+    "@nuxt/image-edge": "^1.0.0-27840416.dc1ed65",
+    "@nuxtjs/tailwindcss": "^6.2.0",
+    "nuxt": "^3.0.0",
+    "nuxt-icon": "^0.2.5"
   },
   "dependencies": {
     "@types/formidable": "^2.0.5",
     "@types/lodash": "^4.14.191",
     "formidable": "^2.1.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.22.1",
+    "sass": "^1.57.1"
   }
 }
