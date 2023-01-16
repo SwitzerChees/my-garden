@@ -8,7 +8,7 @@
     <div>
       <Button class="p-button-text" @click="navigateNewPlant">
         <div class="flex items-center gap-1">
-          <Icon name="material-symbols:add" size="1.5rem" />
+          <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
           <span class="font-bold text-sm whitespace-nowrap">New Plant</span>
         </div>
       </Button>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-const navigateNewPlant = () => {
+const navigateNewPlant = async () => {
   navigateTo('/details')
 }
 </script>

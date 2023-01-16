@@ -1,3 +1,6 @@
 <template>
-  <h1>Tst</h1>
+  <div class="flex flex-col gap-2">
+    <Plant />
+    <PlantHistory />
+  </div>
 </template>

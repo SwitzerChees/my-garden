@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "start": "node .output/server/index.mjs",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -11,7 +12,9 @@
     "@nuxt/image-edge": "^1.0.0-27840416.dc1ed65",
     "@nuxtjs/tailwindcss": "^6.2.0",
     "nuxt": "^3.0.0",
-    "nuxt-icon": "^0.2.5"
+    "nuxt-icon": "^0.2.5",
+    "@pinia/nuxt": "^0.4.6",
+    "pinia": "^2.0.29"
   },
   "dependencies": {
     "@types/formidable": "^2.0.5",
