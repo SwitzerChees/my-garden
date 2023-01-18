@@ -6,7 +6,7 @@
         <h2 class="font-bold truncate text-sm">Monstera Deliciosa</h2>
         <h3 class="text-xs truncate">Scindapsus Marble Queen</h3>
       </div>
-      <Button class="p-button-text" @click="openPlant">
+      <Button class="p-button-text" @click="showPlant">
         <Icon name="lucide:more-horizontal" size="1.5rem" />
       </Button>
     </div>
@@ -41,11 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { usePlantsStore } from '~~/stores/plants'
-
-let { detailsOpen } = $(usePlantsStore())
-
-const openPlant = () => {
-  detailsOpen = true
+const showPlant = () => {
+  navigateTo('/plant')
 }
 </script>

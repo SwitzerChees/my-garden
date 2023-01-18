@@ -5,19 +5,25 @@
 </template>
 
 <style>
-
-.slide-fade-enter-active {
-  transition: all 0.2s ease-out;
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.35s;
+}
+.slide-left-enter {
+  transform: translateX(-100%);
+}
+.slide-left-leave-to {
+  transform: translateX(100%);
 }
 
-.slide-fade-leave-active {
-  transition: all 0.6s cubic-bezier(1, 0.5, 0.8, 1);
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.35s;
 }
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
+.slide-right-enter {
+  transform: translateX(100%);
 }
-
+.slide-right-leave-to {
+  transform: translateX(-100%);
+}
 </style>

@@ -6,7 +6,7 @@
     <h1 class="truncate">My Garden</h1>
     <div class="grow"></div>
     <div>
-      <Button class="p-button-text" @click="navigateNewPlant">
+      <Button class="p-button-text" @click="newPlant">
         <div class="flex items-center gap-1">
           <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
           <span class="font-bold text-sm whitespace-nowrap">New Plant</span>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-const navigateNewPlant = async () => {
-  navigateTo('/details')
+const newPlant = async () => {
+  navigateTo('/plant')
 }
 </script>
