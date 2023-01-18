@@ -6,7 +6,7 @@
     <h1 class="truncate">My Garden</h1>
     <div class="grow"></div>
     <div>
-      <Button class="p-button-text" @click="newPlant">
+      <Button class="p-button-text" @click="dialogOpen = true">
         <div class="flex items-center gap-1">
           <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
           <span class="font-bold text-sm whitespace-nowrap">New Plant</span>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-const newPlant = async () => {
-  navigateTo('/plant')
-}
+import { useNewPlantStore } from '~~/stores/newplant';
+
+const { dialogOpen } = $(useNewPlantStore())
 </script>
