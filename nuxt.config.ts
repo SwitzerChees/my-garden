@@ -17,4 +17,7 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'slide-right', mode: 'out-in'  },
   },
+  server: {
+    timing: true
+  }
 } as any)
