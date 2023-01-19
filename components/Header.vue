@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { useNewPlantStore } from '~~/stores/newplant';
+import { usePlantStore } from '~~/stores/plant';
 
-const { dialogOpen } = $(useNewPlantStore())
+const { dialogOpen } = $(usePlantStore())
 </script>

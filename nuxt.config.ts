@@ -20,4 +20,11 @@ export default defineNuxtConfig({
   server: {
     timing: true,
   },
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
+  },
 } as any)

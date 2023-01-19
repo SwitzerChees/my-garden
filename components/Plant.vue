@@ -3,8 +3,8 @@
     <div class="flex p-2 px-4 pt-3 gap-2">
       <nuxt-img src="/uploads/2023011517364_51302.jpg" width="128px" height="128px" class="object-cover h-14 w-14 rounded-xl" />
       <div class="flex flex-col overflow-hidden grow">
-        <h2 class="font-bold truncate text-sm">Monstera Deliciosa</h2>
-        <h3 class="text-xs truncate">Scindapsus Marble Queen</h3>
+        <h2 class="font-bold truncate text-sm">{{ plant?.name }}</h2>
+        <h3 v-if="plant?.botanicalName" class="text-xs truncate">{{ plant?.botanicalName }}</h3>
       </div>
       <Button class="p-button-text" @click="showPlant">
         <Icon name="lucide:more-horizontal" size="1.5rem" />
@@ -41,6 +41,11 @@
 </template>
 
 <script setup lang="ts">
+import { Plant } from '~~/definitions'
+defineProps<{
+  plant?: Plant
+}>()
+
 const showPlant = () => {
   navigateTo('/plant')
 }
