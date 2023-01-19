@@ -3,11 +3,17 @@ import { Plant } from '~~/definitions'
 import axios from 'axios'
 
 export const usePlantsStore = defineStore('plants', () => {
-  const plants = $ref<Plant[]>([])
+  let plants = $ref<Plant[]>([])
 
-  // const { fetch, fetchState } = useFetch(async () => {
+  const fetch = async () => {
+    try {
+      const { data } = await axios.get<Plant[]>('/api/plants')
+      plants = data
+      return true
+    } catch (error) {
+      return false
+    }
+  }
 
-  // }))
-
-  return $$({ plants })
+  return $$({ plants, fetch })
 })

@@ -3,7 +3,7 @@
     <Header class="p-2" />
     <ScrollPanel class="grow p-4 overflow-hidden overflow-y-auto">
       <div class="pb-20">
-        <slot/>
+        <slot />
       </div>
     </ScrollPanel>
   </div>
