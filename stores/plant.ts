@@ -3,15 +3,15 @@ import { Plant, db } from '~~/surrealdb'
 import { addPlant } from '~~/surrealdb/mutations'
 
 export const usePlantStore = defineStore('plant', () => {
-  let plant = $ref<Plant>()
+  let selectedPlant = $ref<Plant>()
   let newPlant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [] })
 
   const add = async () => {
-    const success = await addPlant(newPlant)
-    if (!success) return false
+    const addedPlant = await addPlant(newPlant)
+    if (!addedPlant) return false
     newPlant = { id: '', name: '', botanicalName: '', tags: [] }
-    return true
+    return addedPlant
   }
 
-  return $$({ add, plant, newPlant })
+  return $$({ add, selectedPlant, newPlant })
 })

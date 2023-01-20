@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8 md:flex-row">
-    <Plant :plant="plant" class="grow" />
+    <Plant :plant="selectedPlant" class="grow" />
     <PlantHistory class="grow" />
   </div>
 </template>
@@ -13,5 +13,5 @@ definePageMeta({
     name: 'slide-left',
   },
 })
-const { plant } = $(usePlantStore())
+const { selectedPlant } = $(usePlantStore())
 </script>

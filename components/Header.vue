@@ -21,5 +21,7 @@
 <script setup>
 import { useUIStore } from '~~/stores/ui'
 
+console.log(scrolls)
+
 const { showNewPlantDialog, showNewPlantButton } = $(useUIStore())
 </script>

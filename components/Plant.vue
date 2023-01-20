@@ -48,10 +48,15 @@
 </template>
 
 <script setup lang="ts">
+import { usePlantStore } from '~~/stores/plant'
 import { Plant } from '~~/surrealdb'
-defineProps<{ plant?: Plant }>()
+
+const { plant } = defineProps<{ plant?: Plant }>()
+
+let { selectedPlant } = $(usePlantStore())
 
 const showPlant = () => {
+  selectedPlant = plant
   navigateTo('/plant')
 }
 </script>
