@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { Plant } from '~~/definitions'
+import { Plant } from '~~/surrealdb'
 defineProps<{
   plant?: Plant
 }>()

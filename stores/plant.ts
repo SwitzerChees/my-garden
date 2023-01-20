@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { Plant } from '~~/definitions'
+import { Plant, db } from '~~/surrealdb'
 
 export const usePlantStore = defineStore('plant', () => {
   let dialogOpen = $ref(false)
@@ -11,14 +11,11 @@ export const usePlantStore = defineStore('plant', () => {
 
   const add = async () => {
     try {
-      const { data } = await axios.post<Plant>('/api/plants', {
+      const newPlant = await db.create('plant', {
         name,
         botanicalName,
       })
-      name = ''
-      botanicalName = ''
-      dialogOpen = false
-      plant = data
+      plant = newPlant
       return true
     } catch (error) {
       return false
