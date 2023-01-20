@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col gap-2">
     <div></div>
-    <NewPlant />
     <div class="flex grow flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <Plant v-for="plant of plants" :key="plant.id" :plant="plant" />
     </div>
@@ -13,12 +12,12 @@ import { usePlantsStore } from '~~/stores/plants'
 import { usePlantStore } from '~~/stores/plant'
 
 onMounted(() => {
-  showNewPlant = true
+  // showNewPlant = true
   fetch()
 })
-onUnmounted(() => {
-  showNewPlant = false
-})
-let { showNewPlant } = $(usePlantStore())
+// onUnmounted(() => {
+//   showNewPlant = false
+// })
+// let { showNewPlant } = $(usePlantStore())
 const { plants, fetch } = $(usePlantsStore())
 </script>

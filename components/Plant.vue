@@ -49,9 +49,7 @@
 
 <script setup lang="ts">
 import { Plant } from '~~/surrealdb'
-defineProps<{
-  plant?: Plant
-}>()
+defineProps<{ plant?: Plant }>()
 
 const showPlant = () => {
   navigateTo('/plant')

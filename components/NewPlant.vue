@@ -1,5 +1,5 @@
 <template>
-  <Dialog v-model:visible="dialogOpen" :dismissable-mask="true" :modal="true">
+  <Dialog v-model:visible="showNewPlantDialog" :dismissable-mask="true" :modal="true">
     <template #header>
       <div class="flex gap-2">
         <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
@@ -51,11 +51,17 @@
 <script setup lang="ts">
 import { usePlantStore } from '~~/stores/plant'
 import { useTagsStore } from '~~/stores/tags'
+import { useUIStore } from '~~/stores/ui'
+
+let { showNewPlantDialog } = $(useUIStore())
 
 const addPlantNavigate = async () => {
-  if (await add()) navigateTo('/plant')
+  if (await add()) {
+    showNewPlantDialog = false
+    navigateTo('/plant')
+  }
 }
 
-const { dialogOpen, newPlant, add } = $(usePlantStore())
+const { newPlant, add } = $(usePlantStore())
 const { tags, fetch: fetchTags } = $(useTagsStore())
 </script>
