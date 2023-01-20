@@ -6,8 +6,8 @@
         <h2 class="font-bold truncate text-sm">{{ plant?.name }}</h2>
         <!-- <h3 v-if="plant?.botanicalName" class="text-xs truncate text-gray-400">{{ plant?.botanicalName }}</h3> -->
         <div class="flex gap-2 py-2 flex-wrap truncate">
-          <Tag severity="success">
-            <span class="text-xs">Alocasia</span>
+          <Tag severity="success" v-for="tag of plant?.tags" :key="tag.id">
+            <span class="text-xs">{{ tag.name }}</span>
           </Tag>
         </div>
       </div>

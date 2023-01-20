@@ -9,12 +9,13 @@ export const usePlantsStore = defineStore('plants', () => {
 
   const fetch = async () => {
     try {
-      const queryResult = await db.query('SELECT * FROM type::table($tb)', {
+      const queryResult = await db.query('SELECT id, name, botanicalName, ->assigned->tag.* as tags FROM type::table($tb)', {
         tb: 'plant',
       })
       plants = pipe(first, get('result'))(queryResult)
       return true
     } catch (error) {
+      console.log(error)
       return false
     }
   }

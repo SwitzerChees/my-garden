@@ -13,9 +13,15 @@ export const usePlantStore = defineStore('plant', () => {
   const add = async () => {
     try {
       const tags = await getOrAddTags(newPlant.tags)
-      // const plantResult = await db.create('plant', newPlant)
-      // newPlant = { id: '', name: '', botanicalName: '', tags: [] }
-      // plant = plantResult as Plant
+      const plantResult = await db.create('plant', {
+        name: newPlant.name,
+        botanicalName: newPlant.botanicalName,
+      })
+      for (const tag of tags) {
+        db.query(`RELATE ${plantResult.id}->assigned->${tag.id}`)
+      }
+      newPlant = { id: '', name: '', botanicalName: '', tags: [] }
+      plant = plantResult as Plant
       return true
     } catch (error) {
       return false
