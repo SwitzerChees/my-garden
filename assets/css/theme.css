@@ -3,7 +3,7 @@
 @import './styles.css';
 
 :root {
-  --font-family: 'Montserrat', Arial, sans-serif;
+  --font-family: Montserrat, Arial, sans-serif;
   /* dark theme specific css */
   --primary-color: hsl(127, 63%, 53%);
   --primary-color-light: hsl(127, 89%, 65%);

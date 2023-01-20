@@ -56,3 +56,13 @@
   src: local(''), url('./fonts/open-sans-v34-latin-700.woff2') format('woff2'),
     /* Chrome 26+, Opera 23+, Firefox 39+ */ url('./fonts/open-sans-v34-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+/* montserrat-regular - latin */
+@font-face {
+  font-family: 'BigLou';
+  src: local(''), url('./fonts/BigLou.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Fonarto';
+  src: local(''), url('./fonts/fonarto.regular.ttf') format('ttf');
+}

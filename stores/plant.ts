@@ -4,6 +4,7 @@ import { Plant } from '~~/definitions'
 
 export const usePlantStore = defineStore('plant', () => {
   let dialogOpen = $ref(false)
+  let showNewPlant = $ref(false)
   let name = $ref('')
   let botanicalName = $ref('')
   let plant = $ref<Plant>()
@@ -24,5 +25,5 @@ export const usePlantStore = defineStore('plant', () => {
     }
   }
 
-  return $$({ dialogOpen, name, botanicalName, add, plant })
+  return $$({ dialogOpen, showNewPlant, name, botanicalName, add, plant })
 })

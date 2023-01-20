@@ -7,7 +7,13 @@ export default defineNuxtConfig({
     '@pinia/nuxt', // https://pinia.vuejs.org/
     '@nuxt/image-edge', // https://v1.image.nuxtjs.org/
   ],
-  css: ['primevue/resources/primevue.min.css', 'primeicons/primeicons.css', 'assets/css/fonts.css', 'assets/css/theme.css'],
+  css: [
+    'primevue/resources/primevue.min.css',
+    'primeicons/primeicons.css',
+    'assets/css/fonts.css',
+    'assets/css/theme.css',
+    'animate.css/animate.min.css',
+  ],
   build: {
     transpile: ['primevue'],
   },
