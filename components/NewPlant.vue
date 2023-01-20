@@ -20,6 +20,7 @@
         <AutoComplete
           :multiple="true"
           :force-selection="true"
+          :completeOnFocus="true"
           :dropdown="true"
           id="tags"
           v-model="newPlant.tags"
