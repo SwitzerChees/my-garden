@@ -29,7 +29,7 @@
         >
           <template #chip="{ value: tag }">
             <div class="flex items-center gap-2">
-              <Icon v-if="!tag.id" name="system-uicons:reset-temporary" size="1.5rem" />
+              <Icon v-if="!tag.id" name="system-uicons:reset-temporary" size="0.9rem" />
               <span class="text-xs">{{ tag.name }}</span>
             </div>
           </template>

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { Tag, db } from '~~/surrealdb'
 import lfp from 'lodash/fp'
-const { first, get, pipe, find } = lfp
+const { first, get, pipe, find, filter } = lfp
 
 export const useTagsStore = defineStore('tags', () => {
   let tags = $ref<Tag[]>([])
@@ -12,7 +12,6 @@ export const useTagsStore = defineStore('tags', () => {
         tb: 'tag',
         filter: filter || '',
       })
-      console.log(queryResult)
       const tagResults = pipe(first, get('result'))(queryResult)
       if (!tagResults.length && filter) {
         tags = [{ name: filter } as Tag]
