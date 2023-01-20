@@ -3,9 +3,11 @@
     <div class="flex px-4 pt-3 pb-2 gap-2">
       <nuxt-img src="/uploads/2023011517364_51302.jpg" width="128px" height="128px" class="object-cover h-14 w-14 rounded-xl" />
       <div class="flex flex-col overflow-hidden grow justify-between">
-        <h2 class="font-bold truncate text-sm">{{ plant?.name }}</h2>
-        <!-- <h3 v-if="plant?.botanicalName" class="text-xs truncate text-gray-400">{{ plant?.botanicalName }}</h3> -->
-        <div class="flex gap-2 py-2 flex-wrap truncate">
+        <div class="flex flex-col gap-0.5">
+          <h2 class="font-bold truncate text-sm">{{ plant?.name }}</h2>
+          <!-- <h3 v-if="plant?.botanicalName" class="text-xs truncate text-gray-400">{{ plant?.botanicalName }}</h3> -->
+        </div>
+        <div class="flex gap-2 pt-2 flex-wrap">
           <Tag severity="success" v-for="tag of plant?.tags" :key="tag.id">
             <span class="text-xs">{{ tag.name }}</span>
           </Tag>
