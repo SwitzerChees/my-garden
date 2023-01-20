@@ -9,11 +9,31 @@
     <div class="flex flex-col gap-2 px-2">
       <div class="flex flex-col gap-0.5">
         <label for="name">Name</label>
-        <InputText id="name" type="text" v-model="name" autofocus @keyup.enter="addPlantNavigate" />
+        <InputText id="name" type="text" v-model="newPlant.name" autofocus @keyup.enter="addPlantNavigate" />
       </div>
       <div class="flex flex-col gap-0.5">
         <label for="botanical">Botanical Name</label>
-        <InputText id="botanical" type="text" v-model="botanicalName" @keyup.enter="addPlantNavigate" />
+        <InputText id="botanical" type="text" v-model="newPlant.botanicalName" @keyup.enter="addPlantNavigate" />
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <label for="tags">Tags</label>
+        <AutoComplete
+          :multiple="true"
+          :force-selection="true"
+          :dropdown="true"
+          id="tags"
+          v-model="newPlant.tags"
+          :suggestions="tags"
+          @complete="fetchTags($event.query)"
+          option-label="name"
+        >
+          <template #chip="{ value: tag }">
+            <div class="flex items-center gap-2">
+              <Icon v-if="!tag.id" name="system-uicons:reset-temporary" size="1.5rem" />
+              <span class="text-xs">{{ tag.name }}</span>
+            </div>
+          </template>
+        </AutoComplete>
       </div>
     </div>
     <template #footer>
@@ -29,10 +49,12 @@
 
 <script setup lang="ts">
 import { usePlantStore } from '~~/stores/plant'
+import { useTagsStore } from '~~/stores/tags'
 
 const addPlantNavigate = async () => {
   if (await add()) navigateTo('/plant')
 }
 
-const { dialogOpen, name, botanicalName, add } = $(usePlantStore())
+const { dialogOpen, newPlant, add } = $(usePlantStore())
+const { tags, fetch: fetchTags } = $(useTagsStore())
 </script>

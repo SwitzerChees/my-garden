@@ -9,6 +9,7 @@ import Timeline from 'primevue/timeline'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import Tag from 'primevue/tag'
+import AutoComplete from 'primevue/autocomplete';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp
@@ -23,4 +24,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   app.component('Dialog', Dialog)
   app.component('InputText', InputText)
   app.component('Tag', Tag)
+  app.component('AutoComplete', AutoComplete)
 })

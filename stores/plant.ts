@@ -1,26 +1,26 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { Plant, db } from '~~/surrealdb'
+import { useTagsStore } from './tags'
 
 export const usePlantStore = defineStore('plant', () => {
   let dialogOpen = $ref(false)
   let showNewPlant = $ref(false)
-  let name = $ref('')
-  let botanicalName = $ref('')
   let plant = $ref<Plant>()
+  let newPlant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [] })
+  const { getOrAddTags } = useTagsStore()
 
   const add = async () => {
     try {
-      const newPlant = await db.create('plant', {
-        name,
-        botanicalName,
-      })
-      plant = newPlant
+      const tags = await getOrAddTags(newPlant.tags)
+      // const plantResult = await db.create('plant', newPlant)
+      // newPlant = { id: '', name: '', botanicalName: '', tags: [] }
+      // plant = plantResult as Plant
       return true
     } catch (error) {
       return false
     }
   }
 
-  return $$({ dialogOpen, showNewPlant, name, botanicalName, add, plant })
+  return $$({ dialogOpen, showNewPlant, add, plant, newPlant })
 })
