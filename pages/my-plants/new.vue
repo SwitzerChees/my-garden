@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="flex flex-col gap-2">
-      <div class="w-32 h-32 self-center cursor-pointer group relative" @click="startUpload">
+      <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
         <nuxt-img :src="photoUrl(newPlant)" width="256px" height="256px" class="object-cover rounded-xl" />
-        <div v-if="progressUpload" class="absolute bottom-0 right-0 left-0">
+        <div v-if="progressUpload" class="absolute bottom-0 left-0 right-0">
           <ProgressBar mode="indeterminate" style="height: 0.3rem" />
         </div>
-        <div v-else class="absolute bottom-2 right-2 rounded-full bg-slate-900 opacity-80 p-2 flex justify-center items-center">
+        <div v-else class="absolute flex items-center justify-center p-2 rounded-full bottom-2 right-2 bg-slate-900 opacity-80">
           <Icon name="material-symbols:android-camera-outline" size="1.5rem" />
         </div>
       </div>
@@ -53,7 +53,7 @@
         <Button @click="addPlantNavigate">
           <div class="flex items-center gap-1">
             <Icon name="prime:save" size="1.5rem" />
-            <span class="font-bold text-sm whitespace-nowrap uppercase">Ok</span>
+            <span class="text-sm font-bold uppercase whitespace-nowrap">Ok</span>
           </div>
         </Button>
       </div>

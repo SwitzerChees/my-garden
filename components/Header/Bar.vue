@@ -1,7 +1,7 @@
 <template>
-  <div class="flex bg-slate-900 items-center gap-4 px-4 md:px-6">
-    <div class="rounded-full bg-slate-800 p-4">
-      <nuxt-img src="/uploads/monstera.png" width="256px" height="256px" class="object-cover rounded-xl h-8 w-8" />
+  <div class="flex items-center px-4 gap-4 bg-slate-900 md:px-6">
+    <div class="p-4 rounded-full bg-slate-800">
+      <nuxt-img src="/uploads/monstera.png" width="256px" height="256px" class="object-cover w-8 h-8 rounded-xl" />
     </div>
     <h1 class="truncate">My Garden</h1>
     <div class="grow"></div>
