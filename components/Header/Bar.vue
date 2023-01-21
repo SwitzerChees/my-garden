@@ -18,10 +18,12 @@
 </template>
 
 <script setup>
+  const router = useRouter()
+
   const navigateNewPlant = () => {
     const { id } = route.params
     if (showEditing && id) {
-      navigateTo(`/my-plants/plant/${id}`)
+      router.replace(`/my-plants/plant/${id}`)
       return
     }
     navigateTo('/my-plants/plant/new')

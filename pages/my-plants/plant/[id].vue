@@ -68,7 +68,7 @@
   import { getPlant, getTags } from '~~/surrealdb/queries'
   import { Photo, Plant, Tag } from '~~/definitions'
   import { photoUrl } from '~~/utils'
-  import { addPlant } from '~~/surrealdb/mutations'
+  import { addOrUpdatePlant } from '~~/surrealdb/mutations'
   const { first } = lfp
   const router = useRouter()
 
@@ -89,9 +89,9 @@
   })
 
   const addPlantNavigate = async () => {
-    const addedPlant = await addPlant(plant)
+    const addedPlant = await addOrUpdatePlant(plant)
     if (addedPlant) {
-      router.replace(`/my-plants/plant/${addedPlant.id}`)
+      router.replace(`/my-plants/${addedPlant.id}`)
     }
   }
 

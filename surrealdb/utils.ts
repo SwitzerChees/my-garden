@@ -1,4 +1,4 @@
-export const executeSafe = async <T>(fn: Promise<T>) => {
+export const executeSafe = async (fn: Promise<any>) => {
   try {
     return { result: await fn }
   } catch (error) {
