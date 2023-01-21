@@ -25,7 +25,7 @@ export const getPlants = async ({ filter = '' }): Promise<Plant[]> => {
       `
       SELECT *, ->assigned->tag.* as tags FROM type::table($tb)
       WHERE string::lowercase(name) CONTAINS $filter OR string::lowercase(botanicalName) CONTAINS $filter
-      OR string::lowercase(->assigned->tag.name) CONTAINS $filter
+      OR string::lowercase(->assigned->tag.name) CONTAINS $filter ORDER BY createdAt DESC
       `,
       {
         tb: 'plant',

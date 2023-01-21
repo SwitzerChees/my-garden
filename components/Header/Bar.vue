@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-slate-900 items-center gap-4 px-4">
+  <div class="flex bg-slate-900 items-center gap-4 px-4 md:px-6">
     <div class="rounded-full bg-slate-800 p-4">
       <nuxt-img src="/uploads/monstera.png" width="256px" height="256px" class="object-cover rounded-xl h-8 w-8" />
     </div>

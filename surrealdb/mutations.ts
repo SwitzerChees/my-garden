@@ -27,6 +27,7 @@ export const addPlant = async (newPlant: Plant): Promise<Plant | undefined> => {
       photo: newPlant.photo,
       name: newPlant.name,
       botanicalName: newPlant.botanicalName,
+      createdAt: new Date(),
     })
   )
   if (error || !result) return
