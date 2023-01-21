@@ -8,9 +8,11 @@
 </template>
 
 <script setup lang="ts">
-  import { usePlantsStore } from '~~/stores/plants'
-  onMounted(() => {
-    fetch()
+  import { Plant } from '~~/definitions'
+  import { getPlants } from '~~/surrealdb/queries'
+
+  let plants = $ref<Plant[]>([])
+  onMounted(async () => {
+    plants = await getPlants({ filter: '' })
   })
-  const { plants, fetch } = $(usePlantsStore())
 </script>
