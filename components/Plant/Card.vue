@@ -25,11 +25,11 @@
           <div class="flex flex-col">
             <div class="flex items-center gap-1">
               <span class="font-bold">Water</span>
-              <span class="text-xs text-gray-400">(every 14 days)</span>
+              <span class="text-xs text-gray-400">({{ getReminderDays(plant.reminder.water) }})</span>
             </div>
-            <span class="text-gray-400">in 3 days</span>
+            <span class="text-gray-400">{{ getReminderInDays(plant.reminder.water) }}</span>
           </div>
-          <Button>
+          <Button v-if="plant.reminder.water">
             <Icon name="mdi:watering-can" size="1.5rem" />
           </Button>
         </div>
@@ -37,11 +37,11 @@
           <div class="flex flex-col">
             <div class="flex items-center gap-1">
               <span class="font-bold">Fertilizer</span>
-              <span class="text-xs text-gray-400">(every 28 days)</span>
+              <span class="text-xs text-gray-400">({{ getReminderDays(plant.reminder.fertilize) }})</span>
             </div>
-            <span class="text-gray-400">in 10 days</span>
+            <span class="text-gray-400">{{ getReminderInDays(plant.reminder.fertilize) }}</span>
           </div>
-          <Button>
+          <Button v-if="plant.reminder.fertilize">
             <Icon name="healthicons:nutrition" size="1.5rem" />
           </Button>
         </div>
@@ -57,6 +57,19 @@
   defineProps<{ plant: Plant }>()
 
   const route = useRoute()
+
+  const getReminderDays = (days?: number) => {
+    if (!days || days === 0) return 'No Reminder'
+    return `every ${days} days`
+  }
+
+  const getReminderInDays = (days?: number) => {
+    if (!days || days === 0) return ''
+    const today = new Date()
+    const reminderDate = new Date(today.getTime() + days * 24 * 60 * 60 * 1000)
+    const diffInDays = Math.ceil((reminderDate.getTime() - today.getTime()) / (1000 * 3600 * 24))
+    return `in ${diffInDays} days`
+  }
 
   const showPlant = (id: string) => {
     if (route.path === `/my-plants/${id}`) return

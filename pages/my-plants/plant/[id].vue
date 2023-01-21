@@ -49,6 +49,34 @@
             </AutoComplete>
           </div>
         </div>
+        <div class="flex flex-col gap-0.5">
+          <label for="botanical">Water Reminder</label>
+          <InputNumber
+            v-model="plant.reminder.water"
+            prefix="every  "
+            suffix=" days"
+            :min="0"
+            :max-fraction-digits="0"
+            :show-buttons="true"
+            decrement-button-class="p-button-danger"
+            increment-button-class="p-button-success"
+            increment-button-icon="pi pi-plus"
+            decrement-button-icon="pi pi-minus" />
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <label for="botanical">Fertilize Reminder</label>
+          <InputNumber
+            v-model="plant.reminder.fertilize"
+            prefix="every  "
+            suffix=" days"
+            :min="0"
+            :max-fraction-digits="0"
+            :show-buttons="true"
+            decrement-button-class="p-button-danger"
+            increment-button-class="p-button-success"
+            increment-button-icon="pi pi-plus"
+            decrement-button-icon="pi pi-minus" />
+        </div>
         <div class="flex justify-end pt-4">
           <Button @click="addPlantNavigate">
             <div class="flex items-center gap-1">
@@ -72,7 +100,7 @@
   const { first } = lfp
   const router = useRouter()
 
-  let plant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [], history: [] })
+  let plant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 } })
 
   const route = useRoute()
   onMounted(async () => {

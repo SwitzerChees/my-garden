@@ -8,7 +8,6 @@ export interface Tag {
 }
 
 export interface Reminder {
-  id?: string
   water: number
   fertilize: number
 }
@@ -27,4 +26,5 @@ export interface Plant {
   botanicalName: string
   tags: Tag[]
   history: HistoryElement[]
+  reminder: Reminder
 }
