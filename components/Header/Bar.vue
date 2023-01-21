@@ -1,8 +1,8 @@
 <template>
   <div class="flex bg-slate-900 items-center gap-4 px-4">
-    <NewPlant />
+    <PlantDialog />
     <div class="rounded-full bg-slate-800 p-2">
-      <Logo class="h-10 w-10" />
+      <HeaderLogo class="h-10 w-10" />
     </div>
     <h1 class="truncate">My Garden</h1>
     <div class="grow"></div>

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8 md:flex-row">
-    <Plant :plant="selectedPlant" class="grow" />
+    <PlantCard :plant="selectedPlant" class="grow" />
     <PlantHistory class="grow" />
   </div>
 </template>
