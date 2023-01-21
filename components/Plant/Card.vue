@@ -59,7 +59,7 @@
   const route = useRoute()
 
   const showPlant = (id: string) => {
-    if (route.path === `/plant/${id}`) return
-    navigateTo(`/plant/${id}`)
+    if (route.path === `/my-plants/${id}`) return
+    navigateTo(`/my-plants/${id}`)
   }
 </script>

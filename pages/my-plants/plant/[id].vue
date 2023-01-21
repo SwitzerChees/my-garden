@@ -3,7 +3,7 @@
     <div class="w-112">
       <div class="flex flex-col gap-2">
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
-          <nuxt-img :src="photoUrl(newPlant)" width="256px" height="256px" class="object-cover rounded-xl" />
+          <nuxt-img :src="photoUrl(plant)" width="256px" height="256px" class="object-cover rounded-xl" />
           <div v-if="progressUpload" class="absolute bottom-0 left-0 right-0">
             <ProgressBar mode="indeterminate" style="height: 0.3rem" />
           </div>
@@ -23,18 +23,18 @@
         </div>
         <div class="flex flex-col gap-0.5">
           <label for="name">Name</label>
-          <InputText id="name" v-model="newPlant.name" type="text" @keyup.enter="addPlantNavigate" />
+          <InputText id="name" v-model="plant.name" type="text" @keyup.enter="addPlantNavigate" />
         </div>
         <div class="flex flex-col gap-0.5">
           <label for="botanical">Botanical Name</label>
-          <InputText id="botanical" v-model="newPlant.botanicalName" type="text" @keyup.enter="addPlantNavigate" />
+          <InputText id="botanical" v-model="plant.botanicalName" type="text" @keyup.enter="addPlantNavigate" />
         </div>
         <div class="flex flex-col gap-0.5">
           <label for="tags">Tags</label>
           <div class="p-fluid">
             <AutoComplete
               id="tags"
-              v-model="newPlant.tags"
+              v-model="plant.tags"
               :multiple="true"
               :complete-on-focus="true"
               :suggestions="tags"
@@ -65,14 +65,22 @@
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import FileUpload from 'primevue/fileupload'
-  import { getTags } from '~~/surrealdb/queries'
+  import { getPlant, getTags } from '~~/surrealdb/queries'
   import { Photo, Plant, Tag } from '~~/definitions'
   import { photoUrl } from '~~/utils'
   import { addPlant } from '~~/surrealdb/mutations'
   const { first } = lfp
   const router = useRouter()
 
-  const newPlant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [], history: [] })
+  let plant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [], history: [] })
+
+  const route = useRoute()
+  onMounted(async () => {
+    const { id } = route.params
+    if (!id || id instanceof Array || id === 'new') return
+    const existingPlant = await getPlant(id)
+    if (existingPlant) plant = existingPlant
+  })
 
   definePageMeta({
     pageTransition: {
@@ -81,9 +89,9 @@
   })
 
   const addPlantNavigate = async () => {
-    const addedPlant = await addPlant(newPlant)
+    const addedPlant = await addPlant(plant)
     if (addedPlant) {
-      router.replace(`/plant/${addedPlant.id}`)
+      router.replace(`/my-plants/plant/${addedPlant.id}`)
     }
   }
 
@@ -99,11 +107,11 @@
     progressUpload = false
     const photo = first(JSON.parse(photos)) as Photo
     if (!photo) return
-    newPlant.photo = photo
+    plant.photo = photo
   }
 
   let tags = $ref<Tag[]>([])
   const fetchTags = async (query?: string) => {
-    tags = await getTags({ query, withDummy: true, exclude: newPlant.tags })
+    tags = await getTags({ query, withDummy: true, exclude: plant.tags })
   }
 </script>

@@ -7,6 +7,12 @@ export interface Tag {
   name: string
 }
 
+export interface Reminder {
+  id?: string
+  water: number
+  fertilize: number
+}
+
 export interface HistoryElement {
   createdAt: Date
   action: string
