@@ -29,7 +29,7 @@
             </div>
             <span class="text-gray-400">{{ getReminderInDays(plant.reminder.water) }}</span>
           </div>
-          <Button v-if="plant.reminder.water">
+          <Button v-if="plant.reminder.water" @click="waterAction">
             <Icon name="mdi:watering-can" size="1.5rem" />
           </Button>
         </div>
@@ -41,7 +41,7 @@
             </div>
             <span class="text-gray-400">{{ getReminderInDays(plant.reminder.fertilize) }}</span>
           </div>
-          <Button v-if="plant.reminder.fertilize">
+          <Button v-if="plant.reminder.fertilize" @click="fertilizeAction">
             <Icon name="healthicons:nutrition" size="1.5rem" />
           </Button>
         </div>
@@ -52,9 +52,12 @@
 
 <script setup lang="ts">
   import { Plant } from '~~/definitions'
+  import { addHistoryElement } from '~~/surrealdb/mutations'
   import { photoUrl } from '~~/utils'
 
-  defineProps<{ plant: Plant }>()
+  const props = defineProps<{ plant: Plant }>()
+
+  const emits = defineEmits(['watered', 'fertilized'])
 
   const route = useRoute()
 
@@ -69,6 +72,18 @@
     const reminderDate = new Date(today.getTime() + days * 24 * 60 * 60 * 1000)
     const diffInDays = Math.ceil((reminderDate.getTime() - today.getTime()) / (1000 * 3600 * 24))
     return `in ${diffInDays} days`
+  }
+
+  const waterAction = async () => {
+    const historyElement = await addHistoryElement(props.plant.id, { action: 'watered', createdAt: new Date() })
+    if (!historyElement) return
+    emits('watered', historyElement)
+  }
+
+  const fertilizeAction = async () => {
+    const historyElement = await addHistoryElement(props.plant.id, { action: 'fertilized', createdAt: new Date() })
+    if (!historyElement) return
+    emits('fertilized', historyElement)
   }
 
   const showPlant = (id: string) => {

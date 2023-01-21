@@ -58,4 +58,5 @@ export const addHistoryElement = async (plantId: string, historyElement: History
   )
   if (error || !result) return
   await executeSafe(db.query(`RELATE ${plantId}->history->${result.id} UNIQUE`))
+  return result
 }
