@@ -1,19 +1,7 @@
 <template>
-  <Dialog
-    :visible="show"
-    :modal="true"
-    :dismissable-mask="true"
-    :breakpoints="{ '1280px': '50vw', '768px': '90vw' }"
-    :style="{ width: '35vw' }"
-    @update:visible="emit('hide')">
-    <template #header>
-      <div class="flex gap-2">
-        <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
-        <h2>New Plant</h2>
-      </div>
-    </template>
-    <div class="flex flex-col gap-2 px-2">
-      <div class="w-24 h-24 self-center cursor-pointer group relative" @click="startUpload">
+  <div>
+    <div class="flex flex-col gap-2">
+      <div class="w-32 h-32 self-center cursor-pointer group relative" @click="startUpload">
         <nuxt-img :src="photoUrl" width="256px" height="256px" class="object-cover rounded-xl" />
         <div v-if="progressUpload" class="absolute bottom-0 right-0 left-0">
           <ProgressBar mode="indeterminate" style="height: 0.3rem" />
@@ -22,15 +10,16 @@
           <Icon name="material-symbols:android-camera-outline" size="1.5rem" />
         </div>
       </div>
-      <FileUpload
-        v-show="false"
-        ref="upload"
-        name="photo"
-        url="/api/upload"
-        :auto="true"
-        accept="image/*"
-        @upload="uploadComplete"
-        @before-send="progressUpload = true" />
+      <div class="hidden">
+        <FileUpload
+          ref="upload"
+          name="photo"
+          url="/api/upload"
+          :auto="true"
+          accept="image/*"
+          @upload="uploadComplete"
+          @before-send="progressUpload = true" />
+      </div>
       <div class="flex flex-col gap-0.5">
         <label for="name">Name</label>
         <InputText id="name" v-model="newPlant.name" type="text" autofocus @keyup.enter="addPlantNavigate" />
@@ -60,9 +49,7 @@
           </AutoComplete>
         </div>
       </div>
-    </div>
-    <template #footer>
-      <div class="pt-4">
+      <div class="flex justify-end pt-4">
         <Button @click="addPlantNavigate">
           <div class="flex items-center gap-1">
             <Icon name="prime:save" size="1.5rem" />
@@ -70,8 +57,8 @@
           </div>
         </Button>
       </div>
-    </template>
-  </Dialog>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -81,18 +68,18 @@
   import { useTagsStore } from '~~/stores/tags'
   import { Photo } from '~~/definitions'
   const { first } = lfp
+  const router = useRouter()
 
-  defineProps<{
-    show: boolean
-  }>()
-
-  const emit = defineEmits(['added', 'hide'])
+  definePageMeta({
+    pageTransition: {
+      name: 'slide-left',
+    },
+  })
 
   const addPlantNavigate = async () => {
     const addedPlant = await add()
     if (addedPlant) {
-      navigateTo(`/plant/${addedPlant.id}`)
-      emit('added', addedPlant)
+      router.replace(`/plant/${addedPlant.id}`)
     }
   }
 

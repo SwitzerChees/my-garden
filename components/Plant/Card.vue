@@ -58,6 +58,6 @@
   defineProps<{ plant: Plant }>()
 
   const showPlant = (id: string) => {
-    navigateTo(`/my-plants/${id}`)
+    navigateTo(`/plant/${id}`)
   }
 </script>
