@@ -77,7 +77,13 @@
             increment-button-icon="pi pi-plus"
             decrement-button-icon="pi pi-minus" />
         </div>
-        <div class="flex justify-end pt-4">
+        <div class="flex justify-between pt-4">
+          <Button class="p-button-danger" @click="cancelNavigate">
+            <div class="flex items-center gap-1">
+              <Icon name="material-symbols:cancel" size="1.5rem" />
+              <span class="text-sm font-bold uppercase whitespace-nowrap">Cancel</span>
+            </div>
+          </Button>
           <Button @click="addPlantNavigate">
             <div class="flex items-center gap-1">
               <Icon name="prime:save" size="1.5rem" />
@@ -121,6 +127,14 @@
     if (addedPlant) {
       router.replace(`/my-plants/${addedPlant.id}`)
     }
+  }
+
+  const cancelNavigate = () => {
+    if (plant.id) {
+      router.replace(`/my-plants/${plant.id}`)
+      return
+    }
+    router.back()
   }
 
   const upload = $ref<any>(null)
