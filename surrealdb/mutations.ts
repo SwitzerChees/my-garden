@@ -29,8 +29,8 @@ export const addPlant = async (newPlant: Plant): Promise<Plant | undefined> => {
   const { result, error } = await executeSafe(
     db.create('plant', {
       photo: newPlant.photo,
-      name: newPlant.name,
-      botanicalName: newPlant.botanicalName,
+      name: newPlant.name.trim(),
+      botanicalName: newPlant.botanicalName.trim(),
       createdAt: new Date(),
     })
   )
