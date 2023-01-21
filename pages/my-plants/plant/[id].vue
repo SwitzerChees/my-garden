@@ -3,7 +3,7 @@
     <div class="w-112">
       <div class="flex flex-col gap-2">
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
-          <nuxt-img :src="photoUrl(plant)" width="256px" height="256px" class="object-cover rounded-xl" />
+          <nuxt-img :src="photoUrl(plant?.photo)" width="256px" height="256px" class="object-cover rounded-xl" />
           <div v-if="progressUpload" class="absolute bottom-0 left-0 right-0">
             <ProgressBar mode="indeterminate" style="height: 0.3rem" />
           </div>
