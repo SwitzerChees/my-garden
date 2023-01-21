@@ -1,7 +1,11 @@
 <template>
-  <div class="flex flex-col gap-8 md:flex-row">
-    <PlantCard v-if="plant" :plant="plant" class="grow" />
-    <PlantHistory class="grow" />
+  <div class="flex justify-center">
+    <div class="w-160">
+      <div class="flex flex-col gap-8 md:flex-row">
+        <PlantCard v-if="plant" :plant="plant" class="grow" />
+        <PlantHistory class="grow" />
+      </div>
+    </div>
   </div>
 </template>
 

@@ -1,27 +1,26 @@
 <template>
-  <div class="flex flex-col justify-between bg-gray-900 gap-1 rounded-xl">
-    <div class="flex px-4 pt-3 pb-2 gap-2">
+  <div class="flex flex-col justify-between gap-1 bg-gray-900 rounded-xl">
+    <div class="flex gap-2 px-4 pt-3 pb-2 cursor-pointer" @click="showPlant(plant.id)">
       <nuxt-img :src="photoUrl(plant)" width="128px" height="128px" class="object-cover h-14 w-14 rounded-xl" />
       <div class="flex flex-col justify-between overflow-hidden grow">
         <div class="flex flex-col gap-0.5">
           <h2 class="text-sm font-bold truncate">{{ plant?.name }}</h2>
-          <!-- <h3 v-if="plant?.botanicalName" class="text-xs text-gray-400 truncate">{{ plant?.botanicalName }}</h3> -->
         </div>
-        <div class="flex flex-wrap pt-2 gap-2">
+        <div class="flex flex-wrap gap-2 pt-2">
           <Tag v-for="tag of plant?.tags" :key="tag.id" severity="success">
             <span class="text-xs">{{ tag.name }}</span>
           </Tag>
         </div>
       </div>
       <div>
-        <Button class="p-button-text" @click="showPlant(plant.id)">
+        <Button class="p-button-text">
           <Icon name="ic:baseline-remove-red-eye" size="1.5rem" />
         </Button>
       </div>
     </div>
     <div class="flex flex-col gap-1">
       <div class="border-t border-gray-700"></div>
-      <div class="flex flex-col p-4 gap-4">
+      <div class="flex flex-col gap-4 p-4">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
             <div class="flex items-center gap-1">
@@ -57,7 +56,10 @@
 
   defineProps<{ plant: Plant }>()
 
+  const route = useRoute()
+
   const showPlant = (id: string) => {
+    if (route.path === `/plant/${id}`) return
     navigateTo(`/plant/${id}`)
   }
 </script>

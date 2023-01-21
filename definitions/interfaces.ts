@@ -7,10 +7,18 @@ export interface Tag {
   name: string
 }
 
+export interface HistoryElement {
+  createdAt: Date
+  action: string
+  photo?: Photo
+  note?: string
+}
+
 export interface Plant {
   photo?: Photo
   id: string
   name: string
   botanicalName: string
   tags: Tag[]
+  history: HistoryElement[]
 }

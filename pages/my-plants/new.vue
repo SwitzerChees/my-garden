@@ -72,7 +72,7 @@
   const { first } = lfp
   const router = useRouter()
 
-  const newPlant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [] })
+  const newPlant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [], history: [] })
 
   definePageMeta({
     pageTransition: {
