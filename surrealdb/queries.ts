@@ -46,8 +46,8 @@ export const getPlant = async (id: string): Promise<Plant | undefined> => {
   const { result, error } = await executeSafe(
     db.query(
       `
-      SELECT *, ->assigned->tag.* as tags FROM type::table($tb)
-      WHERE id = $id
+      SELECT *, ->assigned->tag.* as tags, ->history->historyelement.* as history FROM type::table($tb)
+      WHERE id = $id LIMIT 1
       `,
       {
         tb: 'plant',

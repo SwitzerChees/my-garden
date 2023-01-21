@@ -2,7 +2,7 @@ import lfp from 'lodash/fp'
 import { executeSafe } from './utils'
 import { getTags } from './queries'
 import { db } from '.'
-import { Plant, Tag } from '~~/definitions'
+import { HistoryElement, Plant, Tag } from '~~/definitions'
 const { find } = lfp
 
 const getOrAddTags = async (newTags: Tag[]) => {
@@ -26,6 +26,7 @@ const getOrAddTags = async (newTags: Tag[]) => {
 }
 
 export const addOrUpdatePlant = async (plant: Plant): Promise<Plant | undefined> => {
+  if (!plant) return
   const plantPayload = {
     photo: plant.photo,
     name: plant.name.trim(),
@@ -44,5 +45,17 @@ export const addOrUpdatePlant = async (plant: Plant): Promise<Plant | undefined>
   for (const tag of tags) {
     await executeSafe(db.query(`RELATE ${result.id}->assigned->${tag.id} UNIQUE`))
   }
+  if (plant.id === '') await addHistoryElement(result.id, { action: 'added', photo: plant.photo, createdAt: new Date() })
   return { ...result, tags, history: [] }
+}
+
+export const addHistoryElement = async (plantId: string, historyElement: HistoryElement) => {
+  const { result, error } = await executeSafe(
+    db.create('historyelement', {
+      ...historyElement,
+      createdAt: new Date(),
+    })
+  )
+  if (error || !result) return
+  await executeSafe(db.query(`RELATE ${plantId}->history->${result.id} UNIQUE`))
 }

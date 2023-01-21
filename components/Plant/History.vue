@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-2 pl-4 border-l-2 border-l-green-400">
     <div v-for="(item, index) in history" :key="index" class="relative flex flex-col justify-center min-h-[2rem]">
-      <div class="absolute top-0 bottom-0 flex flex-col justify-center -left-8">
+      <div class="absolute top-0 bottom-0 flex flex-col justify-center left-[-2.05rem]">
         <Icon :name="actionToIcon(item.action)" size="2rem" class="p-2 text-green-400 rounded-full bg-slate-900" />
       </div>
       <div class="flex flex-col gap-2 pl-4">
