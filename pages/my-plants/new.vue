@@ -65,12 +65,14 @@
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import FileUpload from 'primevue/fileupload'
-  import { usePlantStore } from '~~/stores/plant'
   import { getTags } from '~~/surrealdb/queries'
-  import { Photo, Tag } from '~~/definitions'
+  import { Photo, Plant, Tag } from '~~/definitions'
   import { photoUrl } from '~~/utils'
+  import { addPlant } from '~~/surrealdb/mutations'
   const { first } = lfp
   const router = useRouter()
+
+  const newPlant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [] })
 
   definePageMeta({
     pageTransition: {
@@ -79,7 +81,7 @@
   })
 
   const addPlantNavigate = async () => {
-    const addedPlant = await add()
+    const addedPlant = await addPlant(newPlant)
     if (addedPlant) {
       router.replace(`/plant/${addedPlant.id}`)
     }
@@ -104,6 +106,4 @@
   const fetchTags = async (query?: string) => {
     tags = await getTags({ query, withDummy: true, exclude: newPlant.tags })
   }
-
-  const { newPlant, add } = $(usePlantStore())
 </script>

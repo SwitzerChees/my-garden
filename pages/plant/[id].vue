@@ -1,20 +1,25 @@
 <template>
   <div class="flex flex-col gap-8 md:flex-row">
-    <PlantCard v-if="selectedPlant" :plant="selectedPlant" class="grow" />
+    <PlantCard v-if="plant" :plant="plant" class="grow" />
     <PlantHistory class="grow" />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { usePlantStore } from '~~/stores/plant'
+  import { Plant } from '~~/definitions'
+  import { getPlant } from '~~/surrealdb/queries'
+  let plant = $ref<Plant>()
 
-  // const route = useRoute()
-  // console.log(route.params.id)
+  const route = useRoute()
+  onMounted(async () => {
+    const { id } = route.params
+    if (!id || id instanceof Array) return
+    plant = await getPlant(id)
+  })
 
   definePageMeta({
     pageTransition: {
       name: 'slide-left',
     },
   })
-  const { selectedPlant } = $(usePlantStore())
 </script>

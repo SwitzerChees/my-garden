@@ -41,3 +41,20 @@ export const getPlants = async ({ filter = '' }): Promise<Plant[]> => {
   if (error) return []
   return pipe(first, get('result'))(result)
 }
+
+export const getPlant = async (id: string): Promise<Plant | undefined> => {
+  const { result, error } = await executeSafe(
+    db.query(
+      `
+      SELECT *, ->assigned->tag.* as tags FROM type::table($tb)
+      WHERE id = $id
+      `,
+      {
+        tb: 'plant',
+        id,
+      }
+    )
+  )
+  if (error) return
+  return pipe(first, get('result'), first)(result)
+}
