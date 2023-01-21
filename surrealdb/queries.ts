@@ -2,21 +2,26 @@ import lfp from 'lodash/fp'
 import { executeSafe } from './utils'
 import { db } from '.'
 import { Plant, Tag } from '~~/definitions'
-const { first, get, pipe } = lfp
+const { first, get, pipe, filter, uniqBy } = lfp
 
-export const getTags = async ({ filter = '', withDummy = false }): Promise<Tag[]> => {
+interface GetTagsParams {
+  query?: string
+  withDummy?: boolean
+  exclude?: Tag[]
+}
+export const getTags = async ({ query = '', withDummy = false, exclude = [] }: GetTagsParams): Promise<Tag[]> => {
   const { result, error } = await executeSafe(
     db.query('SELECT * FROM type::table($tb) WHERE string::lowercase(name) CONTAINS $filter', {
       tb: 'tag',
-      filter: filter?.toLowerCase() || '',
+      filter: query?.toLowerCase() || '',
     })
   )
   if (error) return []
-  const tags = pipe(first, get('result'))(result)
-  if (withDummy && filter && !tags.length) {
-    return [{ name: filter } as Tag]
+  const tags: Tag[] = pipe(first, get('result'))(result)
+  if (withDummy && query) {
+    tags.push({ name: query } as Tag)
   }
-  return tags
+  return uniqBy((t: Tag) => t.name.trim())(filter((t: Tag) => filter((e: Tag) => e.name === t.name)(exclude).length === 0)(tags))
 }
 
 export const getPlants = async ({ filter = '' }): Promise<Plant[]> => {

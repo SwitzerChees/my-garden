@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-2">
     <div></div>
-    <div class="flex flex-col grow gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="flex flex-col gap-6 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <PlantCard v-for="plant of plants" :key="plant.id" :plant="plant" />
     </div>
   </div>

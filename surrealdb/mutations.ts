@@ -14,8 +14,12 @@ const getOrAddTags = async (newTags: Tag[]) => {
       resultTags.push(existingTag)
       continue
     }
-    const { result, error } = await executeSafe(db.create('tag', tag as any))
-    if (error) continue
+    const { result, error } = await executeSafe(
+      db.create('tag', {
+        name: tag.name.trim(),
+      })
+    )
+    if (error || !result) continue
     resultTags.push(result)
   }
   return resultTags
