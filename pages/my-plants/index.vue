@@ -8,9 +8,9 @@
 </template>
 
 <script setup lang="ts">
-import { usePlantsStore } from '~~/stores/plants'
-onMounted(() => {
-  fetch()
-})
-const { plants, fetch } = $(usePlantsStore())
+  import { usePlantsStore } from '~~/stores/plants'
+  onMounted(() => {
+    fetch()
+  })
+  const { plants, fetch } = $(usePlantsStore())
 </script>

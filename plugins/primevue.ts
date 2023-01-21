@@ -9,7 +9,7 @@ import Timeline from 'primevue/timeline'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import Tag from 'primevue/tag'
-import AutoComplete from 'primevue/autocomplete';
+import AutoComplete from 'primevue/autocomplete'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp

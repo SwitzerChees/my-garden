@@ -1,8 +1,8 @@
 import lfp from 'lodash/fp'
-const { first, get, pipe, filter, find } = lfp
 import { Tag } from './models'
-import { db } from '.'
 import { executeSafe } from './utils'
+import { db } from '.'
+const { first, get, pipe } = lfp
 
 export const getTags = async ({ filter = '', withDummy = false }): Promise<Tag[]> => {
   const { result, error } = await executeSafe(

@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
-import { Tag, db } from '~~/surrealdb'
-import lfp from 'lodash/fp'
+import { Tag } from '~~/surrealdb'
 import { getTags } from '~~/surrealdb/queries'
-const { first, get, pipe, find, filter } = lfp
 
 export const useTagsStore = defineStore('tags', () => {
   let tags = $ref<Tag[]>([])

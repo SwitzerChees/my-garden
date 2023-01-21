@@ -8,13 +8,13 @@
           <!-- <h3 v-if="plant?.botanicalName" class="text-xs truncate text-gray-400">{{ plant?.botanicalName }}</h3> -->
         </div>
         <div class="flex gap-2 pt-2 flex-wrap">
-          <Tag severity="success" v-for="tag of plant?.tags" :key="tag.id">
+          <Tag v-for="tag of plant?.tags" :key="tag.id" severity="success">
             <span class="text-xs">{{ tag.name }}</span>
           </Tag>
         </div>
       </div>
       <div>
-        <Button class="p-button-text" @click="showPlant">
+        <Button class="p-button-text" @click="showPlant(plant.id)">
           <Icon name="ic:baseline-remove-red-eye" size="1.5rem" />
         </Button>
       </div>
@@ -50,14 +50,11 @@
 </template>
 
 <script setup lang="ts">
-import { usePlantStore } from '~~/stores/plant'
-import { Plant } from '~~/surrealdb'
+  import { Plant } from '~~/surrealdb'
 
-const { plant } = defineProps<{ plant: Plant }>()
+  defineProps<{ plant: Plant }>()
 
-let { selectedPlant } = $(usePlantStore())
-
-const showPlant = () => {
-  navigateTo(`/my-plants/${plant.id}`)
-}
+  const showPlant = (id: string) => {
+    navigateTo(`/my-plants/${id}`)
+  }
 </script>

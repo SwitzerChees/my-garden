@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
-import { Plant, db } from '~~/surrealdb'
+import { Plant } from '~~/surrealdb'
 import { addPlant } from '~~/surrealdb/mutations'
 
 export const usePlantStore = defineStore('plant', () => {
-  let selectedPlant = $ref<Plant>()
+  const selectedPlant = $ref<Plant>()
   let newPlant = $ref<Plant>({ id: '', name: '', botanicalName: '', tags: [] })
 
   const add = async () => {

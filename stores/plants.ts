@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
-import { Plant, db } from '~~/surrealdb'
-import axios from 'axios'
 import lfp from 'lodash/fp'
+import { Plant, db } from '~~/surrealdb'
 const { first, get, pipe } = lfp
 
 export const usePlantsStore = defineStore('plants', () => {
@@ -15,7 +14,6 @@ export const usePlantsStore = defineStore('plants', () => {
       plants = pipe(first, get('result'))(queryResult)
       return true
     } catch (error) {
-      console.log(error)
       return false
     }
   }

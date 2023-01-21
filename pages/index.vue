@@ -1,3 +1,3 @@
 <script setup lang="ts">
-navigateTo('/my-plants')
+  navigateTo('/my-plants')
 </script>

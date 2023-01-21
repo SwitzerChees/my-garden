@@ -1,9 +1,9 @@
 import lfp from 'lodash/fp'
-const { first, get, pipe, filter, find } = lfp
 import { Plant, Tag } from './models'
-import { db } from '.'
 import { executeSafe } from './utils'
 import { getTags } from './queries'
+import { db } from '.'
+const { find } = lfp
 
 const getOrAddTags = async (newTags: Tag[]) => {
   const allTags = await getTags({})

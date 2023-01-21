@@ -1,11 +1,11 @@
 <template>
   <Dialog
-    v-model:visible="showNewPlantDialog"
-    :dismissable-mask="true"
+    :visible="show"
     :modal="true"
+    :dismissable-mask="true"
     :breakpoints="{ '1280px': '50vw', '768px': '90vw' }"
     :style="{ width: '35vw' }"
-  >
+    @update:visible="emit('hide')">
     <template #header>
       <div class="flex gap-2">
         <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
@@ -15,26 +15,25 @@
     <div class="flex flex-col gap-2 px-2">
       <div class="flex flex-col gap-0.5">
         <label for="name">Name</label>
-        <InputText id="name" type="text" v-model="newPlant.name" autofocus @keyup.enter="addPlantNavigate" />
+        <InputText id="name" v-model="newPlant.name" type="text" autofocus @keyup.enter="addPlantNavigate" />
       </div>
       <div class="flex flex-col gap-0.5">
         <label for="botanical">Botanical Name</label>
-        <InputText id="botanical" type="text" v-model="newPlant.botanicalName" @keyup.enter="addPlantNavigate" />
+        <InputText id="botanical" v-model="newPlant.botanicalName" type="text" @keyup.enter="addPlantNavigate" />
       </div>
       <div class="flex flex-col gap-0.5">
         <label for="tags">Tags</label>
         <div class="p-fluid">
           <AutoComplete
-            :multiple="true"
-            :force-selection="true"
-            :completeOnFocus="true"
-            :dropdown="true"
             id="tags"
             v-model="newPlant.tags"
+            :multiple="true"
+            :force-selection="true"
+            :complete-on-focus="true"
+            :dropdown="true"
             :suggestions="tags"
-            @complete="fetchTags($event.query)"
             option-label="name"
-          >
+            @complete="fetchTags($event.query)">
             <template #chip="{ value: tag }">
               <div class="flex items-center gap-2">
                 <Icon v-if="!tag.id" name="system-uicons:reset-temporary" size="0.9rem" />
@@ -57,21 +56,23 @@
 </template>
 
 <script setup lang="ts">
-import { usePlantStore } from '~~/stores/plant'
-import { useTagsStore } from '~~/stores/tags'
-import { useUIStore } from '~~/stores/ui'
+  import { usePlantStore } from '~~/stores/plant'
+  import { useTagsStore } from '~~/stores/tags'
 
-let { showNewPlantDialog } = $(useUIStore())
-const addPlantNavigate = async () => {
-  const addedPlant = await add()
-  if (addedPlant) {
-    selectedPlant = addedPlant
-    showNewPlantDialog = false
-    navigateTo(`/my-plants/${addedPlant.id}`)
+  defineProps<{
+    show: boolean
+  }>()
+
+  const emit = defineEmits(['added', 'hide'])
+
+  const addPlantNavigate = async () => {
+    const addedPlant = await add()
+    if (addedPlant) {
+      navigateTo(`/my-plants/${addedPlant.id}`)
+      emit('added', addedPlant)
+    }
   }
-}
 
-const { newPlant, add } = $(usePlantStore())
-let { selectedPlant } = $(usePlantStore())
-const { tags, fetch: fetchTags } = $(useTagsStore())
+  const { newPlant, add } = $(usePlantStore())
+  const { tags, fetch: fetchTags } = $(useTagsStore())
 </script>

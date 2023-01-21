@@ -1,6 +1,6 @@
-import formidable from 'formidable'
 import fs from 'fs'
 import path from 'path'
+import formidable from 'formidable'
 
 interface Photo {
   imageName: string
@@ -11,8 +11,8 @@ const processFile = (file: formidable.File) => {
   if (!file) return
   if (!file.mimetype?.startsWith('image/')) return
   if (!file.originalFilename) return
-  let dateString = new Date().toISOString().slice(0, -5).replace(/-/g, '').replace(/:/g, '').replace('T', '').slice(0, -1)
-  let imageName = `${dateString}_${Math.round(Math.random() * 100000)}.${file.originalFilename.split('.').pop()}`
+  const dateString = new Date().toISOString().slice(0, -5).replace(/-/g, '').replace(/:/g, '').replace('T', '').slice(0, -1)
+  const imageName = `${dateString}_${Math.round(Math.random() * 100000)}.${file.originalFilename.split('.').pop()}`
   const tempPath = file.filepath
   const uploadPath = `${path.join('uploads', imageName)}`
   fs.copyFileSync(tempPath, uploadPath)
@@ -26,6 +26,7 @@ const parseBody = async (req: any): Promise<{ fields: formidable.Fields; photos:
     const photos: Photo[] = []
     form.parse(req, (err, fields, files) => {
       if (err) {
+        // eslint-disable-next-line no-console
         console.log(err)
         return resolve({ fields, photos })
       }
