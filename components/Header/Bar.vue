@@ -2,7 +2,7 @@
   <div class="flex bg-slate-900 items-center gap-4 px-4">
     <PlantDialog :show="showPlantDialog" @added="hidePlantDialog" @hide="hidePlantDialog" />
     <div class="rounded-full bg-slate-800 p-2">
-      <HeaderLogo class="h-10 w-10" />
+      <HeaderLogo class="h-8 w-8" />
     </div>
     <h1 class="truncate">My Garden</h1>
     <div class="grow"></div>

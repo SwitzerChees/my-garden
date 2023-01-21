@@ -15,14 +15,22 @@
     <div class="flex flex-col gap-2 px-2">
       <div class="w-24 h-24 self-center cursor-pointer group relative" @click="startUpload">
         <nuxt-img :src="photoUrl" width="256px" height="256px" class="object-cover rounded-xl" />
-        <div class="absolute bottom-1 right-1 rounded-full bg-slate-900 opacity-80 p-2 flex justify-center items-center">
+        <div v-if="progressUpload" class="absolute bottom-0 right-0 left-0">
+          <ProgressBar mode="indeterminate" style="height: 0.3rem" />
+        </div>
+        <div v-else class="absolute bottom-1 right-1 rounded-full bg-slate-900 opacity-80 p-2 flex justify-center items-center">
           <Icon name="material-symbols:android-camera-outline" size="1.5rem" />
         </div>
       </div>
-      <FileUpload v-show="false" ref="upload" name="photo" url="/api/upload" :auto="true" accept="image/*" @upload="uploadComplete" />
-      <div class="bg-red-50">
-        <ProgressSpinner />
-      </div>
+      <FileUpload
+        v-show="false"
+        ref="upload"
+        name="photo"
+        url="/api/upload"
+        :auto="true"
+        accept="image/*"
+        @upload="uploadComplete"
+        @before-send="progressUpload = true" />
       <div class="flex flex-col gap-0.5">
         <label for="name">Name</label>
         <InputText id="name" v-model="newPlant.name" type="text" autofocus @keyup.enter="addPlantNavigate" />
@@ -99,7 +107,10 @@
     upload.choose()
   }
 
+  let progressUpload = $ref(false)
+
   const uploadComplete = ({ xhr: { response: photos } }: { xhr: { response: string } }) => {
+    progressUpload = false
     const photo = first(JSON.parse(photos)) as Photo
     if (!photo) return
     newPlant.photo = photo

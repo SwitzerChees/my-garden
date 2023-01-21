@@ -11,7 +11,7 @@ import InputText from 'primevue/inputtext'
 import Tag from 'primevue/tag'
 import AutoComplete from 'primevue/autocomplete'
 import FileUpload from 'primevue/fileupload'
-import ProgressSpinner from 'primevue/progressspinner';
+import ProgressBar from 'primevue/progressbar'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp
@@ -28,5 +28,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   app.component('Tag', Tag)
   app.component('AutoComplete', AutoComplete)
   app.component('FileUpload', FileUpload)
-  app.component('ProgressSpinner', ProgressSpinner)
+  app.component('ProgressBar', ProgressBar)
 })
