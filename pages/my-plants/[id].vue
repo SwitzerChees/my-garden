@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center">
     <div class="w-112">
-      <div class="flex flex-col gap-8">
+      <div class="flex flex-col gap-6">
         <PlantCard v-if="plant" :plant="plant" />
         <PlantHistory v-if="plant" class="ml-4" :history="plant.history" />
       </div>
