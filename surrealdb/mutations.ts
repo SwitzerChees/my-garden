@@ -36,6 +36,7 @@ export const addOrUpdatePlant = async (newPlant: Plant): Promise<Plant | undefin
   const { result, error } = await executeSafe(dbAction)
   if (error || !result) return
   const tags = await getOrAddTags(newPlant.tags)
+  await executeSafe(db.query(`DELETE ${result.id}->assigned`))
   for (const tag of tags) {
     await executeSafe(db.query(`RELATE ${result.id}->assigned->${tag.id} UNIQUE`))
   }
