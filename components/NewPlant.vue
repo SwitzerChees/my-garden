@@ -61,14 +61,13 @@ import { usePlantStore } from '~~/stores/plant'
 import { useTagsStore } from '~~/stores/tags'
 import { useUIStore } from '~~/stores/ui'
 
-
 let { showNewPlantDialog } = $(useUIStore())
 const addPlantNavigate = async () => {
   const addedPlant = await add()
   if (addedPlant) {
     selectedPlant = addedPlant
     showNewPlantDialog = false
-    navigateTo('/plant')
+    navigateTo(`/my-plants/${addedPlant.id}`)
   }
 }
 

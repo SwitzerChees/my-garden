@@ -6,7 +6,7 @@ export const useUIStore = defineStore('ui', () => {
   let showNewPlantButton = $ref(false)
   const route = useRoute()
   const checkShowNewPlantButton = () => {
-    showNewPlantButton = route.path === '/'
+    showNewPlantButton = route.path === '/my-plants'
   }
   checkShowNewPlantButton()
   watch(route, checkShowNewPlantButton)

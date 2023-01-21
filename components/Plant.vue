@@ -53,12 +53,11 @@
 import { usePlantStore } from '~~/stores/plant'
 import { Plant } from '~~/surrealdb'
 
-const { plant } = defineProps<{ plant?: Plant }>()
+const { plant } = defineProps<{ plant: Plant }>()
 
 let { selectedPlant } = $(usePlantStore())
 
 const showPlant = () => {
-  selectedPlant = plant
-  navigateTo('/plant')
+  navigateTo(`/my-plants/${plant.id}`)
 }
 </script>

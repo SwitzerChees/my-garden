@@ -8,6 +8,9 @@
 <script setup lang="ts">
 import { usePlantStore } from '~~/stores/plant'
 
+const route = useRoute()
+console.log(route.params.id)
+
 definePageMeta({
   pageTransition: {
     name: 'slide-left',
