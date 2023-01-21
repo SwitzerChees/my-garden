@@ -13,6 +13,16 @@
       </div>
     </template>
     <div class="flex flex-col gap-2 px-2">
+      <div class="w-24 h-24 self-center cursor-pointer group relative" @click="startUpload">
+        <nuxt-img :src="photoUrl" width="256px" height="256px" class="object-cover rounded-xl" />
+        <div class="absolute bottom-1 right-1 rounded-full bg-slate-900 opacity-80 p-2 flex justify-center items-center">
+          <Icon name="material-symbols:android-camera-outline" size="1.5rem" />
+        </div>
+      </div>
+      <FileUpload v-show="false" ref="upload" name="photo" url="/api/upload" :auto="true" accept="image/*" @upload="uploadComplete" />
+      <div class="bg-red-50">
+        <ProgressSpinner />
+      </div>
       <div class="flex flex-col gap-0.5">
         <label for="name">Name</label>
         <InputText id="name" v-model="newPlant.name" type="text" autofocus @keyup.enter="addPlantNavigate" />
@@ -30,7 +40,6 @@
             :multiple="true"
             :force-selection="true"
             :complete-on-focus="true"
-            :dropdown="true"
             :suggestions="tags"
             option-label="name"
             @complete="fetchTags($event.query)">
@@ -45,19 +54,25 @@
       </div>
     </div>
     <template #footer>
-      <Button @click="addPlantNavigate">
-        <div class="flex items-center gap-1">
-          <Icon name="prime:save" size="1.5rem" />
-          <span class="font-bold text-sm whitespace-nowrap uppercase">Ok</span>
-        </div>
-      </Button>
+      <div class="pt-4">
+        <Button @click="addPlantNavigate">
+          <div class="flex items-center gap-1">
+            <Icon name="prime:save" size="1.5rem" />
+            <span class="font-bold text-sm whitespace-nowrap uppercase">Ok</span>
+          </div>
+        </Button>
+      </div>
     </template>
   </Dialog>
 </template>
 
 <script setup lang="ts">
+  import lfp from 'lodash/fp'
+  import FileUpload from 'primevue/fileupload'
   import { usePlantStore } from '~~/stores/plant'
   import { useTagsStore } from '~~/stores/tags'
+  import { Photo } from '~~/definitions'
+  const { first } = lfp
 
   defineProps<{
     show: boolean
@@ -71,6 +86,23 @@
       navigateTo(`/my-plants/${addedPlant.id}`)
       emit('added', addedPlant)
     }
+  }
+
+  const photoUrl = computed(() => {
+    const basePath = '/uploads/'
+    return `${basePath}${newPlant.photo?.imageName || 'default.jpg'}`
+  })
+
+  const upload = $ref<any>(null)
+  const startUpload = () => {
+    if (!upload) return
+    upload.choose()
+  }
+
+  const uploadComplete = ({ xhr: { response: photos } }: { xhr: { response: string } }) => {
+    const photo = first(JSON.parse(photos)) as Photo
+    if (!photo) return
+    newPlant.photo = photo
   }
 
   const { newPlant, add } = $(usePlantStore())

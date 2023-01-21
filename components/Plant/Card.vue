@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-1 bg-gray-900 rounded-xl justify-between">
     <div class="flex px-4 pt-3 pb-2 gap-2">
-      <nuxt-img src="/uploads/2023011517364_51302.jpg" width="128px" height="128px" class="object-cover h-14 w-14 rounded-xl" />
+      <nuxt-img :src="photoUrl(plant)" width="128px" height="128px" class="object-cover h-14 w-14 rounded-xl" />
       <div class="flex flex-col overflow-hidden grow justify-between">
         <div class="flex flex-col gap-0.5">
           <h2 class="font-bold truncate text-sm">{{ plant?.name }}</h2>
@@ -52,7 +52,8 @@
 </template>
 
 <script setup lang="ts">
-  import { Plant } from '~~/surrealdb'
+  import { Plant } from '~~/definitions'
+  import { photoUrl } from '~~/utils'
 
   defineProps<{ plant: Plant }>()
 

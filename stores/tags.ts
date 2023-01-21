@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Tag } from '~~/surrealdb'
+import { Tag } from '~~/definitions'
 import { getTags } from '~~/surrealdb/queries'
 
 export const useTagsStore = defineStore('tags', () => {

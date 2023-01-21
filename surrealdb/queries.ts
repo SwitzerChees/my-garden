@@ -1,7 +1,7 @@
 import lfp from 'lodash/fp'
-import { Plant, Tag } from './models'
 import { executeSafe } from './utils'
 import { db } from '.'
+import { Plant, Tag } from '~~/definitions'
 const { first, get, pipe } = lfp
 
 export const getTags = async ({ filter = '', withDummy = false }): Promise<Tag[]> => {
@@ -23,7 +23,7 @@ export const getPlants = async ({ filter = '' }): Promise<Plant[]> => {
   const { result, error } = await executeSafe(
     db.query(
       `
-      SELECT id, name, botanicalName, ->assigned->tag.* as tags FROM type::table($tb)
+      SELECT *, ->assigned->tag.* as tags FROM type::table($tb)
       WHERE string::lowercase(name) CONTAINS $filter OR string::lowercase(botanicalName) CONTAINS $filter
       OR string::lowercase(->assigned->tag.name) CONTAINS $filter
       `,

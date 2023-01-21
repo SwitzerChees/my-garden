@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Plant } from '~~/surrealdb'
+import { Plant } from '~~/definitions'
 import { getPlants } from '~~/surrealdb/queries'
 
 export const usePlantsStore = defineStore('plants', () => {

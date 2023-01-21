@@ -6,5 +6,3 @@ await db.signin({
   pass: 'root',
 })
 await db.use('mygarden', 'mygarden')
-
-export * from './models'

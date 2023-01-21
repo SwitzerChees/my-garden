@@ -1,8 +1,8 @@
 import lfp from 'lodash/fp'
-import { Plant, Tag } from './models'
 import { executeSafe } from './utils'
 import { getTags } from './queries'
 import { db } from '.'
+import { Plant, Tag } from '~~/definitions'
 const { find } = lfp
 
 const getOrAddTags = async (newTags: Tag[]) => {
@@ -24,6 +24,7 @@ const getOrAddTags = async (newTags: Tag[]) => {
 export const addPlant = async (newPlant: Plant): Promise<Plant | undefined> => {
   const { result, error } = await executeSafe(
     db.create('plant', {
+      photo: newPlant.photo,
       name: newPlant.name,
       botanicalName: newPlant.botanicalName,
     })
