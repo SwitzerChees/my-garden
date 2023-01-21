@@ -2,11 +2,11 @@
   <div>
     <div class="flex flex-col gap-2">
       <div class="w-32 h-32 self-center cursor-pointer group relative" @click="startUpload">
-        <nuxt-img :src="photoUrl" width="256px" height="256px" class="object-cover rounded-xl" />
+        <nuxt-img :src="photoUrl(newPlant)" width="256px" height="256px" class="object-cover rounded-xl" />
         <div v-if="progressUpload" class="absolute bottom-0 right-0 left-0">
           <ProgressBar mode="indeterminate" style="height: 0.3rem" />
         </div>
-        <div v-else class="absolute bottom-1 right-1 rounded-full bg-slate-900 opacity-80 p-2 flex justify-center items-center">
+        <div v-else class="absolute bottom-2 right-2 rounded-full bg-slate-900 opacity-80 p-2 flex justify-center items-center">
           <Icon name="material-symbols:android-camera-outline" size="1.5rem" />
         </div>
       </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="flex flex-col gap-0.5">
         <label for="name">Name</label>
-        <InputText id="name" v-model="newPlant.name" type="text" autofocus @keyup.enter="addPlantNavigate" />
+        <InputText id="name" v-model="newPlant.name" type="text" @keyup.enter="addPlantNavigate" />
       </div>
       <div class="flex flex-col gap-0.5">
         <label for="botanical">Botanical Name</label>
@@ -67,6 +67,7 @@
   import { usePlantStore } from '~~/stores/plant'
   import { useTagsStore } from '~~/stores/tags'
   import { Photo } from '~~/definitions'
+  import { photoUrl } from '~~/utils'
   const { first } = lfp
   const router = useRouter()
 
@@ -82,11 +83,6 @@
       router.replace(`/plant/${addedPlant.id}`)
     }
   }
-
-  const photoUrl = computed(() => {
-    const basePath = '/uploads/'
-    return `${basePath}${newPlant.photo?.imageName || 'default.jpg'}`
-  })
 
   const upload = $ref<any>(null)
   const startUpload = () => {
