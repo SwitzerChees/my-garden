@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_NAME}
+  namespace: ${KUBERNETES_NAMESPACE}
+  labels:
+    app: ${APP_NAME}
+    service: api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: ${APP_NAME}
+      service: api
+  template:
+    metadata:
+      labels:
+        app: ${APP_NAME}
+        service: api
+    spec:
+      containers:
+        - name: ${APP_NAME}
+          image: ${IMAGE_TAG}
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            failureThreshold: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            failureThreshold: 3
+            periodSeconds: 5
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: nuxt-envs
+                  key: db_host
+          ports:
+            - name: http
+              containerPort: 1337
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 2Gi
