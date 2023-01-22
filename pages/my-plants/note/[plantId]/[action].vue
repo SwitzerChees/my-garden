@@ -1,9 +1,15 @@
-<template><h1>Test</h1></template>
+<template>
+  <div class="flex justify-center px-2 pt-2">
+    <div class="w-112">
+      <h1>{{ 'Tets' }}</h1>
+    </div>
+  </div>
+</template>
 
 <script setup lang="ts">
   definePageMeta({
     pageTransition: {
-      name: 'slide-right',
+      name: 'slide-left',
     },
   })
 

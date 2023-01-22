@@ -46,12 +46,6 @@
   let plant = $ref<Plant>()
   const { first } = lfp
 
-  definePageMeta({
-    pageTransition: {
-      name: 'slide-left',
-    },
-  })
-
   const route = useRoute()
   const fetchPlant = async () => {
     const { plantId } = route.params
