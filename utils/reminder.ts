@@ -21,6 +21,14 @@ export const needReminderAttention = (reminderSummaryEntry: ReminderSummaryEntry
   return days !== 0 && !doneToday && nextInDays <= 0
 }
 
+const daysBetweenDates = (date1: Date, date2: Date) => {
+  date1.setHours(0, 0, 0, 0)
+  date2.setHours(0, 0, 0, 0)
+  const differenceInMilliseconds = date2.getTime() - date1.getTime()
+  const differenceInDays = differenceInMilliseconds / (1000 * 3600 * 24)
+  return Math.ceil(differenceInDays)
+}
+
 export const getReminderSummary = (plant: Plant): ReminderSummary => {
   const { water = 0, fertilize = 0 } = plant.reminder
   const { history } = plant
@@ -31,12 +39,12 @@ export const getReminderSummary = (plant: Plant): ReminderSummary => {
   if (waterAction) {
     waterNext.setDate(new Date(waterAction.createdAt).getDate() + water)
   }
-  const nextWaterInDays = Math.ceil((waterNext.getTime() - today.getTime()) / (1000 * 3600 * 24))
+  const nextWaterInDays = daysBetweenDates(today, waterNext)
   const fertilizeNext = new Date()
   if (fertilizeAction) {
     fertilizeNext.setDate(new Date(fertilizeAction.createdAt).getDate() + fertilize)
   }
-  const nextFertilizeInDays = Math.ceil((fertilizeNext.getTime() - today.getTime()) / (1000 * 3600 * 24))
+  const nextFertilizeInDays = daysBetweenDates(today, fertilizeNext)
   const waterDoneToday = water === 0 ? false : waterAction ? new Date(waterAction.createdAt).getDate() === new Date().getDate() : false
   const fertilizeDoneToday =
     fertilize === 0 ? false : fertilizeAction ? new Date(fertilizeAction.createdAt).getDate() === new Date().getDate() : false

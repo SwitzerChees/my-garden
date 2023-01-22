@@ -50,6 +50,8 @@ export const addOrUpdatePlant = async (plant: Plant): Promise<Plant | undefined>
 }
 
 export const addHistoryElement = async (plantId: string, historyElement: HistoryElement) => {
+  // const jesterday = new Date()
+  // jesterday.setDate(jesterday.getDate() - 0)
   const { result, error } = await executeSafe(
     db.create('historyelement', {
       ...historyElement,
