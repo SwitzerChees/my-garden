@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-2">
+  <div class="relative flex flex-col gap-2">
     <div
       class="fixed left-0 right-0 z-50 flex justify-between p-6 pb-5 m-auto md:max-w-sm lg:max-w-xl md:pb-3 md:p-4 md:justify-center top-20 md:top-0 bg-slate-800 md:bg-slate-900">
       <span class="p-input-icon-left grow">
@@ -37,8 +37,8 @@
   import { getPlants } from '~~/surrealdb/queries'
   const { debounce } = lfp
 
-  const filter = $ref('')
-  const filterReminder = $ref(false)
+  let filter = $ref('')
+  let filterReminder = $ref(false)
 
   const filteredPlants = $computed(() => {
     if (!filterReminder) return plants
@@ -59,6 +59,16 @@
   })
 
   onMounted(async () => {
+    const filterState = sessionStorage.getItem('filter') ? JSON.parse(sessionStorage.getItem('filter') as string) : undefined
+    if (filterState) {
+      filter = filterState.filter
+      filterReminder = filterState.filterReminder
+    }
     plants = await getPlants({ filter })
   })
+
+  const debouncedSafeState = debounce(200, () => {
+    sessionStorage.setItem('filter', JSON.stringify({ filter, filterReminder }))
+  })
+  watch(() => [filter, filterReminder], debouncedSafeState)
 </script>
