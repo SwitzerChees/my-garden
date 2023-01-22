@@ -4,7 +4,9 @@ services:
   surrealdb:
     image: surrealdb/surrealdb:latest
     restart: unless-stopped
-    command: start --log trace --user root --pass root memory
+    command: start --log trace --user root --pass root file:///opt/surrealdb
+    volumes:
+      - ./data/surrealdb:/opt/surrealdb
     ports:
       - 8000:8000
     networks:
