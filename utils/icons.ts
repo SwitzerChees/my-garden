@@ -8,5 +8,6 @@ export const actionToIcon = (action?: string) => {
   if (action === 'image') return 'material-symbols:photo-camera'
   if (action === 'sterilized') return 'simple-line-icons:chemistry'
   if (action === 'measured') return 'gis:measure'
+  if (action === 'note') return 'material-symbols:sticky-note-2-sharp'
   return 'material-symbols:question-mark'
 }

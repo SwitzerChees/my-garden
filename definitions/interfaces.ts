@@ -12,10 +12,21 @@ export interface Reminder {
   fertilize: number
 }
 
+export type HistoryElementType =
+  | 'added'
+  | 'updated'
+  | 'watered'
+  | 'fertilized'
+  | 'repotted'
+  | 'pruned'
+  | 'image'
+  | 'sterilized'
+  | 'measured'
+  | 'note'
 export interface HistoryElement {
   id?: string
   createdAt: Date
-  action: 'added' | 'updated' | 'watered' | 'fertilized' | 'repotted' | 'pruned' | 'image' | 'sterilized' | 'measured'
+  action: HistoryElementType
   photo?: Photo
   note?: string
 }

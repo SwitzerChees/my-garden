@@ -10,6 +10,7 @@
           <span>{{ formatDate(item.createdAt) }}</span>
           <span class="text-xs text-gray-400">({{ capitalizeFirstLetter(item.action) }})</span>
         </div>
+        <span v-if="item.note">{{ item.note }}</span>
         <nuxt-img v-if="item.photo" :src="photoUrl(item.photo)" width="256px" height="256px" class="object-cover w-48 h-48 rounded-xl" />
       </div>
     </div>
@@ -19,11 +20,5 @@
 <script setup lang="ts">
   import { HistoryElement } from '~~/definitions'
   import { formatDate, photoUrl, actionToIcon } from '~~/utils'
-
-  const capitalizeFirstLetter = (action?: string) => {
-    if (!action) return ''
-    return action.charAt(0).toUpperCase() + action.slice(1)
-  }
-
   defineProps<{ history: HistoryElement[] }>()
 </script>

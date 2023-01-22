@@ -14,6 +14,7 @@ import FileUpload from 'primevue/fileupload'
 import ProgressBar from 'primevue/progressbar'
 import InputNumber from 'primevue/inputnumber'
 import SplitButton from 'primevue/splitbutton'
+import Textarea from 'primevue/textarea'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp
@@ -33,4 +34,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   app.component('ProgressBar', ProgressBar)
   app.component('InputNumber', InputNumber)
   app.component('SplitButton', SplitButton)
+  app.component('Textarea', Textarea)
 })

@@ -14,5 +14,10 @@ export const formatDate = (date?: string | Date) => {
   })
 }
 
+export const capitalizeFirstLetter = (action?: string) => {
+  if (!action) return ''
+  return action.charAt(0).toUpperCase() + action.slice(1)
+}
+
 export * from './reminder'
 export * from './icons'

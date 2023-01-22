@@ -2,7 +2,6 @@
   <div class="flex justify-center px-2 pt-2">
     <div class="w-112">
       <div class="flex flex-col gap-6">
-        <PlantDetails v-if="plant" :plant="plant" @watered="fetchPlant" @fertilized="fetchPlant" />
         <div class="flex justify-between">
           <div class="flex flex-col justify-center">
             <Button class="p-button-success" @click="startUpload">
@@ -32,6 +31,7 @@
             </Button>
           </SplitButton>
         </div>
+        <PlantDetails v-if="plant" :plant="plant" @watered="fetchPlant" @fertilized="fetchPlant" />
         <PlantHistory v-if="plant" class="ml-4" :history="orderedHistory" />
       </div>
     </div>
@@ -92,11 +92,11 @@
     },
     {
       label: 'Sterilize',
-      command: () => navigateNote('Sterilize'),
+      command: () => navigateNote('sterilized'),
     },
     {
       label: 'Measure',
-      command: () => navigateNote('measure'),
+      command: () => navigateNote('measured'),
     },
   ])
 </script>
