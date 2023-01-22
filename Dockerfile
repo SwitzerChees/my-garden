@@ -14,10 +14,10 @@ ADD . /app
 # yarn lint
 RUN yarn lint
 # yarn build
-RUN NODE_ENV=production yarn build && find /app \( -name "*.ts" -o -name "*.vue" \) ! -path '*/node_modules/*' -type f -delete
+RUN yarn build
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
 # start command
-CMD ["node", "/app/.output/server/index.mjs"]
+CMD ["yarn", "start"]

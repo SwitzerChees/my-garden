@@ -7,6 +7,10 @@ Dockerfile
 .editorconfig
 .strapi-updater.json
 .env
+.nuxt
+.output
+.github
+.vscode
 build
 data
 docker-compose.yml
