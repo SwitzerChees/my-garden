@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - dev
+
+env:
+  STAGE: dev
+  DOCKERHUB_USERNAME: switzerchees
+  KUBERNETES_NAMESPACE: zskarte-dev
+  APP_NAME: zskarte-server
+  IMAGE_TAG: switzerchees/my-garden:${{ github.sha }}
+  LETSENCRYPT_STAGE: prod
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - uses: docker/login-action@v2
+        name: Login to Docker Hub
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image to Docker Hub
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE_TAG }}
