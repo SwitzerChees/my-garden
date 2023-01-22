@@ -1,10 +1,10 @@
 <template>
-  <div class="flex justify-center px-2 pt-2">
+  <div class="flex justify-center pt-2">
     <div class="w-112">
       <div class="flex flex-col gap-6">
         <div class="flex justify-between">
           <div class="flex flex-col justify-center">
-            <Button class="p-button-success" @click="startUpload">
+            <Button class="p-button-text" @click="startUpload">
               <div class="flex items-center gap-1">
                 <Icon name="material-symbols:photo-camera" size="1.2rem" />
                 <span>Image</span>
