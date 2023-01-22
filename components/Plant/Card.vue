@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="border-t border-gray-700"></div>
-    <PlantReminder :plant="plant" @watered="emits('watered', $event)" @fertilized="emits('fertilized', $event)" />
+    <PlantReminder :plant="plant" class="p-4" @watered="emits('watered', $event)" @fertilized="emits('fertilized', $event)" />
   </div>
 </template>
 
@@ -33,7 +33,8 @@
 
   const route = useRoute()
 
-  const showPlant = (id: string) => {
+  const showPlant = (id?: string) => {
+    if (!id) return
     if (route.path === `/my-plants/${id}`) return
     navigateTo(`/my-plants/${id}`)
   }

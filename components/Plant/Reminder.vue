@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-1">
-    <div class="flex flex-col gap-4 p-4">
+    <div class="flex flex-col gap-4">
       <div class="flex items-start justify-between h-12">
         <div class="flex flex-col">
           <div class="flex items-center gap-1">
@@ -50,12 +50,14 @@
   })
 
   const waterAction = async () => {
+    if (!props.plant.id) return
     const historyElement = await addHistoryElement(props.plant.id, { action: 'watered', createdAt: new Date() })
     if (!historyElement) return
     emits('watered', historyElement)
   }
 
   const fertilizeAction = async () => {
+    if (!props.plant.id) return
     const historyElement = await addHistoryElement(props.plant.id, { action: 'fertilized', createdAt: new Date() })
     if (!historyElement) return
     emits('fertilized', historyElement)

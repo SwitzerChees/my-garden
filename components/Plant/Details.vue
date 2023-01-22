@@ -8,8 +8,8 @@
         <span>{{ tag.name }}</span>
       </Tag>
     </div>
-    <div class="mt-2 border-t border-gray-700"></div>
-    <PlantReminder :plant="plant" @watered="addHistory(plant, $event)" @fertilized="addHistory(plant, $event)" />
+    <div class="mt-4 border-t border-gray-700"></div>
+    <PlantReminder :plant="plant" class="pt-4" @watered="addHistory(plant, $event)" @fertilized="addHistory(plant, $event)" />
   </div>
 </template>
 
