@@ -2,7 +2,7 @@
   <div class="flex justify-center">
     <div class="w-112">
       <div class="flex flex-col gap-6">
-        <PlantCard v-if="plant" :plant="plant" @watered="fetchPlant" @fertilized="fetchPlant" />
+        <PlantDetails v-if="plant" :plant="plant" @watered="fetchPlant" @fertilized="fetchPlant" />
         <PlantHistory v-if="plant" class="ml-4" :history="orderedHistory" />
       </div>
     </div>
