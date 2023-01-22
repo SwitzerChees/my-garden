@@ -4,16 +4,25 @@
       <div class="flex flex-col gap-6">
         <PlantDetails v-if="plant" :plant="plant" @watered="fetchPlant" @fertilized="fetchPlant" />
         <div class="flex justify-between">
-          <Button class="p-button-text">
-            <div class="flex items-center gap-1">
-              <Icon name="fontisto:scissors" size="1.2rem" />
-              <span>Brune</span>
-            </div>
-          </Button>
-          <div class="flex flex-col">
+          <!-- <div class="flex flex-col justify-center gap-2">
+            <Button class="p-button-text">
+              <div class="flex items-center gap-1">
+                <Icon name="fontisto:scissors" size="1.2rem" />
+                <span>Brune</span>
+              </div>
+            </Button>
+            <Button class="p-button-text">
+              <div class="flex items-center gap-1">
+                <Icon name="material-symbols:potted-plant-outline" size="1.2rem" />
+                <span>Repot</span>
+              </div>
+            </Button>
+          </div> -->
+          <div class="flex flex-col justify-center">
             <Button class="p-button-success" @click="startUpload">
               <div class="flex items-center gap-1">
                 <Icon name="material-symbols:photo-camera" size="1.2rem" />
+                <span>Image</span>
               </div>
             </Button>
             <ProgressBar v-if="progressUpload" mode="indeterminate" style="height: 0.3rem" />
@@ -28,12 +37,20 @@
               @upload="uploadComplete"
               @before-send="progressUpload = true" />
           </div>
-          <Button class="p-button-text">
-            <div class="flex items-center gap-1">
-              <Icon name="material-symbols:potted-plant-outline" size="1.2rem" />
-              <span>Repot</span>
-            </div>
-          </Button>
+          <!-- <div class="flex flex-col justify-center gap-2">
+            <Button class="p-button-text">
+              <div class="flex items-center gap-1">
+                <Icon name="material-symbols:sticky-note-2-sharp" size="1.2rem" />
+                <span>Note</span>
+              </div>
+            </Button>
+            <Button class="p-button-text">
+              <div class="flex items-center gap-1">
+                <Icon name="simple-line-icons:chemistry" size="1.2rem" />
+                <span>Sterilize</span>
+              </div>
+            </Button>
+          </div> -->
         </div>
         <PlantHistory v-if="plant" class="ml-4" :history="orderedHistory" />
       </div>

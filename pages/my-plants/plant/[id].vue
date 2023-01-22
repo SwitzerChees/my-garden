@@ -125,15 +125,12 @@
   const addPlantNavigate = async () => {
     const addedPlant = await addOrUpdatePlant(plant)
     if (addedPlant) {
+      if (plant.id) return router.back()
       router.replace(`/my-plants/${addedPlant.id}`)
     }
   }
 
   const cancelNavigate = () => {
-    if (plant.id) {
-      router.replace(`/my-plants/${plant.id}`)
-      return
-    }
     router.back()
   }
 
