@@ -21,7 +21,7 @@
     <div class="flex flex-col gap-1">
       <div class="border-t border-gray-700"></div>
       <div class="flex flex-col gap-4 p-4">
-        <div class="flex items-start justify-between">
+        <div class="flex items-start justify-between h-12">
           <div class="flex flex-col">
             <div class="flex items-center gap-1">
               <span class="font-bold">Water</span>
@@ -33,7 +33,7 @@
             <Icon name="mdi:watering-can" size="1.5rem" />
           </Button>
         </div>
-        <div class="flex items-start justify-between">
+        <div class="flex items-start justify-between h-12">
           <div class="flex flex-col">
             <div class="flex items-center gap-1">
               <span class="font-bold">Fertilizer</span>
