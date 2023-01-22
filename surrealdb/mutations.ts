@@ -1,6 +1,6 @@
 import lfp from 'lodash/fp'
 import { executeSafe } from './utils'
-import { getTags } from './queries'
+import { getPlant, getTags } from './queries'
 import { db } from '.'
 import { HistoryElement, Plant, Tag } from '~~/definitions'
 const { find } = lfp
@@ -14,7 +14,7 @@ const getOrAddTags = async (newTags: Tag[]) => {
       resultTags.push(existingTag)
       continue
     }
-    const { result, error } = await executeSafe(
+    const { result, error } = await executeSafe<Tag>(
       db.create('tag', {
         name: tag.name.trim(),
       })
@@ -37,22 +37,31 @@ export const addOrUpdatePlant = async (plant: Plant): Promise<Plant | undefined>
     },
     createdAt: new Date(),
   }
-  const dbAction = plant.id === '' ? db.create('plant', plantPayload) : db.change(plant.id, plantPayload)
-  const { result, error } = await executeSafe(dbAction)
+  const dbAction = plant.id === undefined ? db.create('plant', plantPayload) : db.change(plant.id, plantPayload)
+  const originalPlant = plant.id === undefined ? undefined : await getPlant(plant.id)
+  const { result, error } = await executeSafe<Plant>(dbAction)
   if (error || !result) return
   const tags = await getOrAddTags(plant.tags)
   await executeSafe(db.query(`DELETE ${result.id}->assigned`))
   for (const tag of tags) {
     await executeSafe(db.query(`RELATE ${result.id}->assigned->${tag.id} UNIQUE`))
   }
-  if (plant.id === '') await addHistoryElement(result.id, { action: 'added', photo: plant.photo, createdAt: new Date() })
+  if (result.id === undefined) return
+  if (plant.id === undefined) await addHistoryElement(result.id, { action: 'added', photo: plant.photo, createdAt: new Date() })
+  else if (originalPlant) {
+    await addHistoryElement(result.id, {
+      action: 'updated',
+      photo: originalPlant?.photo?.imageName !== plant.photo?.imageName ? plant.photo : undefined,
+      createdAt: new Date(),
+    })
+  }
   return { ...result, tags, history: [] }
 }
 
 export const addHistoryElement = async (plantId: string, historyElement: HistoryElement) => {
   // const jesterday = new Date()
   // jesterday.setDate(jesterday.getDate() - 0)
-  const { result, error } = await executeSafe(
+  const { result, error } = await executeSafe<HistoryElement>(
     db.create('historyelement', {
       ...historyElement,
       createdAt: new Date(),

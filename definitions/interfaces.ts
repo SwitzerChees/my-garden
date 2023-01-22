@@ -13,15 +13,16 @@ export interface Reminder {
 }
 
 export interface HistoryElement {
+  id?: string
   createdAt: Date
-  action: 'added' | 'watered' | 'fertilized' | 'repotted' | 'pruned' | 'image'
+  action: 'added' | 'updated' | 'watered' | 'fertilized' | 'repotted' | 'pruned' | 'image'
   photo?: Photo
   note?: string
 }
 
 export interface Plant {
+  id?: string
   photo?: Photo
-  id: string
   name: string
   botanicalName: string
   tags: Tag[]
