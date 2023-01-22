@@ -18,18 +18,7 @@
 
 <script setup lang="ts">
   import { HistoryElement } from '~~/definitions'
-  import { formatDate, photoUrl } from '~~/utils'
-
-  const actionToIcon = (action?: string) => {
-    if (action === 'added') return 'material-symbols:add-circle-rounded'
-    if (action === 'updated') return 'ic:round-mode-edit'
-    if (action === 'watered') return 'mdi:watering-can'
-    if (action === 'fertilized') return 'healthicons:nutrition'
-    if (action === 'repotted') return 'material-symbols:potted-plant-outline'
-    if (action === 'pruned') return 'fontisto:scissors'
-    if (action === 'image') return 'material-symbols:photo-camera'
-    return 'material-symbols:question-mark'
-  }
+  import { formatDate, photoUrl, actionToIcon } from '~~/utils'
 
   const capitalizeFirstLetter = (action?: string) => {
     if (!action) return ''

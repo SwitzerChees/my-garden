@@ -15,3 +15,4 @@ export const formatDate = (date?: string | Date) => {
 }
 
 export * from './reminder'
+export * from './icons'

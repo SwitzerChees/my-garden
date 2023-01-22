@@ -4,20 +4,6 @@
       <div class="flex flex-col gap-6">
         <PlantDetails v-if="plant" :plant="plant" @watered="fetchPlant" @fertilized="fetchPlant" />
         <div class="flex justify-between">
-          <!-- <div class="flex flex-col justify-center gap-2">
-            <Button class="p-button-text">
-              <div class="flex items-center gap-1">
-                <Icon name="fontisto:scissors" size="1.2rem" />
-                <span>Brune</span>
-              </div>
-            </Button>
-            <Button class="p-button-text">
-              <div class="flex items-center gap-1">
-                <Icon name="material-symbols:potted-plant-outline" size="1.2rem" />
-                <span>Repot</span>
-              </div>
-            </Button>
-          </div> -->
           <div class="flex flex-col justify-center">
             <Button class="p-button-success" @click="startUpload">
               <div class="flex items-center gap-1">
@@ -45,15 +31,6 @@
               </div>
             </Button>
           </SplitButton>
-          <!-- <div class="flex flex-col justify-center gap-2">
-
-            <Button class="p-button-text">
-              <div class="flex items-center gap-1">
-                <Icon name="simple-line-icons:chemistry" size="1.2rem" />
-                <span>Sterilize</span>
-              </div>
-            </Button>
-          </div> -->
         </div>
         <PlantHistory v-if="plant" class="ml-4" :history="orderedHistory" />
       </div>

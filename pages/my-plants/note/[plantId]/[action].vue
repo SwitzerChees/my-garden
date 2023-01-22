@@ -3,7 +3,7 @@
 <script setup lang="ts">
   definePageMeta({
     pageTransition: {
-      name: 'slide-left',
+      name: 'slide-right',
     },
   })
 
