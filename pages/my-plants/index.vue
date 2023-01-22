@@ -18,7 +18,6 @@
         @watered="addHistory(plant, $event)"
         @fertilized="addHistory(plant, $event)" />
     </div>
-    <ProgressSpinner ref="loadNewData" />
   </div>
 </template>
 
@@ -38,18 +37,8 @@
   const debouncedFilterPlants = debounce(400, async () => {
     plants = await getPlants({ filter })
   })
-  const loadNewData = $ref()
+
   onMounted(async () => {
     plants = await getPlants({ filter })
-    const options = {
-      root: null,
-      threshold: 0.5,
-    }
-    const observer = new IntersectionObserver((entries) => {
-      console.log(entries[0].isIntersecting)
-      if (entries[0].isIntersecting) {
-        debouncedFilterPlants()
-      }
-    }, options)
   })
 </script>
