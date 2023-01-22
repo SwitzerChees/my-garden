@@ -7,6 +7,7 @@ Dockerfile
 .editorconfig
 .strapi-updater.json
 .env
+.k8s
 .nuxt
 .output
 .github
