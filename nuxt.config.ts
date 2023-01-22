@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     reactivityTransform: true,
   },
   app: {
-    pageTransition: { name: 'slide-right', mode: 'out-in' },
+    pageTransition: { name: 'fade', mode: 'out-in' },
   },
   server: {
     timing: true,

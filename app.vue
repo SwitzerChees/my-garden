@@ -26,13 +26,12 @@
   .slide-right-leave-to {
     transform: translateX(-100%);
   }
-  .v-enter-active,
-  .v-leave-active {
-    transition: opacity 0.5s ease;
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.35s;
   }
-
-  .v-enter-from,
-  .v-leave-to {
+  .fade-enter,
+  .fade-leave-to {
     opacity: 0;
   }
 </style>
