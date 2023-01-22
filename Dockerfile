@@ -11,6 +11,8 @@ RUN yarn install --frozen-lockfile
 # Copy all files
 ADD . /app
 
+# yarn typecheck
+RUN yarn typecheck
 # yarn lint
 RUN yarn lint
 # yarn build

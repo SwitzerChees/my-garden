@@ -10,7 +10,7 @@ interface GetTagsParams {
   exclude?: Tag[]
 }
 export const getTags = async ({ query = '', withDummy = false, exclude = [] }: GetTagsParams): Promise<Tag[]> => {
-  const { result, error } = await executeSafe(
+  const { result, error } = await executeSafe<Tag[]>(
     db.query('SELECT * FROM type::table($tb) WHERE string::lowercase(name) CONTAINS $filter', {
       tb: 'tag',
       filter: query?.toLowerCase() || '',
@@ -25,7 +25,7 @@ export const getTags = async ({ query = '', withDummy = false, exclude = [] }: G
 }
 
 export const getPlants = async ({ filter = '', limit = 10, start = 0 }): Promise<Plant[]> => {
-  const { result, error } = await executeSafe(
+  const { result, error } = await executeSafe<Plant[]>(
     db.query(
       `
       SELECT *, ->assigned->tag.* as tags, ->history->historyelement.* as history FROM type::table($tb)
