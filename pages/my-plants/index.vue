@@ -6,13 +6,23 @@
         <i class="pi pi-search" />
         <InputText v-model="filter" type="text" placeholder="Search" class="w-full" @input="debouncedFilterPlants" />
       </span>
-      <Button class="p-button-text">
-        <Icon name="ic:baseline-filter-alt" size="1.5rem" />
+      <Button class="p-button-text" :class="filterReminder ? 'p-button-success' : ''" @click="filterReminder = !filterReminder">
+        <Icon name="carbon:reminder" size="1.5rem" />
+        <Transition
+          enter-active-class="animate__animated animate__backInRight animate__fast"
+          leave-active-class="animate__animated animate__backOutRight animate__fast">
+          <Icon v-if="filterReminder" name="ic:baseline-filter-alt" size="0.9rem" class="absolute top-2 right-2" />
+        </Transition>
+        <Transition
+          enter-active-class="animate__animated animate__backInRight animate__fast"
+          leave-active-class="animate__animated animate__backOutRight animate__fast">
+          <Icon v-if="!filterReminder" name="ic:baseline-filter-alt-off" size="0.9rem" class="absolute top-2 right-2" />
+        </Transition>
       </Button>
     </div>
     <div class="flex flex-col gap-6 pt-20 md:pt-2 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <PlantCard
-        v-for="plant of plants"
+        v-for="plant of filteredPlants"
         :key="plant.id"
         :plant="plant"
         @watered="addHistory(plant, $event)"
@@ -28,6 +38,16 @@
   const { debounce } = lfp
 
   const filter = $ref('')
+  const filterReminder = $ref(false)
+
+  const filteredPlants = $computed(() => {
+    if (!filterReminder) return plants
+    return plants.filter((p) => {
+      const reminderSummary = getReminderSummary(p)
+      if (needReminderAttention(reminderSummary.water) || needReminderAttention(reminderSummary.fertilize)) return true
+      return false
+    })
+  })
 
   const addHistory = (plant: Plant, historyElement: HistoryElement) => {
     plant.history.push(historyElement)

@@ -15,6 +15,12 @@ interface ReminderSummary {
   fertilize: ReminderSummaryEntry
 }
 
+export const needReminderAttention = (reminderSummaryEntry: ReminderSummaryEntry) => {
+  if (!reminderSummaryEntry) return false
+  const { days, nextInDays, doneToday } = reminderSummaryEntry
+  return days !== 0 && !doneToday && nextInDays <= 0
+}
+
 export const getReminderSummary = (plant: Plant): ReminderSummary => {
   const { water = 0, fertilize = 0 } = plant.reminder
   const { history } = plant
