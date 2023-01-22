@@ -27,9 +27,13 @@
               <span class="font-bold">Water</span>
               <span class="text-xs text-gray-400">({{ getReminderDays(plant.reminder.water) }})</span>
             </div>
-            <span class="text-gray-400">{{ getReminderInDays(nextWaterInDays, plant.reminder.water) }}</span>
+            <span
+              class="text-gray-400"
+              :class="reminderSummary.water.nextInDays < 0 ? 'text-red-400' : reminderSummary.water.doneToday ? 'text-green-400' : ''"
+              >{{ getReminderInDays(reminderSummary.water) }}</span
+            >
           </div>
-          <Button v-if="plant.reminder.water && !doneToday(nextWaterInDays, plant.reminder.water)" @click="waterAction">
+          <Button v-if="plant.reminder.water && !reminderSummary.water.doneToday" @click="waterAction">
             <Icon name="mdi:watering-can" size="1.5rem" />
           </Button>
         </div>
@@ -39,9 +43,15 @@
               <span class="font-bold">Fertilizer</span>
               <span class="text-xs text-gray-400">({{ getReminderDays(plant.reminder.fertilize) }})</span>
             </div>
-            <span class="text-gray-400">{{ getReminderInDays(nextFertilizeInDays, plant.reminder.fertilize) }}</span>
+            <span
+              class="text-gray-400"
+              :class="
+                reminderSummary.fertilize.nextInDays < 0 ? 'text-red-400' : reminderSummary.fertilize.doneToday ? 'text-green-400' : ''
+              "
+              >{{ getReminderInDays(reminderSummary.fertilize) }}</span
+            >
           </div>
-          <Button v-if="plant.reminder.fertilize && !doneToday(nextFertilizeInDays, plant.reminder.fertilize)" @click="fertilizeAction">
+          <Button v-if="plant.reminder.fertilize && !reminderSummary.fertilize.doneToday" @click="fertilizeAction">
             <Icon name="healthicons:nutrition" size="1.5rem" />
           </Button>
         </div>
@@ -51,11 +61,9 @@
 </template>
 
 <script setup lang="ts">
-  import lfp from 'lodash/fp'
-  import { HistoryElement, Plant } from '~~/definitions'
+  import { Plant } from '~~/definitions'
   import { addHistoryElement } from '~~/surrealdb/mutations'
-  import { photoUrl } from '~~/utils'
-  const { first, orderBy, pipe } = lfp
+  import { photoUrl, getReminderDays, getReminderInDays } from '~~/utils'
 
   const props = defineProps<{ plant: Plant }>()
 
@@ -63,58 +71,9 @@
 
   const route = useRoute()
 
-  const getReminderDays = (days?: number) => {
-    if (!days || days === 0) return 'No Reminder'
-    return `every ${days} days`
-  }
-
-  const waterActionTypes = ['added', 'watered', 'repotted']
-  const fertilizeActionTypes = ['added', 'fertilized', 'repotted']
-
-  const mostRecentWaterAction = $computed(() => {
-    if (!props.plant.history || props.plant.history.length === 0) return
-    const waterActions = props.plant.history.filter((h) => waterActionTypes.includes(h.action)) as HistoryElement[]
-    if (waterActions.length === 0) return
-    return pipe(orderBy('createdAt', 'desc'), first)(waterActions) as HistoryElement
+  const reminderSummary = $computed(() => {
+    return getReminderSummary(props.plant)
   })
-
-  const mostRecentFertilizeAction = $computed(() => {
-    if (!props.plant.history || props.plant.history.length === 0) return
-    const fertilizeActions = props.plant.history.filter((h) => fertilizeActionTypes.includes(h.action)) as HistoryElement[]
-    if (fertilizeActions.length === 0) return
-    return pipe(orderBy('createdAt', 'desc'), first)(fertilizeActions) as HistoryElement
-  })
-
-  const nextWaterInDays = computed(() => {
-    if (!props.plant.reminder.water || !mostRecentWaterAction) return
-    const today = new Date()
-    const diffInDays = Math.ceil(
-      (new Date(mostRecentWaterAction.createdAt).getTime() + props.plant.reminder.water * 24 * 60 * 60 * 1000 - today.getTime()) /
-        (1000 * 3600 * 24)
-    )
-    return diffInDays
-  })
-
-  const nextFertilizeInDays = computed(() => {
-    if (!props.plant.reminder.fertilize || !mostRecentFertilizeAction) return
-    const today = new Date()
-    const diffInDays = Math.ceil(
-      (new Date(mostRecentFertilizeAction.createdAt).getTime() + props.plant.reminder.fertilize * 24 * 60 * 60 * 1000 - today.getTime()) /
-        (1000 * 3600 * 24)
-    )
-    return diffInDays
-  })
-
-  const doneToday = (daysNext?: number, daysInterval?: number) => {
-    if (!daysNext || !daysInterval) return false
-    return daysNext === daysInterval
-  }
-
-  const getReminderInDays = (daysNext?: number, daysInterval?: number) => {
-    if (!daysNext || !daysInterval) return ''
-    if (doneToday(daysNext, daysInterval)) return 'Done Today'
-    return `in ${daysNext} days`
-  }
 
   const waterAction = async () => {
     const historyElement = await addHistoryElement(props.plant.id, { action: 'watered', createdAt: new Date() })
