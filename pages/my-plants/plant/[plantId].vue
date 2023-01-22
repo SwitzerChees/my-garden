@@ -110,9 +110,9 @@
 
   const route = useRoute()
   onMounted(async () => {
-    const { id } = route.params
-    if (!id || id instanceof Array || id === 'new') return
-    const existingPlant = await getPlant(id)
+    const { plantId } = route.params
+    if (!plantId || plantId instanceof Array || plantId === 'new') return
+    const existingPlant = await getPlant(plantId)
     if (existingPlant) plant = existingPlant
   })
 

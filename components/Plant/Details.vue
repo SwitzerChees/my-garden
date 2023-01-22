@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-between gap-1 p-6 bg-gray-900 rounded-xl">
-    <nuxt-img :src="photoUrl(plant?.photo)" width="256px" height="256px" class="object-cover w-32 h-32 rounded-xl place-self-center" />
+    <nuxt-img :src="photoUrl(plant?.photo)" width="256px" height="256px" class="object-cover w-40 h-40 rounded-xl place-self-center" />
     <h2 class="pt-1 text-sm font-bold truncate place-self-center">{{ plant?.name }}</h2>
     <h3 v-if="plant?.botanicalName" class="text-sm text-gray-400 truncate place-self-center">{{ plant?.botanicalName }}</h3>
     <div class="flex flex-wrap gap-2 pt-1 place-self-center">

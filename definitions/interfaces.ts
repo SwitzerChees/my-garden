@@ -15,7 +15,7 @@ export interface Reminder {
 export interface HistoryElement {
   id?: string
   createdAt: Date
-  action: 'added' | 'updated' | 'watered' | 'fertilized' | 'repotted' | 'pruned' | 'image'
+  action: 'added' | 'updated' | 'watered' | 'fertilized' | 'repotted' | 'pruned' | 'image' | 'sterilized' | 'measured'
   photo?: Photo
   note?: string
 }

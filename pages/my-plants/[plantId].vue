@@ -37,13 +37,16 @@
               @upload="uploadComplete"
               @before-send="progressUpload = true" />
           </div>
-          <!-- <div class="flex flex-col justify-center gap-2">
-            <Button class="p-button-text">
+          <SplitButton class="bg-text border-round" :model="items">
+            <Button class="p-button-text" @click="navigateNote()">
               <div class="flex items-center gap-1">
                 <Icon name="material-symbols:sticky-note-2-sharp" size="1.2rem" />
                 <span>Note</span>
               </div>
             </Button>
+          </SplitButton>
+          <!-- <div class="flex flex-col justify-center gap-2">
+
             <Button class="p-button-text">
               <div class="flex items-center gap-1">
                 <Icon name="simple-line-icons:chemistry" size="1.2rem" />
@@ -66,11 +69,17 @@
   let plant = $ref<Plant>()
   const { first } = lfp
 
+  definePageMeta({
+    pageTransition: {
+      name: 'slide-left',
+    },
+  })
+
   const route = useRoute()
   const fetchPlant = async () => {
-    const { id } = route.params
-    if (!id || id instanceof Array) return
-    plant = await getPlant(id)
+    const { plantId } = route.params
+    if (!plantId || plantId instanceof Array) return
+    plant = await getPlant(plantId)
   }
 
   const orderedHistory = computed(() => {
@@ -96,9 +105,27 @@
 
   onMounted(fetchPlant)
 
-  definePageMeta({
-    pageTransition: {
-      name: 'slide-left',
+  const navigateNote = (action?: string) => {
+    action = action || 'note'
+    navigateTo(`/my-plants/note/${plant?.id}/${action}`)
+  }
+
+  const items = ref([
+    {
+      label: 'Prune',
+      command: () => navigateNote('pruned'),
     },
-  })
+    {
+      label: 'Repot',
+      command: () => navigateNote('repotted'),
+    },
+    {
+      label: 'Sterilize',
+      command: () => navigateNote('Sterilize'),
+    },
+    {
+      label: 'Measure',
+      command: () => navigateNote('measure'),
+    },
+  ])
 </script>

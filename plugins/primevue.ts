@@ -13,7 +13,7 @@ import AutoComplete from 'primevue/autocomplete'
 import FileUpload from 'primevue/fileupload'
 import ProgressBar from 'primevue/progressbar'
 import InputNumber from 'primevue/inputnumber'
-import OverlayPanel from 'primevue/overlaypanel'
+import SplitButton from 'primevue/splitbutton'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp
@@ -32,5 +32,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   app.component('FileUpload', FileUpload)
   app.component('ProgressBar', ProgressBar)
   app.component('InputNumber', InputNumber)
-  app.component('OverlayPanel', OverlayPanel)
+  app.component('SplitButton', SplitButton)
 })

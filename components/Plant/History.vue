@@ -10,7 +10,7 @@
           <span>{{ formatDate(item.createdAt) }}</span>
           <span class="text-xs text-gray-400">({{ capitalizeFirstLetter(item.action) }})</span>
         </div>
-        <nuxt-img v-if="item.photo" :src="photoUrl(item.photo)" width="256px" height="256px" class="object-cover w-32 h-32 rounded-xl" />
+        <nuxt-img v-if="item.photo" :src="photoUrl(item.photo)" width="256px" height="256px" class="object-cover w-48 h-48 rounded-xl" />
       </div>
     </div>
   </div>
