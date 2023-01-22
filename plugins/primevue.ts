@@ -13,7 +13,6 @@ import AutoComplete from 'primevue/autocomplete'
 import FileUpload from 'primevue/fileupload'
 import ProgressBar from 'primevue/progressbar'
 import InputNumber from 'primevue/inputnumber'
-import ProgressSpinner from 'primevue/progressspinner'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp
@@ -32,5 +31,4 @@ export default defineNuxtPlugin((nuxtApp) => {
   app.component('FileUpload', FileUpload)
   app.component('ProgressBar', ProgressBar)
   app.component('InputNumber', InputNumber)
-  app.component('ProgressSpinner', ProgressSpinner)
 })
