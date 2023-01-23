@@ -1,4 +1,34 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~~": ["."],
+      "~~/*": ["./*"],
+      "@@": ["."],
+      "@@/*": ["./*"],
+      "~": ["."],
+      "~/*": ["./*"],
+      "@": ["."],
+      "@/*": ["./*"],
+      "assets": ["assets"],
+      "assets/*": ["assets/*"],
+      "public": ["public"],
+      "public/*": ["public/*"],
+      "#app": ["../../node_modules/nuxt/dist/app"],
+      "#app/*": ["../../node_modules/nuxt/dist/app/*"],
+      "vue-demi": ["../../node_modules/nuxt/dist/app/compat/vue-demi"],
+      "pinia": ["../../node_modules/pinia/dist/pinia"],
+      "#image": ["../../node_modules/@nuxt/image-edge/dist/runtime"],
+      "#image/*": ["../../node_modules/@nuxt/image-edge/dist/runtime/*"],
+      "#head": ["../../node_modules/nuxt/dist/head/runtime"],
+      "#head/*": ["../../node_modules/nuxt/dist/head/runtime/*"],
+      "#imports": [".nuxt/imports"],
+      "#build": [".nuxt"],
+      "#build/*": [".nuxt/*"],
+      "#components": [".nuxt/components"],
+      "@my-garden/*": ["@my-garden/*"],
+    }
+  }
 }

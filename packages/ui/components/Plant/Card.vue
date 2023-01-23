@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Plant } from '@my-garden/common/definitions'
+  import { Plant } from '~~/../common/definitions'
   import { photoUrl } from '~~/utils'
 
   defineProps<{ plant: Plant }>()

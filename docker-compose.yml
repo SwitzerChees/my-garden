@@ -1,14 +1,28 @@
 version: "3.8"
 services:
 
-  surrealdb:
-    image: surrealdb/surrealdb:latest
+  postgresql:
+    image: bitnami/postgresql:14.5.0
     restart: unless-stopped
-    command: start --log trace --user root --pass root file:///opt/surrealdb
     volumes:
-      - ./data/surrealdb:/opt/surrealdb
+      - ./data/postgresql:/bitnami/postgresql
     ports:
-      - 8000:8000
+      - 8432:5432
+    environment:
+      - POSTGRESQL_PASSWORD=test123
+    networks:
+      - my-garden
+
+  pgadmin:
+    image: dpage/pgadmin4:6.18
+    restart: unless-stopped
+    volumes:
+      - ./data/pgadmin/servers.json:/pgadmin4/servers.json
+    ports:
+      - 8050:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=hello@digital4you.ch
+      - PGADMIN_DEFAULT_PASSWORD=d4y
     networks:
       - my-garden
 

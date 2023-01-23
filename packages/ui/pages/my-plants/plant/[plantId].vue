@@ -99,8 +99,8 @@
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import FileUpload from 'primevue/fileupload'
-  import { getPlant, getTags } from '~~/surrealdb/queries'
   import { Photo, Plant, Tag } from '@my-garden/common/definitions'
+  import { getPlant, getTags } from '~~/surrealdb/queries'
   import { photoUrl } from '~~/utils'
   import { addOrUpdatePlant } from '~~/surrealdb/mutations'
   const { first } = lfp

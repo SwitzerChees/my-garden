@@ -1,8 +1,8 @@
 import lfp from 'lodash/fp'
+import { HistoryElement, Plant, Tag } from '@my-garden/common/definitions'
 import { executeSafe } from './utils'
 import { getPlant, getTags } from './queries'
 import { db } from '.'
-import { HistoryElement, Plant, Tag } from '@my-garden/common/definitions'
 const { find } = lfp
 
 const getOrAddTags = async (newTags: Tag[]) => {
