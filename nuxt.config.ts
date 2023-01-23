@@ -33,4 +33,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  image: {
+    dir: 'static',
+  },
 } as any)

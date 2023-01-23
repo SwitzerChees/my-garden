@@ -6,7 +6,7 @@ node_modules
 .output
 .env
 dist
-public/uploads/*
-!public/uploads/.gitkeep
-.DS_Store
+static/*
 data
+**/.DS_Store
+.DS_Store

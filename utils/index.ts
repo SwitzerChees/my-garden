@@ -1,7 +1,7 @@
 import { Photo } from '~~/definitions'
 
 export const photoUrl = (photo?: Photo) => {
-  const basePath = '/uploads/'
+  const basePath = '/'
   return `${basePath}${photo?.imageName || 'plant.png'}`
 }
 

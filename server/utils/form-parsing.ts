@@ -12,7 +12,7 @@ const processFile = async (file: formidable.File) => {
   const dateString = new Date().toISOString().slice(0, -5).replace(/-/g, '').replace(/:/g, '').replace('T', '').slice(0, -1)
   const imageName = `${dateString}_${Math.round(Math.random() * 100000)}.${file.originalFilename.split('.').pop()}`
   const tempPath = file.filepath
-  const uploadPath = `${path.join('public/uploads', imageName)}`
+  const uploadPath = `${path.join('static', imageName)}`
   fs.copyFileSync(tempPath, uploadPath)
   fs.unlinkSync(tempPath)
   if (file.mimetype === 'image/jpeg') {
