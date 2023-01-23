@@ -5,14 +5,15 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:ui": "cd packages/ui && yarn dev",
-    "dev:api": "cd packages/api && yarn dev",
-    "lint:ui": "cd packages/ui && yarn lint",
-    "lint:api": "cd packages/api && yarn lint",
-    "typecheck:ui": "cd packages/ui && yarn typecheck"
+    "dev:ui": "yarn workspace @my-garden/ui dev",
+    "dev:api": "yarn workspace @my-garden/api dev",
+    "lint:ui": "yarn workspace @my-garden/ui lint",
+    "lint:api": "yarn workspace @my-garden/api lint",
+    "typecheck:ui": "yarn workspace @my-garden/ui typecheck"
   },
   "dependencies": {
     "lodash": "^4.17.21",
+    "axios": "^1.2.3",
     "typescript": "^4.9.4"
   },
   "devDependencies": {
