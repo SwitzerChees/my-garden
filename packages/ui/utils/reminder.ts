@@ -1,5 +1,5 @@
 import lfp from 'lodash/fp'
-import { HistoryElement, Plant } from '~~/definitions'
+import { HistoryElement, Plant } from '@my-garden/common/definitions'
 const { first, orderBy, pipe } = lfp
 
 const waterActionTypes = ['added', 'watered', 'repotted']

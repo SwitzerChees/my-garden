@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
   import lfp from 'lodash/fp'
-  import { HistoryElement, Photo, HistoryElementType } from '~~/definitions'
+  import { HistoryElement, Photo, HistoryElementType } from '@my-garden/common/definitions'
   import { addHistoryElement } from '~~/surrealdb/mutations'
   const router = useRouter()
   const { first } = lfp

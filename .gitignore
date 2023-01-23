@@ -6,9 +6,10 @@ node_modules
 .output
 .env
 dist
-static/*
+
 data
 **/.DS_Store
 .DS_Store
-!static/plant.png
-!static/monstera.png
+packages/ui/static/*
+!packages/ui/static/plant.png
+!packages/ui/static/monstera.png

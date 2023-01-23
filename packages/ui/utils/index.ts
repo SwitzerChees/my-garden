@@ -1,4 +1,4 @@
-import { Photo } from '~~/definitions'
+import { Photo } from '@my-garden/common/definitions'
 
 export const photoUrl = (photo?: Photo) => {
   const basePath = '/'

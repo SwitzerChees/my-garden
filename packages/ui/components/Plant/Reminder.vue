@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Plant } from '~~/definitions'
+  import { Plant } from '@my-garden/common/definitions'
   import { addHistoryElement } from '~~/surrealdb/mutations'
 
   const props = defineProps<{ plant: Plant }>()

@@ -1,7 +1,7 @@
 import lfp from 'lodash/fp'
 import { executeSafe } from './utils'
 import { db } from '.'
-import { Plant, Tag } from '~~/definitions'
+import { Plant, Tag } from '@my-garden/common/definitions'
 const { first, get, pipe, filter, uniqBy } = lfp
 
 interface GetTagsParams {

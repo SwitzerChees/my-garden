@@ -3,7 +3,7 @@ import path from 'path'
 // eslint-disable-next-line import/default
 import jp from 'jpeg-autorotate'
 import formidable from 'formidable'
-import { Photo } from '~~/definitions'
+import { Photo } from '@my-garden/common/definitions'
 
 const processFile = async (file: formidable.File) => {
   if (!file) return

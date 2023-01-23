@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
   import lfp from 'lodash/fp'
-  import { HistoryElement, Plant } from '~~/definitions'
+  import { HistoryElement, Plant } from '@my-garden/common/definitions'
   import { getPlants } from '~~/surrealdb/queries'
   const { debounce } = lfp
 

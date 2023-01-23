@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
   import lfp from 'lodash/fp'
-  import { Photo, Plant } from '~~/definitions'
+  import { Photo, Plant } from '@my-garden/common/definitions'
   import { addHistoryElement } from '~~/surrealdb/mutations'
   import { getPlant } from '~~/surrealdb/queries'
   let plant = $ref<Plant>()

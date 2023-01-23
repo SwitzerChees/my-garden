@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-  import { HistoryElement } from '~~/definitions'
+  import { HistoryElement } from '@my-garden/common/definitions'
   import { formatDate, photoUrl, actionToIcon } from '~~/utils'
   defineProps<{ history: HistoryElement[] }>()
 </script>

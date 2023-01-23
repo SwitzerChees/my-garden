@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-  import { HistoryElement, Plant } from '~~/definitions'
+  import { HistoryElement, Plant } from '@my-garden/common/definitions'
   import { photoUrl } from '~~/utils'
 
   defineProps<{ plant: Plant }>()

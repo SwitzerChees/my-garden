@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Plant } from '~~/definitions'
+import { Plant } from '@my-garden/common/definitions'
 import { getPlants } from '~~/surrealdb/queries'
 
 export const usePlantsStore = defineStore('plants', () => {
