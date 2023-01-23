@@ -16,10 +16,10 @@ RUN yarn typecheck
 # yarn lint
 RUN yarn lint
 # yarn build
-RUN yarn build
+# RUN yarn build
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
 # start command
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]
