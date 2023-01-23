@@ -10,6 +10,5 @@ static/*
 data
 **/.DS_Store
 .DS_Store
-!static/.gitkeep
 !static/plant.png
 !static/monstera.png
