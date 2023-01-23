@@ -12,12 +12,10 @@ RUN yarn install --frozen-lockfile
 ADD . /app
 
 # yarn typecheck
-RUN yarn typecheck
+RUN yarn typecheck:ui
 # yarn lint
-RUN yarn lint
+RUN yarn lint:ui
+RUN yarn lint:api
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
-
-# start command
-CMD ["yarn", "dev"]

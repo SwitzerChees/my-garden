@@ -8,7 +8,8 @@
     "dev:ui": "cd packages/ui && yarn dev",
     "dev:api": "cd packages/api && yarn dev",
     "lint:ui": "cd packages/ui && yarn lint",
-    "lint:api": "cd packages/api && yarn lint"
+    "lint:api": "cd packages/api && yarn lint",
+    "typecheck:ui": "cd packages/ui && yarn typecheck"
   },
   "dependencies": {
     "lodash": "^4.17.21",

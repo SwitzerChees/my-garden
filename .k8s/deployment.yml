@@ -22,6 +22,8 @@ spec:
       containers:
         - name: ${APP_NAME}
           image: ${IMAGE_TAG}
+          command:
+            - "yarn dev:ui"
           startupProbe:
             httpGet:
               path: /
