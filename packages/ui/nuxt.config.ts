@@ -41,4 +41,8 @@ export default defineNuxtConfig({
       quality: 'auto:best',
     },
   },
+  typescript: {
+    strict: true,
+    typeCheck: true,
+  },
 } as any)

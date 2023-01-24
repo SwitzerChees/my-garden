@@ -23,7 +23,9 @@ spec:
         - name: ${APP_NAME}
           image: ${IMAGE_TAG}
           command:
-            - "yarn dev:ui"
+            - /bin/bash
+            - "-c"
+            - yarn dev:ui
           startupProbe:
             httpGet:
               path: /
