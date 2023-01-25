@@ -17,8 +17,7 @@ ADD . /app
 # yarn typecheck
 RUN yarn typecheck:ui
 # yarn lint
-RUN yarn lint:ui
-RUN yarn lint:api
+RUN yarn lint
 
 # Install and execute node-prune
 RUN apt update && apt install curl -y

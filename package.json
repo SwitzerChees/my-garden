@@ -7,6 +7,7 @@
   "scripts": {
     "dev:ui": "yarn workspace @my-garden/ui dev",
     "dev:api": "yarn workspace @my-garden/api dev",
+    "lint": "yarn lint:ui && yarn lint:api",
     "lint:ui": "yarn workspace @my-garden/ui lint",
     "lint:api": "yarn workspace @my-garden/api lint",
     "typecheck:ui": "yarn workspace @my-garden/ui typecheck",
