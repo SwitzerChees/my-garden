@@ -21,14 +21,19 @@
 </template>
 
 <script setup lang="ts">
-  const { login } = useStrapiAuth()
+  const { setToken, setUser, login } = useStrapiAuth()
+  const { getSafeAPIResponse } = useAPI()
+
   const username = $ref('')
   const password = $ref('')
   let errorMessage = $ref('')
 
   const loginStrapi = async () => {
     try {
-      await login({ identifier: username, password })
+      const { ok, result } = await getSafeAPIResponse<any>(login({ identifier: username, password }))
+      if (!ok) return
+      setToken(result.jwt)
+      setUser(result.user)
       location.reload()
     } catch (error: any) {
       if (!error?.error) return
