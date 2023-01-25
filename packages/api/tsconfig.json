@@ -4,6 +4,7 @@
     "outDir": "dist",
     "rootDir": ".",
     "baseUrl": ".",
+    "sourceMap": true,
     "paths": {
       "@my-garden/*": ["@my-garden/*"]
     }

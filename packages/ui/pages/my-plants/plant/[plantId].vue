@@ -98,8 +98,7 @@
 
 <script setup lang="ts">
   import { Plant, Tag } from '@my-garden/common/definitions'
-  import { getPlant, getTags } from '~~/surrealdb/queries'
-  import { addOrUpdatePlant } from '~~/surrealdb/mutations'
+  import { getPlant } from '~~/surrealdb/queries'
   const router = useRouter()
   const { uploadUrl, progressUpload, mediaUrl, getMediaFromResult, beforeUpload } = $(useUpload())
 
@@ -119,6 +118,7 @@
     },
   })
 
+  const { addOrUpdatePlant } = $(useMutations())
   const addPlantNavigate = async () => {
     const addedPlant = await addOrUpdatePlant(plant)
     if (addedPlant) {
@@ -142,6 +142,8 @@
     if (!photo) return
     plant.photo = photo
   }
+
+  const { getTags } = $(useQueries())
 
   let tags = $ref<Tag[]>([])
   const fetchTags = async (query?: string) => {

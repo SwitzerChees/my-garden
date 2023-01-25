@@ -41,6 +41,11 @@
       "relation": "oneToOne",
       "target": "api::reminder.reminder",
       "inversedBy": "plant"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
