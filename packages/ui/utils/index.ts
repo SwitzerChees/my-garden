@@ -1,8 +1,8 @@
-import { Photo } from '@my-garden/common/definitions'
+import { Media } from '@my-garden/common/definitions'
 
-export const photoUrl = (photo?: Photo) => {
+export const photoUrl = (photo?: Media) => {
   const basePath = '/'
-  return `${basePath}${photo?.imageName || 'plant.png'}`
+  return `${basePath}${photo?.url || 'plant.png'}`
 }
 
 export const formatDate = (date?: string | Date) => {

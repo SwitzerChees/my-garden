@@ -106,7 +106,7 @@
   const { first } = lfp
   const router = useRouter()
 
-  let plant = $ref<Plant>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 } })
+  let plant = $ref<any>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 } })
 
   const route = useRoute()
   onMounted(async () => {

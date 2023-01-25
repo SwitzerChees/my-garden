@@ -51,14 +51,14 @@
 
   const waterAction = async () => {
     if (!props.plant.id) return
-    const historyElement = await addHistoryElement(props.plant.id, { action: 'watered', createdAt: new Date() })
+    const historyElement = await addHistoryElement(props.plant.id as any, { action: 'watered', createdAt: new Date() })
     if (!historyElement) return
     emits('watered', historyElement)
   }
 
   const fertilizeAction = async () => {
     if (!props.plant.id) return
-    const historyElement = await addHistoryElement(props.plant.id, { action: 'fertilized', createdAt: new Date() })
+    const historyElement = await addHistoryElement(props.plant.id as any, { action: 'fertilized', createdAt: new Date() })
     if (!historyElement) return
     emits('fertilized', historyElement)
   }

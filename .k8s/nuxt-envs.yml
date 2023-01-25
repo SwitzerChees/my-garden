@@ -5,4 +5,5 @@ metadata:
   name: nuxt-envs
 type: Opaque
 stringData:
-  db_host: 'test'
+  base_url: https://${BASE_URL}
+  strapi_url: https://${STRAPI_URL}

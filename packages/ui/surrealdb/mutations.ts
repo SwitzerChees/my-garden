@@ -5,13 +5,13 @@ import { getPlant, getTags } from './queries'
 import { db } from '.'
 const { find } = lfp
 
-const getOrAddTags = async (newTags: Tag[]) => {
+const getOrAddTags = async (newTags: any[]) => {
   const allTags = await getTags({})
   const resultTags: Tag[] = []
   for (const tag of newTags) {
     const existingTag = find({ name: tag.name })(allTags)
     if (existingTag) {
-      resultTags.push(existingTag)
+      // resultTags.push(existingTag)
       continue
     }
     const { result, error } = await executeSafe<Tag>(
@@ -25,7 +25,7 @@ const getOrAddTags = async (newTags: Tag[]) => {
   return resultTags
 }
 
-export const addOrUpdatePlant = async (plant: Plant): Promise<Plant | undefined> => {
+export const addOrUpdatePlant = async (plant: any): Promise<Plant | undefined> => {
   if (!plant) return
   const plantPayload = {
     photo: plant.photo,
@@ -39,7 +39,7 @@ export const addOrUpdatePlant = async (plant: Plant): Promise<Plant | undefined>
   }
   const dbAction = plant.id === undefined ? db.create('plant', plantPayload) : db.change(plant.id, plantPayload)
   const originalPlant = plant.id === undefined ? undefined : await getPlant(plant.id)
-  const { result, error } = await executeSafe<Plant>(dbAction)
+  const { result, error } = await executeSafe<any>(dbAction)
   if (error || !result) return
   const tags = await getOrAddTags(plant.tags)
   await executeSafe(db.query(`DELETE ${result.id}->assigned`))
@@ -51,14 +51,14 @@ export const addOrUpdatePlant = async (plant: Plant): Promise<Plant | undefined>
   else if (originalPlant) {
     await addHistoryElement(result.id, {
       action: 'updated',
-      photo: originalPlant?.photo?.imageName !== plant.photo?.imageName ? plant.photo : undefined,
+      photo: originalPlant?.photo?.url !== plant.photo?.url ? plant.photo : undefined,
       createdAt: new Date(),
     })
   }
   return { ...result, tags, history: [] }
 }
 
-export const addHistoryElement = async (plantId: string, historyElement: HistoryElement) => {
+export const addHistoryElement = async (plantId: string, historyElement: any) => {
   // const jesterday = new Date()
   // jesterday.setDate(jesterday.getDate() - 0)
   const { result, error } = await executeSafe<HistoryElement>(

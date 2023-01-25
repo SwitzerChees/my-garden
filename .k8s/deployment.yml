@@ -40,11 +40,23 @@ spec:
             failureThreshold: 3
             periodSeconds: 5
           env:
-            - name: DATABASE_HOST
+            - name: NUXT_STRAPI_URL
               valueFrom:
                 secretKeyRef:
                   name: nuxt-envs
-                  key: db_host
+                  key: strapi_url
+            - name: NUXT_PUBLIC_STRAPI_URL
+              valueFrom:
+                secretKeyRef:
+                  name: nuxt-envs
+                  key: strapi_url
+            - name: NUXT_PUBLIC_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: nuxt-envs
+                  key: base_url
+            - name: NODE_ENV
+              value: production
           ports:
             - name: http
               containerPort: 3000

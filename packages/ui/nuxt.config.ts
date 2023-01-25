@@ -6,7 +6,19 @@ export default defineNuxtConfig({
     'nuxt-icon', // https://icones.js.org/
     '@pinia/nuxt', // https://pinia.vuejs.org/
     '@nuxt/image-edge', // https://v1.image.nuxtjs.org/
+    '@nuxtjs/strapi', // https://strapi.nuxtjs.org/
   ],
+  runtimeConfig: {
+    strapi: {
+      url: 'http://0.0.0.0:1337',
+    },
+    public: {
+      baseUrl: 'http://localhost:3000',
+      strapi: {
+        url: 'http://localhost:1337',
+      },
+    },
+  },
   css: [
     'primevue/resources/primevue.min.css',
     'primeicons/primeicons.css',

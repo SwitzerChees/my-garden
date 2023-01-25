@@ -1,4 +1,4 @@
-import { HistoryElement, Media, Reminder, StrapiObject, Tag } from '.'
+import { HistoryElement, Media, Reminder, StrapiObject, Tag, User } from '.'
 
 export interface Plant extends StrapiObject {
   photo?: Media
@@ -7,4 +7,5 @@ export interface Plant extends StrapiObject {
   tags: Tag[]
   history: HistoryElement[]
   reminder: Reminder
+  createdBy: User
 }

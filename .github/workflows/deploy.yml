@@ -9,7 +9,8 @@ env:
   APP_NAME: my-garden
   IMAGE_TAG: switzerchees/my-garden:${{ github.sha }}
   LETSENCRYPT_STAGE: prod
-  BASE_URL: my-garden.hackerman.ch
+  BASE_URL: mygarden.hackerman.ch
+  STRAPI_URL: mygarden-dev.hackerman.ch
 
 jobs:
   build-and-deploy:
@@ -33,7 +34,7 @@ jobs:
       - name: Check and Install kubectl
         uses: azure/setup-kubectl@v3
         with:
-          version: "latest"
+          version: 'latest'
         id: install
 
       - name: Set Kubernetes Context

@@ -64,7 +64,7 @@
   const route = useRoute()
   const plantId = route.params.plantId instanceof Array ? first(route.params.plantId) : route.params.plantId ? route.params.plantId : ''
   const action = route.params.action instanceof Array ? first(route.params.action) : route.params.action ? route.params.action : ''
-  const historyElement = $ref<HistoryElement>({ action: (action || 'note') as HistoryElementType, note: '', createdAt: new Date() })
+  const historyElement = $ref<any>({ action: (action || 'note') as HistoryElementType, note: '', createdAt: new Date() })
 
   const addNoteNavigate = async () => {
     if (!plantId) return
