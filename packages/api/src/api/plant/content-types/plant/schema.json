@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "plants",
+  "info": {
+    "singularName": "plant",
+    "pluralName": "plants",
+    "displayName": "Plant",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "photo": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "botanicalName": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag"
+    },
+    "history": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::history-element.history-element",
+      "mappedBy": "plant"
+    },
+    "reminder": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::reminder.reminder",
+      "inversedBy": "plant"
+    }
+  }
+}

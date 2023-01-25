@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "history_elements",
+  "info": {
+    "singularName": "history-element",
+    "pluralName": "history-elements",
+    "displayName": "HistoryElement"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "action": {
+      "type": "enumeration",
+      "enum": ["added", "updated", "watered", "fertilized", "repotted", "pruned", "  image", "  sterilized", "  measured", "  note"]
+    },
+    "photo": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": true
+    },
+    "note": {
+      "type": "text"
+    },
+    "plant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::plant.plant",
+      "inversedBy": "history"
+    }
+  }
+}
