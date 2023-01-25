@@ -9,7 +9,9 @@
     "dev:api": "yarn workspace @my-garden/api dev",
     "lint:ui": "yarn workspace @my-garden/ui lint",
     "lint:api": "yarn workspace @my-garden/api lint",
-    "typecheck:ui": "yarn workspace @my-garden/ui typecheck"
+    "typecheck:ui": "yarn workspace @my-garden/ui typecheck",
+    "prettify": "prettier --write \"**/*.{js,ts,html,css,json,md,vue}\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "lodash": "^4.17.21",
@@ -22,6 +24,8 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "vue-tsc": "^1.0.24"
+    "vue-tsc": "^1.0.24",
+    "husky": "^8.0.0",
+    "pretty-quick": "^3.1.3"
   }
 }

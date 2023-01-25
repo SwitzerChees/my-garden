@@ -28,7 +28,7 @@
       "#build": [".nuxt"],
       "#build/*": [".nuxt/*"],
       "#components": [".nuxt/components"],
-      "@my-garden/*": ["@my-garden/*"],
+      "@my-garden/*": ["@my-garden/*"]
     }
   }
 }

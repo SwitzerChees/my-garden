@@ -23,8 +23,8 @@ spec:
         - name: ${APP_NAME}
           image: ${IMAGE_TAG}
           command:
-            - /bin/bash
-            - "-c"
+            - /bin/sh
+            - '-c'
             - yarn dev:ui
           startupProbe:
             httpGet:
