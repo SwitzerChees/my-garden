@@ -4,7 +4,8 @@
   "info": {
     "singularName": "history-element",
     "pluralName": "history-elements",
-    "displayName": "HistoryElement"
+    "displayName": "HistoryElement",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -16,9 +17,10 @@
       "enum": ["added", "updated", "watered", "fertilized", "repotted", "pruned", "  image", "  sterilized", "  measured", "  note"]
     },
     "photo": {
-      "allowedTypes": ["images"],
       "type": "media",
-      "multiple": true
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
     },
     "note": {
       "type": "text"

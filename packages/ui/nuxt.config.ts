@@ -46,11 +46,8 @@ export default defineNuxtConfig({
     },
   },
   image: {
-    provider: 'ipx',
-    dir: 'static',
-    modifiers: {
-      effect: 'sharpen:100',
-      quality: 'auto:best',
+    strapi: {
+      baseURL: 'http://localhost:133722/uploads/',
     },
   },
   typescript: {

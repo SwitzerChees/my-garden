@@ -7,5 +7,5 @@ export interface Plant extends StrapiObject {
   tags: Tag[]
   history: HistoryElement[]
   reminder: Reminder
-  createdBy: User
+  createdBy?: User
 }

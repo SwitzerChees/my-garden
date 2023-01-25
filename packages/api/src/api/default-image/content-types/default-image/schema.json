@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "default_images",
+  "info": {
+    "singularName": "default-image",
+    "pluralName": "default-images",
+    "displayName": "DefaultImages"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "plant": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "logo": {
+      "allowedTypes": ["images", "files", "videos", "audios"],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

@@ -3,7 +3,7 @@
     <div class="w-112">
       <div class="flex flex-col gap-2">
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
-          <nuxt-img :src="photoUrl(plant?.photo)" width="256px" height="256px" class="object-cover rounded-xl" />
+          <nuxt-img :src="mediaUrl(plant?.photo)" width="256px" height="256px" class="object-cover rounded-xl" />
           <div v-if="progressUpload" class="absolute bottom-0 left-0 right-0">
             <ProgressBar mode="indeterminate" style="height: 0.3rem" />
           </div>
@@ -14,12 +14,12 @@
         <div class="hidden">
           <FileUpload
             ref="upload"
-            name="photo"
-            url="/api/upload"
+            name="files"
+            :url="uploadUrl"
             :auto="true"
             accept="image/*"
             @upload="uploadComplete"
-            @before-send="progressUpload = true" />
+            @before-send="beforeUpload" />
         </div>
         <div class="flex flex-col gap-0.5">
           <label for="name">Name</label>
@@ -97,16 +97,13 @@
 </template>
 
 <script setup lang="ts">
-  import lfp from 'lodash/fp'
-  import FileUpload from 'primevue/fileupload'
-  import { Photo, Plant, Tag } from '@my-garden/common/definitions'
+  import { Plant, Tag } from '@my-garden/common/definitions'
   import { getPlant, getTags } from '~~/surrealdb/queries'
-  import { photoUrl } from '~~/utils'
   import { addOrUpdatePlant } from '~~/surrealdb/mutations'
-  const { first } = lfp
   const router = useRouter()
+  const { uploadUrl, progressUpload, mediaUrl, getMediaFromResult, beforeUpload } = $(useUpload())
 
-  let plant = $ref<any>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 } })
+  let plant = $ref<Plant>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 } })
 
   const route = useRoute()
   onMounted(async () => {
@@ -140,11 +137,8 @@
     upload.choose()
   }
 
-  let progressUpload = $ref(false)
-
-  const uploadComplete = ({ xhr: { response: photos } }: { xhr: { response: string } }) => {
-    progressUpload = false
-    const photo = first(JSON.parse(photos)) as Photo
+  const uploadComplete = (result: { xhr: XMLHttpRequest }) => {
+    const photo = getMediaFromResult(result)
     if (!photo) return
     plant.photo = photo
   }

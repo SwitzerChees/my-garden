@@ -10,9 +10,6 @@ dist
 data
 **/.DS_Store
 .DS_Store
-packages/ui/static/*
-!packages/ui/static/plant.png
-!packages/ui/static/monstera.png
 
 ############################
 # OS X
@@ -129,3 +126,6 @@ exports
 dist
 build
 .strapi-updater.json
+packages/api/public/uploads/*
+packages/api/public/uploads/.gitkeep
+**/.DS_Store
