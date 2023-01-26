@@ -4,7 +4,8 @@
   "info": {
     "singularName": "telegram-config",
     "pluralName": "telegram-configs",
-    "displayName": "TelegramConfig"
+    "displayName": "TelegramConfig",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -17,8 +18,7 @@
       "required": true
     },
     "chatId": {
-      "type": "string",
-      "required": true
+      "type": "integer"
     }
   }
 }

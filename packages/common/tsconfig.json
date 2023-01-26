@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib/",
+    "rootDir": ".",
+    "esModuleInterop": true,
+    "composite": true
+  },
+  "include": ["./", "./**/*.ts", "./**/*.js", "src/**/*.json"]
+}

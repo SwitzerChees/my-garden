@@ -129,3 +129,4 @@ build
 packages/api/public/uploads/*
 packages/api/public/uploads/.gitkeep
 **/.DS_Store
+lib
