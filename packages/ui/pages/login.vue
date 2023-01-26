@@ -1,6 +1,7 @@
 <template>
-  <div class="flex justify-center">
-    <div class="flex flex-col gap-4 max-w-xs grow">
+  <div class="flex justify-center items-center grow pt-8">
+    <div class="flex flex-col gap-4 max-w-xs grow bg-slate-600 p-8 rounded-lg">
+      <img :src="plantUrl" class="object-cover w-16 h-16 rounded-xl self-center" />
       <div class="flex flex-col gap-0.5">
         <label for="name">Username</label>
         <InputText id="name" v-model="username" type="text" @keyup.enter="loginStrapi" />
@@ -21,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+  const { plantUrl } = $(useDefaultImages())
   const { setToken, setUser, login } = useStrapiAuth()
   const { getSafeAPIResponse } = useAPI()
 

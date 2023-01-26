@@ -10,6 +10,7 @@
     "prettify": "prettier --write \"**/*.{js,ts,html,css,json,md,vue}\""
   },
   "devDependencies": {
+    "@kevinmarrec/nuxt-pwa": "^0.15.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/strapi": "^1.7.1",
     "@types/file-saver": "^2.0.5",

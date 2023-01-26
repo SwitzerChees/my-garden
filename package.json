@@ -10,6 +10,11 @@
     "lint": "yarn lint:ui && yarn lint:api",
     "lint:ui": "yarn workspace @my-garden/ui lint",
     "lint:api": "yarn workspace @my-garden/api lint",
+    "build:ui": "yarn workspace @my-garden/ui build",
+    "build:api": "yarn workspace @my-garden/api build",
+    "build": "yarn build:ui && yarn build:api",
+    "start:ui": "yarn workspace @my-garden/ui start",
+    "start:api": "yarn workspace @my-garden/api start",
     "typecheck:ui": "yarn workspace @my-garden/ui typecheck",
     "prettify": "prettier --write \"**/*.{js,ts,html,css,json,md,vue}\"",
     "prepare": "husky install"

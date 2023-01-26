@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${APP_NAME}
+  name: ${APP_NAME}-ui
   namespace: ${KUBERNETES_NAMESPACE}
   labels:
-    app: ${APP_NAME}
-    service: api
+    app: ${APP_NAME}-ui
+    service: ui
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: ${APP_NAME}
-      service: api
+      app: ${APP_NAME}-ui
+      service: ui
   template:
     metadata:
       labels:
-        app: ${APP_NAME}
-        service: api
+        app: ${APP_NAME}-ui
+        service: ui
     spec:
       containers:
-        - name: ${APP_NAME}
+        - name: ${APP_NAME}-ui
           image: ${IMAGE_TAG}
           command:
             - /bin/sh
             - '-c'
-            - yarn dev:ui
+            - yarn start:ui
           startupProbe:
             httpGet:
               path: /
               port: http
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             failureThreshold: 5
             periodSeconds: 5
           livenessProbe:

@@ -11,6 +11,15 @@ env:
   LETSENCRYPT_STAGE: prod
   BASE_URL: mygarden.hackerman.ch
   STRAPI_URL: mygarden-api.hackerman.ch
+  DB_HOST: postgresql.postgresql.svc.cluster.local
+  DB_PORT: 5432
+  DB_NAME: mygarden
+  DB_USER: postgres
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  ADMIN_JWT_SECRET: ${{ secrets.STRAPI_ADMIN_JWT_SECRET }}
+  JWT_SECRET: ${{ secrets.STRAPI_JWT_SECRET }}
+  APP_KEYS: ${{ secrets.STRAPI_APP_KEYS }}
+  API_TOKEN_SALT: ${{ secrets.STRAPI_API_TOKEN_SALT }}
 
 jobs:
   build-and-deploy:
@@ -47,8 +56,12 @@ jobs:
         with:
           k8-config-file-paths: |
             .k8s/namespace.yml
-            .k8s/nuxt-envs.yml
-            .k8s/deployment.yml
-            .k8s/service.yml
-            .k8s/ingress.yml
+            .k8s/ui/nuxt-envs.yml
+            .k8s/ui/deployment.yml
+            .k8s/ui/service.yml
+            .k8s/ui/ingress.yml
+            .k8s/api/strapi-envs.yml
+            .k8s/api/deployment.yml
+            .k8s/api/service.yml
+            .k8s/api/ingress.yml
           replacement-method: defined

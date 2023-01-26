@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt', // https://pinia.vuejs.org/
     '@nuxt/image-edge', // https://v1.image.nuxtjs.org/
     '@nuxtjs/strapi', // https://strapi.nuxtjs.org/
+    '@kevinmarrec/nuxt-pwa', // https://github.com/kevinmarrec/nuxt-pwa-module
   ],
   runtimeConfig: {
     strapi: {
@@ -50,8 +51,15 @@ export default defineNuxtConfig({
       baseURL: 'http://localhost:133722/uploads/',
     },
   },
-  typescript: {
-    strict: true,
-    typeCheck: true,
+  pwa: {
+    workbox: {
+      enabled: false,
+    },
+    manifest: {
+      name: 'MyGarden',
+      short_name: 'MyGarden',
+      lang: 'en',
+      useWebmanifestExtension: false,
+    },
   },
 } as any)
