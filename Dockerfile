@@ -30,10 +30,19 @@ RUN node-prune
 FROM node:18-alpine
 
 WORKDIR /app
-COPY --from=build /app/node_modules /app/node_modules
 
-# Copy all files
-ADD . /app
+# Copy node_modules and global package.json
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/package.json /app/package.json
+
+# Copy files for ui
+COPY --from=build /app/packages/ui/node_modules /app/packages/ui/node_modules
+COPY --from=build /app/packages/ui/package.json /app/packages/ui/package.json
+COPY --from=build /app/packages/ui/.nuxt /app/packages/ui/.nuxt
+COPY --from=build /app/packages/ui/.output /app/packages/ui/.output
+
+# Copy files for api
+COPY --from=build /app/packages/api /app/packages/api
 
 ENV HOST 0.0.0.0
 EXPOSE 3000

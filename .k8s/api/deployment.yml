@@ -6,7 +6,6 @@ metadata:
   labels:
     app: ${APP_NAME}-api
     service: api
-    stage: ${STAGE}
 spec:
   replicas: 1
   revisionHistoryLimit: 2
@@ -14,13 +13,11 @@ spec:
     matchLabels:
       app: ${APP_NAME}-api
       service: api
-      stage: ${STAGE}
   template:
     metadata:
       labels:
         app: ${APP_NAME}-api
         service: api
-        stage: ${STAGE}
     spec:
       containers:
         - name: ${APP_NAME}-api
