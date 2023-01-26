@@ -9,7 +9,7 @@ ADD ./packages/api/package.json /app/packages/api/package.json
 ADD ./packages/ui/package.json /app/packages/ui/package.json
 ADD ./packages/common/package.json /app/packages/common/package.json
 ADD ./yarn.lock /app/yarn.lock
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 # Copy all files
 ADD . /app
@@ -31,13 +31,15 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy node_modules and global package.json
-COPY --from=build /app/node_modules /app/node_modules
-COPY --from=build /app/package.json /app/package.json
+# Copy package json and install packages again for production
+ADD ./package.json /app/package.json
+ADD ./packages/api/package.json /app/packages/api/package.json
+ADD ./packages/ui/package.json /app/packages/ui/package.json
+ADD ./packages/common/package.json /app/packages/common/package.json
+ADD ./yarn.lock /app/yarn.lock
+RUN yarn install --frozen-lockfile
 
 # Copy files for ui
-COPY --from=build /app/packages/ui/node_modules /app/packages/ui/node_modules
-COPY --from=build /app/packages/ui/package.json /app/packages/ui/package.json
 COPY --from=build /app/packages/ui/.nuxt /app/packages/ui/.nuxt
 COPY --from=build /app/packages/ui/.output /app/packages/ui/.output
 
