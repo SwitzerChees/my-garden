@@ -35,7 +35,6 @@ export const addOrUpdatePlant = async (plant: any): Promise<Plant | undefined> =
       water: plant.reminder.water || 0,
       fertilize: plant.reminder.fertilize || 0,
     },
-    createdAt: new Date(),
   }
   const dbAction = plant.id === undefined ? db.create('plant', plantPayload) : db.change(plant.id, plantPayload)
   const originalPlant = plant.id === undefined ? undefined : await getPlant(plant.id)
@@ -47,12 +46,11 @@ export const addOrUpdatePlant = async (plant: any): Promise<Plant | undefined> =
     await executeSafe(db.query(`RELATE ${result.id}->assigned->${tag.id} UNIQUE`))
   }
   if (result.id === undefined) return
-  if (plant.id === undefined) await addHistoryElement(result.id, { action: 'added', photo: plant.photo, createdAt: new Date() })
+  if (plant.id === undefined) await addHistoryElement(result.id, { action: 'added', photo: plant.photo })
   else if (originalPlant) {
     await addHistoryElement(result.id, {
       action: 'updated',
       photo: originalPlant?.photo?.url !== plant.photo?.url ? plant.photo : undefined,
-      createdAt: new Date(),
     })
   }
   return { ...result, tags, history: [] }
@@ -64,7 +62,6 @@ export const addHistoryElement = async (plantId: string, historyElement: any) =>
   const { result, error } = await executeSafe<HistoryElement>(
     db.create('historyelement', {
       ...historyElement,
-      createdAt: new Date(),
     })
   )
   if (error || !result) return

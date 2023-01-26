@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
   import lfp from 'lodash/fp'
-  import { HistoryElement, Photo, HistoryElementType } from '@my-garden/common/definitions'
+  import { Photo, HistoryElementType } from '@my-garden/common/definitions'
   import { addHistoryElement } from '~~/surrealdb/mutations'
   const { mediaUrl } = $(useUpload())
   const router = useRouter()
@@ -65,7 +65,7 @@
   const route = useRoute()
   const plantId = route.params.plantId instanceof Array ? first(route.params.plantId) : route.params.plantId ? route.params.plantId : ''
   const action = route.params.action instanceof Array ? first(route.params.action) : route.params.action ? route.params.action : ''
-  const historyElement = $ref<any>({ action: (action || 'note') as HistoryElementType, note: '', createdAt: new Date() })
+  const historyElement = $ref<any>({ action: (action || 'note') as HistoryElementType, note: '' })
 
   const addNoteNavigate = async () => {
     if (!plantId) return

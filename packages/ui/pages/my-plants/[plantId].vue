@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
   import lfp from 'lodash/fp'
-  import { Photo, Plant } from '@my-garden/common/definitions'
+  import { Plant } from '@my-garden/common/definitions'
   import { addHistoryElement } from '~~/surrealdb/mutations'
   const { getPlant } = $(useQueries())
   let plant = $ref<Plant>()
@@ -55,7 +55,7 @@
 
   const orderedHistory = computed(() => {
     if (!plant?.history) return []
-    return plant.history.sort((a, b) => new Date(b.createdAt as any).getTime() - new Date(a.createdAt as any).getTime())
+    return plant.history.sort((a, b) => new Date(b.createdAt || new Date()).getTime() - new Date(a.createdAt || new Date()).getTime())
   })
 
   let progressUpload = $ref(false)
@@ -64,7 +64,7 @@
     progressUpload = false
     const photo = first(JSON.parse(photos)) as any
     if (!photo || !plant?.id) return
-    const historyElement = await addHistoryElement(plant.id as any, { action: 'image', photo, createdAt: new Date() })
+    const historyElement = await addHistoryElement(plant.id as any, { action: 'image', photo })
     if (!historyElement) return
     plant.history.push(historyElement)
   }

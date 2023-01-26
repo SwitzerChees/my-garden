@@ -28,7 +28,7 @@ export const useTransformer = () => {
 
       // collection
       if (_.isArray(data) && data.length && _.has(_.head(data), 'attributes')) {
-        return data.map((e) => transformResponse(e), customOptions) as T
+        return data.map((e) => transformResponse(e), customOptions) as unknown as T
       }
     }
 

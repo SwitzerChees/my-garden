@@ -17,13 +17,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   const { logoUrl } = $(useDefaultImages())
+  const route = useRoute()
 
   const navigateNewPlant = () => {
-    const { id } = route.params
-    if (showEditing && id) {
-      navigateTo(`/my-plants/plant/${id}`)
+    const { plantId } = route.params
+    if (showEditing && plantId) {
+      navigateTo(`/my-plants/plant/${plantId}`)
       return
     }
     navigateTo('/my-plants/plant/new')
@@ -32,7 +33,6 @@
   let showEditing = $ref(false)
   let showPlantButton = $ref(false)
 
-  const route = useRoute()
   const checkButtonActions = () => {
     showPlantButton = route.path.startsWith('/my-plants') && !route.path.startsWith('/my-plants/plant/')
     showEditing = route.path.startsWith('/my-plants/')

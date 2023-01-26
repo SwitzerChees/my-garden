@@ -37,17 +37,18 @@ export const getReminderSummary = (plant: Plant): ReminderSummary => {
   const fertilizeAction = mostRecentFertilizeAction(history)
   const waterNext = new Date()
   if (waterAction) {
-    waterNext.setDate(new Date(waterAction.createdAt).getDate() + water)
+    waterNext.setDate(new Date(waterAction.createdAt || new Date()).getDate() + water)
   }
   const nextWaterInDays = daysBetweenDates(today, waterNext)
   const fertilizeNext = new Date()
   if (fertilizeAction) {
-    fertilizeNext.setDate(new Date(fertilizeAction.createdAt).getDate() + fertilize)
+    fertilizeNext.setDate(new Date(fertilizeAction.createdAt || new Date()).getDate() + fertilize)
   }
   const nextFertilizeInDays = daysBetweenDates(today, fertilizeNext)
-  const waterDoneToday = water === 0 ? false : waterAction ? new Date(waterAction.createdAt).getDate() === new Date().getDate() : false
+  const waterDoneToday =
+    water === 0 ? false : waterAction ? new Date(waterAction.createdAt || new Date()).getDate() === new Date().getDate() : false
   const fertilizeDoneToday =
-    fertilize === 0 ? false : fertilizeAction ? new Date(fertilizeAction.createdAt).getDate() === new Date().getDate() : false
+    fertilize === 0 ? false : fertilizeAction ? new Date(fertilizeAction.createdAt || new Date()).getDate() === new Date().getDate() : false
   return {
     water: {
       days: water,

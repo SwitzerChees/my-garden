@@ -34,7 +34,7 @@ export const useQueries = () => {
   const getPlant = async (plantId: number): Promise<Plant | undefined> => {
     const { ok, result } = await getSafeAPIResponse<Plant>(
       findOne('plants', plantId, {
-        populate: ['tags', 'history', 'photo'],
+        populate: ['tags', 'history.photo', 'photo'],
       })
     )
     if (!ok) return

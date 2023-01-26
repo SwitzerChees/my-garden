@@ -21,15 +21,6 @@ export const useMutations = () => {
     const dbAction = plant.id === undefined ? create('plants', plantPayload) : update('plants', plant.id, plantPayload)
     const { ok, result } = await getSafeAPIResponse<Plant>(dbAction)
     if (!ok || !result) return
-    // if (plant.id === undefined && result.id) {
-    //   await addHistoryElement(result.id, { action: 'added', photo: plant.photo })
-    // } else if (originalPlant) {
-    //   await addHistoryElement(result.id, {
-    //     action: 'updated',
-    //     photo: originalPlant?.photo?.url !== plant.photo?.url ? plant.photo : undefined,
-    //     createdAt: new Date(),
-    //   })
-    // }
     return result
   }
 

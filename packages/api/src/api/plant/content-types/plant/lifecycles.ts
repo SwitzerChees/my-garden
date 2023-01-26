@@ -8,20 +8,19 @@ export default {
   },
   afterCreate: async (ctx) => {
     await strapi.entityService.create('api::history-element.history-element', {
-      data: { action: 'added', photo: ctx.params.data.photo },
+      data: { action: 'added', photo: ctx.params.data.photo, plant: ctx.result.id },
     })
   },
   beforeUpdate: async (ctx) => {
-    ctx.params.originalPlant = await strapi.entityService.findOne('api::plant.plant', {
-      id: ctx.params.data.id,
-      fields: ['photo'],
+    ctx.params.originalPlant = await strapi.entityService.findOne('api::plant.plant', ctx.params.where.id, {
+      populate: ['photo'],
     })
   },
   afterUpdate: async (ctx) => {
     if (!ctx.params.originalPlant) return
-    const photo = ctx.params.originalPlant.photo.url !== ctx.params.data.photo.url ? ctx.params.data.photo : undefined
+    const photo = ctx.params.originalPlant?.photo?.url !== ctx.params.data?.photo?.url ? ctx.params.data?.photo : undefined
     await strapi.entityService.create('api::history-element.history-element', {
-      data: { action: 'updated', photo },
+      data: { action: 'updated', photo, plant: ctx.result.id },
     })
   },
 }
