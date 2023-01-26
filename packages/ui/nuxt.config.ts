@@ -55,11 +55,16 @@ export default defineNuxtConfig({
     workbox: {
       enabled: false,
     },
+    meta: {
+      theme_color: '#0f172a',
+      nativeUI: true,
+    },
     manifest: {
       name: 'MyGarden',
       short_name: 'MyGarden',
       lang: 'en',
       useWebmanifestExtension: false,
+      background_color: '#0f172a',
     },
   },
 } as any)
