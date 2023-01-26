@@ -1,4 +1,4 @@
-import { Plant } from '@my-garden/common/definitions'
+import { HistoryElement, Plant } from '@my-garden/common/definitions'
 
 export const useMutations = () => {
   const { getSafeAPIResponse } = useAPI()
@@ -18,11 +18,12 @@ export const useMutations = () => {
       assignedTags: plant.tags,
       user: strapiuser?.id,
     }
-    const dbAction = plant.id === undefined ? create('plants', plantPayload) : update(plant.id, plantPayload)
+    const dbAction = plant.id === undefined ? create('plants', plantPayload) : update('plants', plant.id, plantPayload)
     const { ok, result } = await getSafeAPIResponse<Plant>(dbAction)
     if (!ok || !result) return
-    // if (plant.id === undefined) await addHistoryElement(result.id, { action: 'added', photo: plant.photo, createdAt: new Date() })
-    // else if (originalPlant) {
+    // if (plant.id === undefined && result.id) {
+    //   await addHistoryElement(result.id, { action: 'added', photo: plant.photo })
+    // } else if (originalPlant) {
     //   await addHistoryElement(result.id, {
     //     action: 'updated',
     //     photo: originalPlant?.photo?.url !== plant.photo?.url ? plant.photo : undefined,
@@ -31,5 +32,17 @@ export const useMutations = () => {
     // }
     return result
   }
-  return $$({ addOrUpdatePlant })
+
+  const addHistoryElement = async (plantId: number, historyElement: HistoryElement) => {
+    if (!plantId) return
+    const { ok, result } = await getSafeAPIResponse<HistoryElement>(
+      create('history-elements', {
+        ...historyElement,
+        plant: plantId,
+      })
+    )
+    if (!ok || !result) return
+    return result
+  }
+  return $$({ addOrUpdatePlant, addHistoryElement })
 }

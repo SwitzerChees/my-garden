@@ -36,16 +36,13 @@
       "target": "api::history-element.history-element",
       "mappedBy": "plant"
     },
-    "reminder": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::reminder.reminder",
-      "inversedBy": "plant"
-    },
     "user": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "reminder": {
+      "type": "json"
     }
   }
 }

@@ -42,7 +42,7 @@
   import lfp from 'lodash/fp'
   import { Photo, Plant } from '@my-garden/common/definitions'
   import { addHistoryElement } from '~~/surrealdb/mutations'
-  import { getPlant } from '~~/surrealdb/queries'
+  const { getPlant } = $(useQueries())
   let plant = $ref<Plant>()
   const { first } = lfp
 
@@ -50,12 +50,12 @@
   const fetchPlant = async () => {
     const { plantId } = route.params
     if (!plantId || plantId instanceof Array) return
-    plant = await getPlant(plantId)
+    plant = await getPlant(parseInt(plantId))
   }
 
   const orderedHistory = computed(() => {
-    if (!plant) return []
-    return plant.history.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    if (!plant?.history) return []
+    return plant.history.sort((a, b) => new Date(b.createdAt as any).getTime() - new Date(a.createdAt as any).getTime())
   })
 
   let progressUpload = $ref(false)
@@ -68,6 +68,7 @@
     if (!historyElement) return
     plant.history.push(historyElement)
   }
+
   const upload = $ref<any>(null)
   const startUpload = () => {
     if (!upload) return

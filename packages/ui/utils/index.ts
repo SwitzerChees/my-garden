@@ -1,10 +1,3 @@
-import { Media } from '@my-garden/common/definitions'
-
-export const photoUrl = (photo?: Media) => {
-  const basePath = '/'
-  return `${basePath}${photo?.url || 'plant.png'}`
-}
-
 export const formatDate = (date?: string | Date) => {
   if (!date) return ''
   return new Date(date).toLocaleString('de-CH', {

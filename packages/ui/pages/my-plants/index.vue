@@ -34,7 +34,7 @@
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import { HistoryElement, Plant } from '@my-garden/common/definitions'
-  import { getPlants } from '~~/surrealdb/queries'
+  const { getPlants } = $(useQueries())
   const { debounce } = lfp
 
   let filter = $ref('')

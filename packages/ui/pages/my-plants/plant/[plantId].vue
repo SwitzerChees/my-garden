@@ -3,7 +3,7 @@
     <div class="w-112">
       <div class="flex flex-col gap-2">
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
-          <nuxt-img :src="mediaUrl(plant?.photo)" width="256px" height="256px" class="object-cover rounded-xl" />
+          <img :src="mediaUrl(plant?.photo)" class="object-cover rounded-xl" />
           <div v-if="progressUpload" class="absolute bottom-0 left-0 right-0">
             <ProgressBar mode="indeterminate" style="height: 0.3rem" />
           </div>
@@ -98,17 +98,18 @@
 
 <script setup lang="ts">
   import { Plant, Tag } from '@my-garden/common/definitions'
-  import { getPlant } from '~~/surrealdb/queries'
   const router = useRouter()
   const { uploadUrl, progressUpload, mediaUrl, getMediaFromResult, beforeUpload } = $(useUpload())
+  const { getTags, getPlant } = $(useQueries())
+  const route = useRoute()
+  const { addOrUpdatePlant } = $(useMutations())
 
   let plant = $ref<Plant>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 } })
 
-  const route = useRoute()
   onMounted(async () => {
     const { plantId } = route.params
     if (!plantId || plantId instanceof Array || plantId === 'new') return
-    const existingPlant = await getPlant(plantId)
+    const existingPlant = await getPlant(parseInt(plantId))
     if (existingPlant) plant = existingPlant
   })
 
@@ -118,7 +119,6 @@
     },
   })
 
-  const { addOrUpdatePlant } = $(useMutations())
   const addPlantNavigate = async () => {
     const addedPlant = await addOrUpdatePlant(plant)
     if (addedPlant) {
@@ -142,8 +142,6 @@
     if (!photo) return
     plant.photo = photo
   }
-
-  const { getTags } = $(useQueries())
 
   let tags = $ref<Tag[]>([])
   const fetchTags = async (query?: string) => {
