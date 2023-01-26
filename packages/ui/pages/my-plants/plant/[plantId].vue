@@ -82,9 +82,9 @@
             decrement-button-icon="pi pi-minus" />
         </div>
         <div class="flex justify-between pt-4">
-          <Button class="p-button-danger" @click="cancelNavigate">
+          <Button class="p-button-text" @click="cancelNavigate">
             <div class="flex items-center gap-1">
-              <Icon name="material-symbols:cancel" size="1.5rem" />
+              <Icon name="ic:outline-arrow-back-ios-new" size="1.2rem" />
               <span class="text-sm font-bold uppercase whitespace-nowrap">Back</span>
             </div>
           </Button>
