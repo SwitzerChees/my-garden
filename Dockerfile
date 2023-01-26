@@ -1,18 +1,15 @@
-FROM node:lts-slim as build
+FROM node:lts-slim
 
 # Create app directory
 WORKDIR /app
 
-# yarn install
-ADD ./package.json /app/package.json
-ADD ./packages/api/package.json /app/packages/api/package.json
-ADD ./packages/ui/package.json /app/packages/ui/package.json
-ADD ./packages/common/package.json /app/packages/common/package.json
-ADD ./yarn.lock /app/yarn.lock
-RUN yarn install --frozen-lockfile
+# Install node-prune
+RUN apt update && apt install -y curl
+RUN curl -sf https://gobinaries.com/tj/node-prune | sh
 
-# Copy all files
+# Copy all files and install execute node-prune
 ADD . /app
+RUN yarn install --frozen-lockfile && node-prune
 
 # yarn typecheck
 RUN yarn typecheck:ui
@@ -20,31 +17,6 @@ RUN yarn typecheck:ui
 RUN yarn lint
 # yarn build
 RUN yarn build
-
-# Install and execute node-prune
-RUN apt update && apt install curl -y
-RUN curl -sf https://gobinaries.com/tj/node-prune | sh
-RUN node-prune
-
-# Use production image
-FROM node:18-alpine
-
-WORKDIR /app
-
-# Copy package json and install packages again for production
-ADD ./package.json /app/package.json
-ADD ./packages/api/package.json /app/packages/api/package.json
-ADD ./packages/ui/package.json /app/packages/ui/package.json
-ADD ./packages/common/package.json /app/packages/common/package.json
-ADD ./yarn.lock /app/yarn.lock
-RUN yarn install --frozen-lockfile
-
-# Copy files for ui
-COPY --from=build /app/packages/ui/.nuxt /app/packages/ui/.nuxt
-COPY --from=build /app/packages/ui/.output /app/packages/ui/.output
-
-# Copy files for api
-COPY --from=build /app/packages/api /app/packages/api
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
