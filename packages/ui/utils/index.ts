@@ -12,5 +12,5 @@ export const capitalizeFirstLetter = (action?: string) => {
   return action.charAt(0).toUpperCase() + action.slice(1)
 }
 
-export * from './reminder'
+export * from '@my-garden/common/utils/reminder'
 export * from './icons'

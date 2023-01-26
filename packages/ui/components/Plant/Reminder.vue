@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
   import { Plant } from '@my-garden/common/definitions'
-  import { getReminderInDays, getReminderDays, getReminderSummary } from '~~/utils'
+  import { getReminderInDays, getReminderDays, getReminderSummary } from '@my-garden/common/utils'
   const { addHistoryElement } = $(useMutations())
 
   const props = defineProps<{ plant: Plant }>()

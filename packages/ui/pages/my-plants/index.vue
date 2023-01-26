@@ -34,6 +34,7 @@
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import { HistoryElement, Plant } from '@my-garden/common/definitions'
+  import { getReminderSummary, needReminderAttention } from '@my-garden/common/utils'
   const { getPlants } = $(useQueries())
   const { debounce } = lfp
 
