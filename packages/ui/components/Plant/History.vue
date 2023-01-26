@@ -10,7 +10,7 @@
           <span>{{ formatDate(item.createdAt) }}</span>
           <span class="text-xs text-gray-400">({{ capitalizeFirstLetter(item.action) }})</span>
         </div>
-        <span v-if="item.note">{{ item.note }}</span>
+        <span v-if="item.note" class="whitespace-pre-line">{{ item.note }}</span>
         <img
           v-if="item.photo"
           :src="mediaUrl(item.photo)"

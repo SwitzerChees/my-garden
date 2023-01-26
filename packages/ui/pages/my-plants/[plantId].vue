@@ -3,11 +3,17 @@
     <div class="w-112">
       <div class="flex flex-col gap-6">
         <div class="flex justify-between">
+          <div class="md:hidden">
+            <Button class="p-button-text" @click="navigateHome">
+              <div class="flex items-center gap-1">
+                <Icon name="ic:outline-arrow-back-ios-new" size="1.2rem" />
+              </div>
+            </Button>
+          </div>
           <div class="flex flex-col justify-center">
-            <Button class="p-button-text" @click="startUpload">
+            <Button class="p-button-success" @click="startUpload">
               <div class="flex items-center gap-1">
                 <Icon name="material-symbols:photo-camera" size="1.2rem" />
-                <span>Image</span>
               </div>
             </Button>
             <ProgressBar v-if="progressUpload" mode="indeterminate" style="height: 0.3rem" />
@@ -81,6 +87,10 @@
   const navigateNote = (action?: string) => {
     action = action || 'note'
     navigateTo(`/my-plants/note/${plant?.id}/${action}`)
+  }
+
+  const navigateHome = () => {
+    navigateTo('/my-plants')
   }
 
   const items = ref([

@@ -1,92 +1,9 @@
 body {
   overflow-x: hidden;
-}
-
-h1 {
-  font-weight: 600;
-  font-size: 1.25rem;
-}
-
-h2 {
-  font-weight: 300;
-  font-size: 1.125rem;
-}
-
-.logo {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  text-decoration: none;
-}
-
-.title {
   font-family: 'Montserrat', Arial, sans-serif;
   font-weight: 400;
-  font-size: 32px;
-  text-decoration: none;
 }
 
-.subtitle {
-  font-weight: 400;
-  font-size: 18px;
-  text-decoration: none;
-}
-
-.heading {
-  font-weight: 300;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.label {
-  font-weight: 300;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.error-label {
-  font-weight: 300;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.link {
-  font-weight: 300;
-  font-size: 14px;
-  text-decoration: underline;
-}
-
-.mobile-menu-nav {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-weight: 400;
-  font-size: 34px;
-  text-decoration: none;
-}
-
-.mobile-menu-nav-active {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-weight: 600;
-  font-size: 34px;
-  text-decoration: none;
-}
-
-.mobile-nav {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-weight: 400;
-  font-size: 10px;
-  text-decoration: none;
-}
-
-.mobile-nav-active {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-weight: 400;
-  font-size: 10px;
-  text-decoration: none;
-}
-
-.montserrat {
-  font-family: 'Montserrat', Arial, sans-serif;
-}
 .p-breadcrumb {
   padding: 0.407rem;
 }
