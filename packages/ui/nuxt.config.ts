@@ -35,6 +35,11 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: 'fade', mode: 'out-in' },
+    head: {
+      charset: 'utf-8',
+      title: 'MyGarden',
+      meta: [{ name: 'description', content: 'The best management app for your plants.' }],
+    },
   },
   server: {
     timing: true,
