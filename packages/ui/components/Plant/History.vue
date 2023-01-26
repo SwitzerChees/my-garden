@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
   import { HistoryElement } from '@my-garden/common/definitions'
-  import { formatDate, actionToIcon } from '~~/utils'
+  import { formatDate, actionToIcon, capitalizeFirstLetter } from '~~/utils'
   const { mediaUrl } = $(useUpload())
   defineProps<{ history: HistoryElement[] }>()
 </script>

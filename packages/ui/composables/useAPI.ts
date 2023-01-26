@@ -30,7 +30,7 @@ export const useAPI = () => {
       return {
         ok: false,
         status: err.error.status as APIStatus,
-        result: null as T,
+        result: null as unknown as T,
       }
     }
   }

@@ -52,6 +52,7 @@
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import { Photo, HistoryElementType } from '@my-garden/common/definitions'
+  import { capitalizeFirstLetter, actionToIcon } from '~~/utils'
   const { addHistoryElement } = $(useMutations())
   const { mediaUrl, uploadUrl, progressUpload, beforeUpload } = $(useUpload())
   const router = useRouter()
