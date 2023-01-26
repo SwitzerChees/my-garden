@@ -11,11 +11,14 @@
           <span class="text-xs text-gray-400">({{ capitalizeFirstLetter(item.action) }})</span>
         </div>
         <span v-if="item.note" class="whitespace-pre-line">{{ item.note }}</span>
-        <img
+        <div v-if="item.photo" class="w-48 h-48 rounded-xl mt-1 overflow-hidden flex justify-center items-center">
+          <Image :src="mediaUrl(item.photo)" :srcset="getResponsiveImageSourceSet(item.photo)" :preview="true" />
+        </div>
+        <!-- <img
           v-if="item.photo"
           :src="mediaUrl(item.photo)"
           :srcset="getResponsiveImageSourceSet(item.photo)"
-          class="object-cover w-48 h-48 rounded-xl mt-1" />
+          class="object-cover w-48 h-48 rounded-xl mt-1" /> -->
       </div>
     </div>
   </div>

@@ -1,9 +1,8 @@
 <template>
   <div class="flex flex-col justify-between gap-1 p-6 bg-gray-900 rounded-xl">
-    <img
-      :src="mediaUrl(plant?.photo)"
-      :srcset="getResponsiveImageSourceSet(plant?.photo)"
-      class="object-cover w-40 h-40 rounded-xl place-self-center" />
+    <div class="w-40 h-40 rounded-xl place-self-center overflow-hidden flex justify-center items-center">
+      <Image :src="mediaUrl(plant?.photo)" :srcset="getResponsiveImageSourceSet(plant?.photo)" :preview="true" />
+    </div>
     <h2 class="pt-1 font-bold truncate place-self-center">{{ plant?.name }}</h2>
     <h3 v-if="plant?.botanicalName" class="text-gray-400 truncate place-self-center">{{ plant?.botanicalName }}</h3>
     <div class="flex flex-wrap gap-2 pt-1 place-self-center">
