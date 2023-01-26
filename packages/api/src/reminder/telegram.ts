@@ -9,7 +9,7 @@ export const sendReminders = async (strapi: Strapi) => {
       limit: -1,
       populate: ['history'],
     })
-    const telegramConfig: TelegramConfig = await strapi.entityService.findOne('api::telegram-config.telegram-config', 1)
+    const telegramConfig: TelegramConfig = await strapi.entityService.findOne('api::telegram-config.telegram-config', {})
     if (!telegramConfig) {
       strapi.log.warn('No telegram config found')
       return
