@@ -7,7 +7,10 @@
           <h1 class="p-2 text-lg font-bold">{{ capitalizeFirstLetter(action) }}</h1>
         </div>
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
-          <img :src="mediaUrl(historyElement?.photo)" class="object-cover rounded-xl" />
+          <img
+            :src="mediaUrl(historyElement?.photo)"
+            :srcset="getResponsiveImageSourceSet(historyElement?.photo)"
+            class="object-cover rounded-xl" />
           <div v-if="progressUpload" class="absolute bottom-0 left-0 right-0">
             <ProgressBar mode="indeterminate" style="height: 0.3rem" />
           </div>
@@ -54,7 +57,7 @@
   import { Photo, HistoryElementType } from '@my-garden/common/definitions'
   import { capitalizeFirstLetter, actionToIcon } from '~~/utils'
   const { addHistoryElement } = $(useMutations())
-  const { mediaUrl, uploadUrl, progressUpload, beforeUpload } = $(useUpload())
+  const { mediaUrl, uploadUrl, progressUpload, beforeUpload, getResponsiveImageSourceSet } = $(useUpload())
   const router = useRouter()
   const { first } = lfp
 

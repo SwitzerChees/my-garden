@@ -11,7 +11,11 @@
           <span class="text-xs text-gray-400">({{ capitalizeFirstLetter(item.action) }})</span>
         </div>
         <span v-if="item.note">{{ item.note }}</span>
-        <img v-if="item.photo" :src="mediaUrl(item.photo)" width="256px" height="256px" class="object-cover w-48 h-48 rounded-xl mt-1" />
+        <img
+          v-if="item.photo"
+          :src="mediaUrl(item.photo)"
+          :srcset="getResponsiveImageSourceSet(item.photo)"
+          class="object-cover w-48 h-48 rounded-xl mt-1" />
       </div>
     </div>
   </div>
@@ -20,6 +24,6 @@
 <script setup lang="ts">
   import { HistoryElement } from '@my-garden/common/definitions'
   import { formatDate, actionToIcon, capitalizeFirstLetter } from '~~/utils'
-  const { mediaUrl } = $(useUpload())
+  const { mediaUrl, getResponsiveImageSourceSet } = $(useUpload())
   defineProps<{ history: HistoryElement[] }>()
 </script>

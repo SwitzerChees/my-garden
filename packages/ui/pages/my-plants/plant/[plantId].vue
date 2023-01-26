@@ -3,7 +3,7 @@
     <div class="w-112">
       <div class="flex flex-col gap-2">
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
-          <img :src="mediaUrl(plant?.photo)" class="object-cover rounded-xl" />
+          <img :src="mediaUrl(plant?.photo)" :srcset="getResponsiveImageSourceSet(plant?.photo)" class="object-cover rounded-xl" />
           <div v-if="progressUpload" class="absolute bottom-0 left-0 right-0">
             <ProgressBar mode="indeterminate" style="height: 0.3rem" />
           </div>
@@ -100,7 +100,7 @@
 <script setup lang="ts">
   import { Plant, Tag } from '@my-garden/common/definitions'
   const router = useRouter()
-  const { uploadUrl, progressUpload, mediaUrl, getMediaFromResult, beforeUpload } = $(useUpload())
+  const { uploadUrl, progressUpload, mediaUrl, getMediaFromResult, beforeUpload, getResponsiveImageSourceSet } = $(useUpload())
   const { getTags, getPlant } = $(useQueries())
   const route = useRoute()
   const { addOrUpdatePlant } = $(useMutations())

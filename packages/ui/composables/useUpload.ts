@@ -3,11 +3,6 @@ import { Media, MediaFormat } from '@my-garden/common/definitions'
 import { RuntimeConfig } from '~~/definitions'
 const { first } = lfp
 
-interface ImageResponsiveSource {
-  src: string
-  srcSet: string
-}
-
 export const useUpload = () => {
   let progressUpload = $ref(false)
   const token = $(useStrapiToken())
@@ -20,16 +15,16 @@ export const useUpload = () => {
     return runtimeConfig.public.strapi.url + mediaFormat?.url
   }
 
-  const getResponsiveImageSource = (media?: Media) => {
+  const getResponsiveImageSourceSet = (media?: Media) => {
     if (!media) return undefined
-    const responsiveImageSource: ImageResponsiveSource = { src: media.url || mediaUrl(media), srcSet: '' }
     const srcSets: string[] = []
-    if (media?.formats?.thumbnail) srcSets.push(mediaUrl(media.formats.thumbnail))
-    if (media?.formats?.small) srcSets.push(mediaUrl(media.formats.small))
-    if (media?.formats?.medium) srcSets.push(mediaUrl(media.formats.medium))
-    if (media?.formats?.large) srcSets.push(mediaUrl(media.formats.large))
-    responsiveImageSource.srcSet = srcSets.filter((src) => !!src).join(', ')
-    return responsiveImageSource
+    const formatToSrcSet = (format: MediaFormat) => `${mediaUrl(format)} ${format.width}w`
+    if (media?.formats?.thumbnail) srcSets.push(formatToSrcSet(media.formats.thumbnail))
+    if (media?.formats?.small) srcSets.push(formatToSrcSet(media.formats.small))
+    if (media?.formats?.medium) srcSets.push(formatToSrcSet(media.formats.medium))
+    if (media?.formats?.large) srcSets.push(formatToSrcSet(media.formats.large))
+    const srcSet = srcSets.filter((src) => !!src).join(', ')
+    return srcSet
   }
 
   const beforeUpload = ({ xhr }: { xhr: XMLHttpRequest }) => {
@@ -44,7 +39,7 @@ export const useUpload = () => {
   return $$({
     uploadUrl,
     mediaUrl,
-    getResponsiveImageSource,
+    getResponsiveImageSourceSet,
     progressUpload,
     beforeUpload,
     getMediaFromResult,

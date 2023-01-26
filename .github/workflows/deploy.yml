@@ -10,7 +10,7 @@ env:
   IMAGE_TAG: switzerchees/my-garden:${{ github.sha }}
   LETSENCRYPT_STAGE: prod
   BASE_URL: mygarden.hackerman.ch
-  STRAPI_URL: mygarden-dev.hackerman.ch
+  STRAPI_URL: mygarden-api.hackerman.ch
 
 jobs:
   build-and-deploy:
