@@ -50,6 +50,7 @@ export const useQueries = () => {
             {
               $or: [
                 { name: { $containsi: filter } },
+                { botanicalName: { $containsi: filter } },
                 {
                   tags: { name: { $containsi: filter } },
                 },

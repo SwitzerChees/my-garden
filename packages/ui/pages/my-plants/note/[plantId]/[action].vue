@@ -34,7 +34,7 @@
           <Button class="p-button-danger" @click="cancelNavigate">
             <div class="flex items-center gap-1">
               <Icon name="material-symbols:cancel" size="1.5rem" />
-              <span class="text-sm font-bold uppercase whitespace-nowrap">Cancel</span>
+              <span class="text-sm font-bold uppercase whitespace-nowrap">Back</span>
             </div>
           </Button>
           <Button @click="addNoteNavigate">
