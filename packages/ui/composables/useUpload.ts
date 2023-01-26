@@ -38,7 +38,6 @@ export const useUpload = () => {
   }
 
   const getMediaFromResult = ({ xhr: { response: photos } }: { xhr: { response: string } }): Media | undefined => {
-    progressUpload = false
     return first(JSON.parse(photos)) as Media
   }
 

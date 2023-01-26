@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
   import { Plant } from '@my-garden/common/definitions'
-  import { addHistoryElement } from '~~/surrealdb/mutations'
+  const { addHistoryElement } = $(useMutations())
 
   const props = defineProps<{ plant: Plant }>()
 
@@ -51,7 +51,7 @@
 
   const waterAction = async () => {
     if (!props.plant.id) return
-    const historyElement = await addHistoryElement(props.plant.id as any, { action: 'watered' })
+    const historyElement = await addHistoryElement(props.plant.id, { action: 'watered' })
     if (!historyElement) return
     emits('watered', historyElement)
   }

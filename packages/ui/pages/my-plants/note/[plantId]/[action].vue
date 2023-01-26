@@ -7,7 +7,7 @@
           <h1 class="p-2 text-lg font-bold">{{ capitalizeFirstLetter(action) }}</h1>
         </div>
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
-          <img :src="mediaUrl(historyElement?.photo)" width="256px" height="256px" class="object-cover rounded-xl" />
+          <img :src="mediaUrl(historyElement?.photo)" class="object-cover rounded-xl" />
           <div v-if="progressUpload" class="absolute bottom-0 left-0 right-0">
             <ProgressBar mode="indeterminate" style="height: 0.3rem" />
           </div>
@@ -18,12 +18,13 @@
         <div class="hidden">
           <FileUpload
             ref="upload"
-            name="photo"
-            url="/api/upload"
+            name="files"
+            :url="uploadUrl"
             :auto="true"
             accept="image/*"
             @upload="uploadComplete"
-            @before-send="progressUpload = true" />
+            @before-send="beforeUpload"
+            @progress="progressUpload = false" />
         </div>
         <div class="flex flex-col gap-0.5">
           <label for="note">Note</label>
@@ -51,8 +52,8 @@
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import { Photo, HistoryElementType } from '@my-garden/common/definitions'
-  import { addHistoryElement } from '~~/surrealdb/mutations'
-  const { mediaUrl } = $(useUpload())
+  const { addHistoryElement } = $(useMutations())
+  const { mediaUrl, uploadUrl, progressUpload, beforeUpload } = $(useUpload())
   const router = useRouter()
   const { first } = lfp
 
@@ -69,7 +70,7 @@
 
   const addNoteNavigate = async () => {
     if (!plantId) return
-    const addedHistoryElement = await addHistoryElement(plantId, historyElement)
+    const addedHistoryElement = await addHistoryElement(parseInt(plantId), historyElement)
     if (addedHistoryElement) {
       return router.back()
     }
@@ -85,10 +86,7 @@
     upload.choose()
   }
 
-  let progressUpload = $ref(false)
-
   const uploadComplete = ({ xhr: { response: photos } }: { xhr: { response: string } }) => {
-    progressUpload = false
     const photo = first(JSON.parse(photos)) as Photo
     if (!photo) return
     historyElement.photo = photo

@@ -15,12 +15,13 @@
           <div class="hidden">
             <FileUpload
               ref="upload"
-              name="photo"
-              url="/api/upload"
+              name="files"
+              :url="uploadUrl"
               :auto="true"
               accept="image/*"
               @upload="uploadComplete"
-              @before-send="progressUpload = true" />
+              @before-send="beforeUpload"
+              @progress="progressUpload = false" />
           </div>
           <SplitButton class="bg-text border-round" :model="items">
             <Button class="p-button-text" @click="navigateNote()">
@@ -41,12 +42,14 @@
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import { Plant } from '@my-garden/common/definitions'
-  import { addHistoryElement } from '~~/surrealdb/mutations'
+  const { addHistoryElement } = $(useMutations())
   const { getPlant } = $(useQueries())
+  const { uploadUrl, progressUpload, beforeUpload } = $(useUpload())
+  const route = useRoute()
+
   let plant = $ref<Plant>()
   const { first } = lfp
 
-  const route = useRoute()
   const fetchPlant = async () => {
     const { plantId } = route.params
     if (!plantId || plantId instanceof Array) return
@@ -58,14 +61,12 @@
     return plant.history.sort((a, b) => new Date(b.createdAt || new Date()).getTime() - new Date(a.createdAt || new Date()).getTime())
   })
 
-  let progressUpload = $ref(false)
-
   const uploadComplete = async ({ xhr: { response: photos } }: { xhr: { response: string } }) => {
-    progressUpload = false
     const photo = first(JSON.parse(photos)) as any
     if (!photo || !plant?.id) return
     const historyElement = await addHistoryElement(plant.id as any, { action: 'image', photo })
     if (!historyElement) return
+    historyElement.photo = photo
     plant.history.push(historyElement)
   }
 

@@ -14,7 +14,7 @@
   "attributes": {
     "action": {
       "type": "enumeration",
-      "enum": ["added", "updated", "watered", "fertilized", "repotted", "pruned", "  image", "  sterilized", "  measured", "  note"]
+      "enum": ["added", "updated", "watered", "fertilized", "repotted", "pruned", "image", "sterilized", "measured", "note"]
     },
     "photo": {
       "type": "media",

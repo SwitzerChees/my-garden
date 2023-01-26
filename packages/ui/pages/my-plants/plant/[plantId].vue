@@ -19,7 +19,8 @@
             :auto="true"
             accept="image/*"
             @upload="uploadComplete"
-            @before-send="beforeUpload" />
+            @before-send="beforeUpload"
+            @progress="progressUpload = false" />
         </div>
         <div class="flex flex-col gap-0.5">
           <label for="name">Name</label>
