@@ -34,9 +34,7 @@ export default factories.createCoreController('api::plant.plant', {
       const reminderSummary = getReminderSummary(plant)
       if (reminderSummary.water.days > 0) {
         const nextInDate = new Date()
-        nextInDate.setDate(
-          nextInDate.getDate() + (reminderSummary.water.doneToday ? reminderSummary.water.days : reminderSummary.water.nextInDays)
-        )
+        nextInDate.setDate(nextInDate.getDate() + reminderSummary.water.nextInDays)
         nextInDate.setHours(0, 0, 0, 0)
         let event = events.find((e: Event) => e.date.getTime() === nextInDate.getTime())
         if (!event) {
@@ -47,10 +45,7 @@ export default factories.createCoreController('api::plant.plant', {
       }
       if (reminderSummary.fertilize.days > 0) {
         const nextInDate = new Date()
-        nextInDate.setDate(
-          nextInDate.getDate() +
-            (reminderSummary.fertilize.doneToday ? reminderSummary.fertilize.days : reminderSummary.fertilize.nextInDays)
-        )
+        nextInDate.setDate(nextInDate.getDate() + reminderSummary.fertilize.nextInDays)
         nextInDate.setHours(0, 0, 0, 0)
         let event = events.find((e: Event) => e.date.getTime() === nextInDate.getTime())
         if (!event) {
