@@ -34,7 +34,9 @@ export default factories.createCoreController('api::plant.plant', {
       const reminderSummary = getReminderSummary(plant)
       if (reminderSummary.water.days > 0) {
         const nextInDate = new Date()
-        nextInDate.setDate(nextInDate.getDate() + reminderSummary.water.nextInDays)
+        nextInDate.setDate(
+          nextInDate.getDate() + (reminderSummary.water.doneToday ? reminderSummary.water.days : reminderSummary.water.nextInDays)
+        )
         nextInDate.setHours(0, 0, 0, 0)
         let event = events.find((e: Event) => e.date.getTime() === nextInDate.getTime())
         if (!event) {
@@ -45,7 +47,10 @@ export default factories.createCoreController('api::plant.plant', {
       }
       if (reminderSummary.fertilize.days > 0) {
         const nextInDate = new Date()
-        nextInDate.setDate(nextInDate.getDate() + reminderSummary.fertilize.nextInDays)
+        nextInDate.setDate(
+          nextInDate.getDate() +
+            (reminderSummary.fertilize.doneToday ? reminderSummary.fertilize.days : reminderSummary.fertilize.nextInDays)
+        )
         nextInDate.setHours(0, 0, 0, 0)
         let event = events.find((e: Event) => e.date.getTime() === nextInDate.getTime())
         if (!event) {
@@ -63,7 +68,7 @@ export default factories.createCoreController('api::plant.plant', {
       end.setHours(10, 0, 0, 0)
       let summary = '🪴 MyGarden:'
       if (event.water > 0) summary += ` ${event.water}💧`
-      if (event.fertitlize > 0) summary += ` ${event.fertitlize}🧪`
+      if (event.fertitlize > 0) summary += ` ${event.fertitlize} 🧪`
       const id = `my-plant-event-${start.getTime()}`
       cal.createEvent({
         id,
@@ -73,7 +78,7 @@ export default factories.createCoreController('api::plant.plant', {
         summary,
       })
     }
-    ctx.set('Content-Type', 'text/calendar; charset=utf-8')
+    // ctx.set('Content-Type', 'text/calendar; charset=utf-8')
     ctx.send(cal.toString())
   },
 })
