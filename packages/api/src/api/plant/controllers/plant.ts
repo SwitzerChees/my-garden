@@ -78,7 +78,7 @@ export default factories.createCoreController('api::plant.plant', {
         summary,
       })
     }
-    // ctx.set('Content-Type', 'text/calendar; charset=utf-8')
+    ctx.set('Content-Type', 'text/calendar; charset=utf-8')
     ctx.send(cal.toString())
   },
 })
