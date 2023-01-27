@@ -10,11 +10,12 @@
     "prettify": "prettier --write \"**/*.{js,ts,html,css,json,md,vue}\""
   },
   "dependencies": {
-    "@strapi/strapi": "4.6.0",
-    "@strapi/plugin-users-permissions": "4.6.0",
+    "@my-garden/common": "1.0.0",
     "@strapi/plugin-i18n": "4.6.0",
-    "pg": "8.6.0",
-    "@my-garden/common": "1.0.0"
+    "@strapi/plugin-users-permissions": "4.6.0",
+    "@strapi/strapi": "4.6.0",
+    "ical-generator": "^3.6.1",
+    "pg": "8.6.0"
   },
   "author": {
     "name": "A Strapi developer"
