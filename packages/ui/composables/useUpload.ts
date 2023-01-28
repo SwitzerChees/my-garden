@@ -27,6 +27,28 @@ export const useUpload = () => {
     return srcSet
   }
 
+  const getResponsiveImageSizes = (media?: Media) => {
+    if (!media) return undefined
+    const sizes: string[] = []
+    const formatToSize = (format: MediaFormat) => `(max-width: ${format.width}px) ${format.width}px`
+    if (media?.formats?.thumbnail) sizes.push(formatToSize(media.formats.thumbnail))
+    if (media?.formats?.small) sizes.push(formatToSize(media.formats.small))
+    if (media?.formats?.medium) sizes.push(formatToSize(media.formats.medium))
+    if (media?.formats?.large) sizes.push(formatToSize(media.formats.large))
+    const size = sizes.filter((src) => !!src).join(', ')
+    return size
+  }
+
+  const responsiveMediaUrl = (width: number, media?: Media) => {
+    if (!media?.url) return plantUrl
+    if (!media.formats) return mediaUrl(media)
+    const closestFormat = Object.values(media.formats).reduce((prev, curr) => {
+      return Math.abs(curr.width - width) < Math.abs(prev.width - width) ? curr : prev
+    })
+    if (!closestFormat) return mediaUrl(media)
+    return mediaUrl(closestFormat)
+  }
+
   const beforeUpload = ({ xhr }: { xhr: XMLHttpRequest }) => {
     progressUpload = true
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
@@ -39,7 +61,9 @@ export const useUpload = () => {
   return $$({
     uploadUrl,
     mediaUrl,
+    responsiveMediaUrl,
     getResponsiveImageSourceSet,
+    getResponsiveImageSizes,
     progressUpload,
     beforeUpload,
     getMediaFromResult,

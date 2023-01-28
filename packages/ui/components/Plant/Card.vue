@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col justify-between gap-1 bg-gray-900 rounded-xl">
     <div class="flex gap-2 px-4 pt-3 pb-2 cursor-pointer" @click="showPlant(plant.id as any)">
-      <img :src="mediaUrl(plant?.photo)" :srcset="getResponsiveImageSourceSet(plant?.photo)" class="object-cover h-16 w-16 rounded-xl" />
+      <!-- <img :src="mediaUrl(plant?.photo)" :srcset="getResponsiveImageSourceSet(plant?.photo)" class="object-cover h-16 w-16 rounded-xl" /> -->
+      <PlantImage :image="plant?.photo" :width="64" class="h-16 w-16 rounded-xl overflow-hidden" />
       <div class="flex flex-col justify-between overflow-hidden grow">
         <div class="flex flex-col gap-0.5">
           <h2 class="text-sm font-bold truncate">{{ plant?.name }}</h2>
@@ -25,7 +26,6 @@
 
 <script setup lang="ts">
   import { Plant } from '~~/../common/definitions'
-  const { mediaUrl, getResponsiveImageSourceSet } = $(useUpload())
 
   defineProps<{ plant: Plant }>()
 
