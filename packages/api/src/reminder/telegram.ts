@@ -7,6 +7,7 @@ export const sendReminders = async (strapi: Strapi) => {
   try {
     const allPlants: Plant[] = await strapi.entityService.findMany('api::plant.plant', {
       limit: -1,
+      filters: { status: 'active' },
       populate: ['history'],
     })
     const telegramConfig: TelegramConfig = await strapi.entityService.findOne('api::telegram-config.telegram-config', {})

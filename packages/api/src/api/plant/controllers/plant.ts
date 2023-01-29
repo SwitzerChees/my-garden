@@ -21,6 +21,7 @@ export default factories.createCoreController('api::plant.plant', {
     const plantsFromUser: Plant[] = await strapi.entityService.findMany('api::plant.plant', {
       limit: -1,
       filters: {
+        status: 'active',
         user: {
           icalToken: token,
         },
