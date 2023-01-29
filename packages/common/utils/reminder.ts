@@ -32,9 +32,10 @@ const daysBetweenDates = (date1: Date, date2: Date) => {
 export const getReminderSummary = (plant: Plant): ReminderSummary => {
   const { water = 0, fertilize = 0 } = plant.reminder
   const { history } = plant
+  const activeHistory = history.filter((h) => h.status === 'active')
   const today = new Date()
-  const waterAction = mostRecentWaterAction(history)
-  const fertilizeAction = mostRecentFertilizeAction(history)
+  const waterAction = mostRecentWaterAction(activeHistory)
+  const fertilizeAction = mostRecentFertilizeAction(activeHistory)
   const waterNext = new Date()
   if (waterAction) {
     waterNext.setDate(new Date(waterAction.createdAt || new Date()).getDate() + water)

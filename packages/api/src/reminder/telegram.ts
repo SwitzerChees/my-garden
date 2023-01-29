@@ -41,15 +41,3 @@ export const sendReminders = async (strapi: Strapi) => {
     strapi.log.error(error)
   }
 }
-
-// let apiToken = 'my_bot_api_token'
-// let chatId = '@my_channel_name'
-// let text = 'Hello world!'
-
-// let urlString =
-
-// let request = new XMLHttpRequest()
-// request.open('GET', urlString)
-// request.send()
-
-// let response = request.response

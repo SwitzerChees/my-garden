@@ -34,7 +34,16 @@ export const useQueries = () => {
   const getPlant = async (plantId: number): Promise<Plant | undefined> => {
     const { ok, result } = await getSafeAPIResponse<Plant>(
       findOne('plants', plantId, {
-        populate: ['tags', 'history.photo', 'photo'],
+        populate: {
+          tags: true,
+          history: {
+            populate: ['photo'],
+            filters: {
+              status: 'active',
+            },
+          },
+          photo: true,
+        },
       })
     )
     if (!ok) return
@@ -46,7 +55,7 @@ export const useQueries = () => {
       find('plants', {
         filters: {
           $and: [
-            { user: strapiuser?.id },
+            { user: strapiuser?.id, status: 'active' },
             {
               $or: [
                 { name: { $containsi: filter } },
@@ -58,7 +67,15 @@ export const useQueries = () => {
             },
           ],
         },
-        populate: ['tags', 'history', 'photo'],
+        populate: {
+          tags: true,
+          history: {
+            filters: {
+              status: 'active',
+            },
+          },
+          photo: true,
+        },
       })
     )
     if (!ok) return []

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-2 pl-4 border-l-2 border-l-green-400">
-    <div v-for="(item, index) in history" :key="index" class="relative flex flex-col justify-center min-h-[2rem] mb-8">
+    <div v-for="(item, index) in filteredHistory(history)" :key="index" class="relative flex flex-col justify-center min-h-[2rem] mb-8">
       <div v-if="item.action !== 'added'" class="absolute right-0 top-0">
         <Button class="p-button-text z-50" @click="deleteHistoryElement(item)">
           <div class="flex items-center gap-1">
@@ -39,6 +39,8 @@
 
   defineProps<{ history: HistoryElement[] }>()
 
+  const filteredHistory = (history) => history.filter((item) => item.status === 'active')
+
   const deleteHistoryElement = (historyElement: HistoryElement) => {
     confirm.require({
       message: 'Are you sure you want to delete this History Element?',
@@ -53,6 +55,7 @@
             detail: 'The History Element got successfully deleted.',
             life: 3000,
           })
+          historyElement.status = 'archived'
         }
       },
     })
