@@ -1,12 +1,12 @@
 <template>
-  <div class="flex bg-slate-900 justify-between h-20">
-    <Button class="p-button-text" @click="navigateMyPlants">
+  <div class="flex bg-slate-900 justify-between h-20 items-center">
+    <Button class="p-button-text z-50" @click="navigateMyPlants">
       <div class="flex items-center gap-2">
         <Icon name="teenyicons:plant-outline" size="1.2rem" />
         <span>Plants</span>
       </div>
     </Button>
-    <Button class="p-button-text" @click="navigateProfile">
+    <Button class="p-button-text z-50" @click="navigateProfile">
       <div class="flex items-center gap-2">
         <Icon name="pajamas:profile" size="1.2rem" />
         <span>Profile</span>
