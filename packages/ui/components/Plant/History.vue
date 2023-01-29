@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-2 pl-4 border-l-2 border-l-green-400">
     <div v-for="(item, index) in filteredHistory(history)" :key="index" class="relative flex flex-col justify-center min-h-[2rem] mb-8">
       <div v-if="item.action !== 'added'" class="absolute right-0 top-0">
-        <Button class="p-button-text z-50" @click="deleteHistoryElement(item)">
+        <Button class="p-button-text" @click="deleteHistoryElement(item)">
           <div class="flex items-center gap-1">
             <Icon name="mingcute:delete-2-line" size="1.2rem" />
           </div>

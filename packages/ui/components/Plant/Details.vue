@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex flex-col justify-between gap-1 p-6 bg-gray-900 rounded-xl">
     <div class="absolute right-2 top-2">
-      <Button class="p-button-text z-50" @click="deletePlant(plant)">
+      <Button class="p-button-text z-20" @click="deletePlant(plant)">
         <div class="flex items-center gap-1">
           <Icon name="mingcute:delete-2-line" size="1.2rem" />
         </div>
