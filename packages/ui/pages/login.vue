@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center grow pt-8">
-    <div class="flex flex-col w-full md:w-96 gap-8 justify-center">
+    <div class="flex flex-col w-full px-6 md:w-96 gap-8 justify-center">
       <img :src="logoUrl" class="object-cover w-16 h-16 rounded-xl self-center" />
       <div class="flex justify-center">
         <Button @click="googleLogin">
