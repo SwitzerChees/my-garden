@@ -39,13 +39,13 @@
     plant.history.push(historyElement)
   }
 
-  const deletePlant = (plant) => {
+  const deletePlant = (plant: Plant) => {
     confirm.require({
       message: 'Are you sure you want to delete the Plant?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
-        const updatedPlant = await updatePlantStatus(plant.id, 'archived')
+        const updatedPlant = await updatePlantStatus(plant.id || 0, 'archived')
         if (updatedPlant) {
           notificationsStore.addNotification({
             severity: Severity.Success,

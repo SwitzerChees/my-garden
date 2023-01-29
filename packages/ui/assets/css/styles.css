@@ -80,8 +80,12 @@ body {
   height: auto;
 }
 
-/* @media (max-width: 639px) {
+@media (max-width: 639px) {
   .p-toast {
     width: calc(100% - 2.5rem) !important;
   }
-} */
+  .p-dialog {
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
+  }
+}
