@@ -16,6 +16,8 @@ import InputNumber from 'primevue/inputnumber'
 import SplitButton from 'primevue/splitbutton'
 import Textarea from 'primevue/textarea'
 
+import Tooltip from 'primevue/tooltip'
+
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp
   app.use(PrimeVue, { ripple: true })
@@ -35,4 +37,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   app.component('InputNumber', InputNumber)
   app.component('SplitButton', SplitButton)
   app.component('Textarea', Textarea)
+
+  // directives
+  app.directive('tooltip', Tooltip)
 })

@@ -1,45 +1,47 @@
 <template>
-  <div class="flex justify-center pt-2">
-    <div class="w-112">
+  <div class="flex justify-center md:pr-24">
+    <div class="w-112 pt-24 md:pt-2">
       <div class="flex flex-col gap-6">
-        <div class="flex justify-between">
-          <div class="md:hidden">
-            <Button class="p-button-text" @click="navigateHome">
-              <div class="flex items-center gap-1">
-                <Icon name="ic:outline-arrow-back-ios-new" size="1.2rem" />
-              </div>
-            </Button>
-          </div>
-          <div class="flex flex-col justify-center">
-            <Button class="p-button-success" @click="startUpload">
-              <div class="flex items-center gap-1">
-                <Icon name="material-symbols:photo-camera" size="1.2rem" />
-              </div>
-            </Button>
-            <ProgressBar v-if="progressUpload" mode="indeterminate" style="height: 0.3rem" />
-          </div>
-          <div class="hidden">
-            <FileUpload
-              ref="upload"
-              name="files"
-              :url="uploadUrl"
-              :auto="true"
-              accept="image/*"
-              @upload="uploadComplete"
-              @before-send="beforeUpload"
-              @progress="progressUpload = false" />
-          </div>
-          <SplitButton class="bg-text border-round" :model="items">
-            <Button class="p-button-text" @click="navigateNote()">
-              <div class="flex items-center gap-1">
-                <Icon name="material-symbols:sticky-note-2-sharp" size="1.2rem" />
-                <span>Note</span>
-              </div>
-            </Button>
-          </SplitButton>
-        </div>
         <PlantDetails v-if="plant" :plant="plant" @watered="fetchPlant" @fertilized="fetchPlant" />
         <PlantHistory v-if="plant" class="ml-4" :history="orderedHistory" />
+      </div>
+    </div>
+    <div class="flex justify-center fixed left-0 right-0 z-50 px-6 pl-4 py-4 -mt-4 md:-mt-24 bg-slate-900 md:bg-transparent">
+      <div class="flex justify-between w-112">
+        <div class="md:hidden">
+          <Button class="p-button-text" @click="navigateHome">
+            <div class="flex items-center gap-1">
+              <Icon name="ic:outline-arrow-back-ios-new" size="1.2rem" />
+            </div>
+          </Button>
+        </div>
+        <div class="flex flex-col justify-center">
+          <Button class="p-button-success" @click="startUpload">
+            <div class="flex items-center gap-1">
+              <Icon name="material-symbols:photo-camera" size="1.2rem" />
+            </div>
+          </Button>
+          <ProgressBar v-if="progressUpload" mode="indeterminate" style="height: 0.3rem" />
+        </div>
+        <div class="hidden">
+          <FileUpload
+            ref="upload"
+            name="files"
+            :url="uploadUrl"
+            :auto="true"
+            accept="image/*"
+            @upload="uploadComplete"
+            @before-send="beforeUpload"
+            @progress="progressUpload = false" />
+        </div>
+        <SplitButton class="bg-text border-round" :model="items">
+          <Button class="p-button-text" @click="navigateNote()">
+            <div class="flex items-center gap-1">
+              <Icon name="material-symbols:sticky-note-2-sharp" size="1.2rem" />
+              <span>Note</span>
+            </div>
+          </Button>
+        </SplitButton>
       </div>
     </div>
   </div>
