@@ -23,7 +23,7 @@
         </Transition>
       </Button>
     </div>
-    <div class="flex flex-col gap-6 pt-24 md:pt-2 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="flex flex-col gap-6 pt-[6.5rem] md:pt-4 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <PlantCard
         v-for="plant of filteredPlants"
         :key="plant.id"

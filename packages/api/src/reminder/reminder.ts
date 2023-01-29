@@ -2,8 +2,8 @@ import lfp from 'lodash/fp'
 import { HistoryElement, Plant } from '@my-garden/common/definitions'
 const { first, orderBy, pipe } = lfp
 
-const waterActionTypes = ['added', 'watered', 'repotted']
-const fertilizeActionTypes = ['added', 'fertilized', 'repotted']
+const waterActionTypes = ['watered']
+const fertilizeActionTypes = ['fertilized']
 
 interface ReminderSummaryEntry {
   days: number

@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
   import lfp from 'lodash/fp'
-  import { Plant } from '@my-garden/common/definitions'
+  import { HistoryElementType, Plant } from '@my-garden/common/definitions'
   const { addHistoryElement } = $(useMutations())
   const { getPlant } = $(useQueries())
   const { uploadUrl, progressUpload, beforeUpload } = $(useUpload())
@@ -86,7 +86,7 @@
 
   onMounted(fetchPlant)
 
-  const navigateNote = (action?: string) => {
+  const navigateNote = (action?: HistoryElementType) => {
     action = action || 'note'
     navigateTo(`/my-plants/note/${plant?.id}/${action}`)
   }
@@ -96,6 +96,14 @@
   }
 
   const items = ref([
+    {
+      label: 'Water',
+      command: () => navigateNote('watered'),
+    },
+    {
+      label: 'Fertilize',
+      command: () => navigateNote('fertilized'),
+    },
     {
       label: 'Prune',
       command: () => navigateNote('pruned'),
