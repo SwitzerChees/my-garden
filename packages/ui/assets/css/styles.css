@@ -79,3 +79,9 @@ body {
 .p-button.p-splitbutton-menubutton {
   height: auto;
 }
+
+/* @media (max-width: 639px) {
+  .p-toast {
+    width: calc(100% - 2.5rem) !important;
+  }
+} */
