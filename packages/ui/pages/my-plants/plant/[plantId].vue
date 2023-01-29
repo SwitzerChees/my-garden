@@ -1,6 +1,12 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-112">
+    <div class="flex justify-center fixed left-0 right-0 z-50 px-6 pl-4 py-4 -mt-4 md:-mt-24 bg-slate-900 md:bg-transparent">
+      <div class="flex justify-center items-center w-112 md:pl-12">
+        <Icon name="material-symbols:potted-plant" size="2rem" />
+        <h1 class="p-2 text-xl font-bold">{{ isNewPlant ? 'New Plant' : 'Edit Plant' }}</h1>
+      </div>
+    </div>
+    <div class="w-112 pt-24 md:pt-2">
       <div class="flex flex-col gap-2">
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
           <img
@@ -115,6 +121,11 @@
     if (!plantId || plantId instanceof Array || plantId === 'new') return
     const existingPlant = await getPlant(parseInt(plantId))
     if (existingPlant) plant = existingPlant
+  })
+
+  const isNewPlant = $computed(() => {
+    const { plantId } = route.params
+    return !plantId || plantId instanceof Array || plantId === 'new'
   })
 
   definePageMeta({

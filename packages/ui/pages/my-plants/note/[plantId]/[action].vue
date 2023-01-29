@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center">
-    <div class="flex justify-center fixed left-0 right-0 z-50 px-6 pl-4 py-4 -mt-4 md:-mt-24 bg-slate-900 md:bg-transparent">
-      <div class="flex justify-center w-112">
+    <div class="flex justify-center fixed left-0 right-0 z-50 px-6 py-4 -mt-4 md:-mt-24 bg-slate-900 md:bg-transparent">
+      <div class="flex justify-center w-112 md:pl-12">
         <div class="flex items-center gap-2">
           <Icon :name="actionToIcon(action)" size="2rem" />
           <h1 class="p-2 text-xl font-bold">{{ capitalizeFirstLetter(action) }}</h1>
