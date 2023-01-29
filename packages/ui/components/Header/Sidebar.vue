@@ -7,7 +7,7 @@
       <Transition
         enter-active-class="animate__animated animate__backInLeft animate__fast"
         leave-active-class="animate__animated animate__backOutLeft animate__fast">
-        <Button v-if="showPlantButton" v-tooltip.right="newPlantTooltip" class="p-button-text" @click="navigateNewPlant">
+        <Button v-if="showPlantButton && !isLoginPage" v-tooltip.right="newPlantTooltip" class="p-button-text" @click="navigateNewPlant">
           <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
           <Transition
             enter-active-class="animate__animated animate__backInLeft animate__fast"
@@ -18,12 +18,12 @@
         </Button>
       </Transition>
     </div>
-    <Button v-tooltip.right="'Plants'" class="p-button-text" @click="navigateMyPlants">
+    <Button v-if="!isLoginPage" v-tooltip.right="'Plants'" class="p-button-text" @click="navigateMyPlants">
       <div class="flex items-center gap-2">
         <Icon name="teenyicons:plant-outline" size="1.2rem" />
       </div>
     </Button>
-    <Button v-tooltip.right="'Profile'" class="p-button-text" @click="navigateProfile">
+    <Button v-if="!isLoginPage" v-tooltip.right="'Profile'" class="p-button-text" @click="navigateProfile">
       <div class="flex items-center gap-2">
         <Icon name="pajamas:profile" size="1.2rem" />
       </div>
@@ -55,6 +55,10 @@
   const navigateProfile = () => {
     navigateTo('/profile')
   }
+
+  const isLoginPage = $computed(() => {
+    return route.path.startsWith('/login')
+  })
 
   let showEditing = $ref(false)
   let showPlantButton = $ref(false)
