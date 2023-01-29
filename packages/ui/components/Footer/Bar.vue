@@ -16,7 +16,7 @@
       enter-active-class="animate__animated animate__backInUp animate__fast"
       leave-active-class="animate__animated animate__backOutDown animate__fast">
       <div v-if="showPlantButton" class="absolute bottom-6 flex justify-center left-0 right-0">
-        <div class="bg-slate-700 rounded-full w-20 h-20 flex justify-center items-center border border-green-400">
+        <div class="bg-slate-700 rounded-full w-[4.5rem] h-[4.5rem] flex justify-center items-center border border-green-400">
           <Button class="p-button-text p-button-rounded" @click="navigateNewPlant">
             <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
             <Transition
