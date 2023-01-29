@@ -34,8 +34,9 @@
 
 <script setup lang="ts">
   const { logoUrl } = $(useDefaultImages())
-  const { setToken, setUser, login, getProviderAuthenticationUrl } = useStrapiAuth()
+  const { setToken, setUser, login, getProviderAuthenticationUrl, authenticateProvider } = useStrapiAuth()
   const { getSafeAPIResponse } = useAPI()
+  const route = useRoute()
 
   const email = $ref('')
   const password = $ref('')
@@ -58,4 +59,12 @@
       errorMessage = error.error.message
     }
   }
+
+  onMounted(async () => {
+    // Check for auth token from google
+    if (route.query.access_token) {
+      await authenticateProvider('google', route.query.access_token as string)
+      location.reload()
+    }
+  })
 </script>
