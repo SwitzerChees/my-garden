@@ -53,6 +53,7 @@ export const useQueries = () => {
   const getPlants = async ({ filter = '' }): Promise<Plant[]> => {
     const { ok, result } = await getSafeAPIResponse<Plant[]>(
       find('plants', {
+        pagination: { limit: -1, start: 0 },
         filters: {
           $and: [
             { user: strapiuser?.id, status: 'active' },
