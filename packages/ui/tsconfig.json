@@ -29,6 +29,7 @@
       "#build/*": [".nuxt/*"],
       "#components": [".nuxt/components"],
       "@my-garden/*": ["@my-garden/*"]
-    }
+    },
+    "noImplicitAny": false
   }
 }

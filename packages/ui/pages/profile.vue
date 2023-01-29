@@ -52,18 +52,42 @@
 </template>
 
 <script setup lang="ts">
-  const user = $(useStrapiUser())
-  const { logout } = useStrapiAuth()
-  const router = useRouter()
+  import { Severity } from '../definitions'
+  import { useNotificationsStore } from '../stores/notifications'
 
-  const password = $ref('')
+  const user = $(useStrapiUser())
+  const { logout, setUser } = useStrapiAuth()
+  const client = useStrapiClient()
+  const { getSafeAPIResponse } = useAPI()
+  const router = useRouter()
+  const notificationsStore = useNotificationsStore()
+
+  let password = $ref('')
   let username = $ref('')
 
   const navigateBack = () => {
     router.back()
   }
 
-  const updateProfile = () => {}
+  const updateProfile = async () => {
+    const request = client('/profile/update', {
+      method: 'POST',
+      body: { username, password },
+    })
+    const { ok } = await getSafeAPIResponse<any>(request)
+    if (ok) {
+      if (!user?.username) return
+      user.username = username
+      password = ''
+      setUser(user)
+      notificationsStore.addNotification({
+        severity: Severity.Success,
+        summary: 'Profile Updated',
+        detail: 'The Profile got successfully updated.',
+        life: 3000,
+      })
+    }
+  }
 
   const logoutUser = () => {
     logout()

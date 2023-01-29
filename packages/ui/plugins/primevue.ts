@@ -15,8 +15,10 @@ import ProgressBar from 'primevue/progressbar'
 import InputNumber from 'primevue/inputnumber'
 import SplitButton from 'primevue/splitbutton'
 import Textarea from 'primevue/textarea'
+import Toast from 'primevue/toast'
 
 import Tooltip from 'primevue/tooltip'
+import ToastService from 'primevue/toastservice'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp
@@ -26,6 +28,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   app.component('Button', Button)
   app.component('Card', Card)
   app.component('ScrollPanel', ScrollPanel)
+  app.component('Toast', Toast)
   app.component('Image', Image)
   app.component('Timeline', Timeline)
   app.component('Dialog', Dialog)
@@ -40,4 +43,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // directives
   app.directive('tooltip', Tooltip)
+
+  // services
+  app.use(ToastService)
 })

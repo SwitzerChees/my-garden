@@ -24,8 +24,12 @@ export const useAPI = () => {
         result: response as T,
       }
     } catch (err: any) {
-      if (err.error.status === APIStatus.BadRequest && err.error.message && addNotification) {
-        addNotification({ life: 7000, severity: Severity.Error, summary: 'error', detail: err.error.message })
+      if (
+        (err.error.status === APIStatus.BadRequest || err.error.status === APIStatus.InternalServerError) &&
+        err.error.message &&
+        addNotification
+      ) {
+        addNotification({ life: 7000, severity: Severity.Error, summary: 'Error', detail: err.error.message })
       }
       return {
         ok: false,

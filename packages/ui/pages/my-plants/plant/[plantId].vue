@@ -108,11 +108,14 @@
 
 <script setup lang="ts">
   import { Plant, Tag } from '@my-garden/common/definitions'
+  import { useNotificationsStore } from '../../../stores/notifications'
+  import { Severity } from '../../../definitions'
   const router = useRouter()
   const { uploadUrl, progressUpload, mediaUrl, getMediaFromResult, beforeUpload, getResponsiveImageSourceSet } = $(useUpload())
   const { getTags, getPlant } = $(useQueries())
   const route = useRoute()
   const { addOrUpdatePlant } = $(useMutations())
+  const notificationsStore = useNotificationsStore()
 
   let plant = $ref<Plant>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 } })
 
@@ -137,7 +140,21 @@
   const addPlantNavigate = async () => {
     const addedPlant = await addOrUpdatePlant(plant)
     if (addedPlant) {
-      if (plant.id) return router.back()
+      if (plant.id) {
+        notificationsStore.addNotification({
+          severity: Severity.Success,
+          summary: 'Plant Updated',
+          detail: 'Successfully Updated Plant.',
+          life: 3000,
+        })
+        return router.back()
+      }
+      notificationsStore.addNotification({
+        severity: Severity.Success,
+        summary: 'Plant Added',
+        detail: 'Successfully Added New Plant.',
+        life: 3000,
+      })
       router.replace(`/my-plants/${addedPlant.id}`)
     }
   }
