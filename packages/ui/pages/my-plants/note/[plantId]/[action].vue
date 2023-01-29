@@ -1,11 +1,15 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-112">
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center self-center gap-2">
-          <Icon :name="actionToIcon(action)" size="1.5rem" />
-          <h1 class="p-2 text-lg font-bold">{{ capitalizeFirstLetter(action) }}</h1>
+    <div class="flex justify-center fixed left-0 right-0 z-50 px-6 pl-4 py-4 -mt-4 md:-mt-24 bg-slate-900 md:bg-transparent">
+      <div class="flex justify-center w-112">
+        <div class="flex items-center gap-2">
+          <Icon :name="actionToIcon(action)" size="2rem" />
+          <h1 class="p-2 text-xl font-bold">{{ capitalizeFirstLetter(action) }}</h1>
         </div>
+      </div>
+    </div>
+    <div class="w-112 pt-24 md:pt-2">
+      <div class="flex flex-col gap-2">
         <div class="relative self-center w-32 h-32 cursor-pointer group" @click="startUpload">
           <img
             :src="mediaUrl(historyElement?.photo)"
