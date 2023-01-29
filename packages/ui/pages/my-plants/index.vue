@@ -6,6 +6,9 @@
         <i class="pi pi-search" />
         <InputText v-model="filter" type="text" placeholder="Search" class="w-full" @input="debouncedFilterPlants" />
       </span>
+      <Button v-if="filter || filterReminder" class="p-button-text" @click="cleanFilter">
+        <Icon name="material-symbols:close-rounded" size="1.5rem" />
+      </Button>
       <Button class="p-button-text" :class="filterReminder ? 'p-button-success' : ''" @click="filterReminder = !filterReminder">
         <Icon name="carbon:reminder" size="1.5rem" />
         <Transition
@@ -58,6 +61,12 @@
   const debouncedFilterPlants = debounce(400, async () => {
     plants = await getPlants({ filter })
   })
+
+  const cleanFilter = async () => {
+    filter = ''
+    filterReminder = false
+    plants = await getPlants({ filter })
+  }
 
   onMounted(async () => {
     const filterState = sessionStorage.getItem('filter') ? JSON.parse(sessionStorage.getItem('filter') as string) : undefined
