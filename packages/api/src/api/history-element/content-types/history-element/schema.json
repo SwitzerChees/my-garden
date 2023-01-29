@@ -30,6 +30,11 @@
       "relation": "manyToOne",
       "target": "api::plant.plant",
       "inversedBy": "history"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["active", "archived"],
+      "default": "active"
     }
   }
 }

@@ -16,9 +16,11 @@ import InputNumber from 'primevue/inputnumber'
 import SplitButton from 'primevue/splitbutton'
 import Textarea from 'primevue/textarea'
 import Toast from 'primevue/toast'
+import ConfirmDialog from 'primevue/confirmdialog'
 
 import Tooltip from 'primevue/tooltip'
 import ToastService from 'primevue/toastservice'
+import ConfirmationService from 'primevue/confirmationservice'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = nuxtApp.vueApp
@@ -40,10 +42,12 @@ export default defineNuxtPlugin((nuxtApp) => {
   app.component('InputNumber', InputNumber)
   app.component('SplitButton', SplitButton)
   app.component('Textarea', Textarea)
+  app.component('ConfirmDialog', ConfirmDialog)
 
   // directives
   app.directive('tooltip', Tooltip)
 
   // services
   app.use(ToastService)
+  app.use(ConfirmationService)
 })

@@ -16,4 +16,5 @@ export interface HistoryElement extends StrapiObject {
   action: HistoryElementType
   photo?: Media
   note?: string
+  status: 'active' | 'archived'
 }

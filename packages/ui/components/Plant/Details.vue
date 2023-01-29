@@ -1,5 +1,12 @@
 <template>
-  <div class="flex flex-col justify-between gap-1 p-6 bg-gray-900 rounded-xl">
+  <div class="relative flex flex-col justify-between gap-1 p-6 bg-gray-900 rounded-xl">
+    <div class="absolute right-2 top-2">
+      <Button class="p-button-text z-50" @click="deletePlant(plant)">
+        <div class="flex items-center gap-1">
+          <Icon name="mingcute:delete-2-line" size="1.2rem" />
+        </div>
+      </Button>
+    </div>
     <div class="w-40 h-40 rounded-xl place-self-center overflow-hidden flex justify-center items-center">
       <Image :src="mediaUrl(plant?.photo)" :srcset="getResponsiveImageSourceSet(plant?.photo)" :preview="true" />
     </div>
@@ -16,12 +23,39 @@
 </template>
 
 <script setup lang="ts">
+  import { useConfirm } from 'primevue/useconfirm'
   import { HistoryElement, Plant } from '@my-garden/common/definitions'
+  import { useNotificationsStore } from '../../stores/notifications'
+  import { Severity } from '../../definitions'
   const { mediaUrl, getResponsiveImageSourceSet } = $(useUpload())
+  const { updatePlantStatus } = $(useMutations())
+  const router = useRouter()
+  const confirm = useConfirm()
+  const notificationsStore = useNotificationsStore()
 
   defineProps<{ plant: Plant }>()
 
   const addHistory = (plant: Plant, historyElement: HistoryElement) => {
     plant.history.push(historyElement)
+  }
+
+  const deletePlant = (plant) => {
+    confirm.require({
+      message: 'Are you sure you want to delete the Plant?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: async () => {
+        const updatedPlant = await updatePlantStatus(plant.id, 'archived')
+        if (updatedPlant) {
+          notificationsStore.addNotification({
+            severity: Severity.Success,
+            summary: 'Plant Deleted',
+            detail: 'The Plant got successfully deleted.',
+            life: 3000,
+          })
+          router.replace('/my-plants')
+        }
+      },
+    })
   }
 </script>

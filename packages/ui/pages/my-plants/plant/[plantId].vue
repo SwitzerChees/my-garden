@@ -117,7 +117,7 @@
   const { addOrUpdatePlant } = $(useMutations())
   const notificationsStore = useNotificationsStore()
 
-  let plant = $ref<Plant>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 } })
+  let plant = $ref<Plant>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 }, status: 'active' })
 
   onMounted(async () => {
     const { plantId } = route.params

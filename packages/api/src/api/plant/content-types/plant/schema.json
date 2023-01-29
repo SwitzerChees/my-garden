@@ -43,6 +43,11 @@
     },
     "reminder": {
       "type": "json"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["active", "archived"],
+      "default": "active"
     }
   }
 }

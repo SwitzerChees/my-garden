@@ -72,7 +72,7 @@
   const uploadComplete = async ({ xhr: { response: photos } }: { xhr: { response: string } }) => {
     const photo = first(JSON.parse(photos)) as any
     if (!photo || !plant?.id) return
-    const historyElement = await addHistoryElement(plant.id as any, { action: 'image', photo })
+    const historyElement = await addHistoryElement(plant.id as any, { action: 'image', photo, status: 'active' })
     if (!historyElement) return
     historyElement.photo = photo
     plant.history.push(historyElement)

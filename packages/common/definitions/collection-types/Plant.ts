@@ -8,4 +8,5 @@ export interface Plant extends StrapiObject {
   history: HistoryElement[]
   reminder: Reminder
   user?: User
+  status: 'active' | 'archived'
 }

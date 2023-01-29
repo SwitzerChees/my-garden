@@ -35,5 +35,20 @@ export const useMutations = () => {
     if (!ok || !result) return
     return result
   }
-  return $$({ addOrUpdatePlant, addHistoryElement })
+
+  const updatePlantStatus = async (plantId: number, status: 'active' | 'archived') => {
+    if (!plantId) return
+    const { ok, result } = await getSafeAPIResponse<Plant>(update('plants', plantId, { status }))
+    if (!ok || !result) return
+    return result
+  }
+
+  const updateHistoryElementStatus = async (historyElementId: number, status: 'active' | 'archived') => {
+    if (!historyElementId) return
+    const { ok, result } = await getSafeAPIResponse<HistoryElement>(update('history-elements', historyElementId, { status }))
+    if (!ok || !result) return
+    return result
+  }
+
+  return $$({ addOrUpdatePlant, addHistoryElement, updatePlantStatus, updateHistoryElementStatus })
 }

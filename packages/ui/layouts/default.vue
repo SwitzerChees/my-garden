@@ -9,6 +9,7 @@
     <div class="mx-6 md:ml-28 mt-2 border-t border-gray-700"></div>
     <span class="px-20 md:pl-40 pt-6 pb-20 text-center">MyGarden created for 🪴 with a lot of ☕️ and ❤️</span>
     <Notifications />
+    <ConfirmDialog />
   </div>
 </template>
 
