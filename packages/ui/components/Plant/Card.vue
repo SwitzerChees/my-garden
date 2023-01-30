@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-between gap-1 bg-gray-900 rounded-xl">
-    <div class="flex gap-2 px-4 pt-3 pb-2 cursor-pointer" @click="showPlant(plant.id as any)">
+    <div class="flex gap-2 px-4 pt-3 pb-2 cursor-pointer" @click="showPlant(plant.id)">
       <PlantImage :image="plant?.photo" :width="64" class="h-16 w-16 rounded-xl overflow-hidden" />
       <div class="flex flex-col justify-between overflow-hidden grow">
         <div class="flex flex-col gap-0.5">
@@ -24,7 +24,8 @@
 </template>
 
 <script setup lang="ts">
-  import { Plant } from '~~/../common/definitions'
+  import { Plant } from '@my-garden/common/definitions'
+  import { usePlantsStore } from '../../stores/plants'
 
   defineProps<{ plant: Plant }>()
 
@@ -32,9 +33,10 @@
 
   const route = useRoute()
 
-  const showPlant = (id?: string) => {
+  const showPlant = (id?: number) => {
     if (!id) return
     if (route.path === `/my-plants/${id}`) return
+    usePlantsStore().selectedPlantId = id
     navigateTo(`/my-plants/${id}`)
   }
 </script>

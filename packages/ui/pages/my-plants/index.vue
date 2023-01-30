@@ -29,6 +29,7 @@
     <div class="flex flex-col gap-6 pt-[7.5rem] md:pt-6 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <PlantCard
         v-for="plant of filteredPlants"
+        :id="`plant-${plant.id}`"
         :key="plant.id"
         :plant="plant"
         @watered="addHistory(plant, $event)"
@@ -41,8 +42,11 @@
   import lfp from 'lodash/fp'
   import { HistoryElement, Plant } from '@my-garden/common/definitions'
   import { getReminderSummary, needReminderAttention } from '@my-garden/common/utils'
+  import { usePlantsStore } from '../../stores/plants'
   const { getPlants } = $(useQueries())
   const { debounce } = lfp
+  let { plants } = $(usePlantsStore())
+  const { selectedPlantId } = $(usePlantsStore())
 
   let filter = $ref('')
   let filterReminder = $ref(false)
@@ -60,7 +64,6 @@
     plant.history.push(historyElement)
   }
 
-  let plants = $ref<Plant[]>([])
   const debouncedFilterPlants = debounce(400, async () => {
     plants = await getPlants({ filter })
   })
@@ -71,6 +74,15 @@
     plants = await getPlants({ filter })
   }
 
+  const scrollToSelectedPlant = (count: number) => {
+    if (!selectedPlantId || count >= 10) return
+    const plantElement = document.getElementById(`plant-${selectedPlantId}`)
+    if (!plantElement) {
+      return setTimeout(() => scrollToSelectedPlant(count + 1), 100)
+    }
+    plantElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+
   onMounted(async () => {
     const filterState = sessionStorage.getItem('filter') ? JSON.parse(sessionStorage.getItem('filter') as string) : undefined
     if (filterState) {
@@ -78,6 +90,8 @@
       filterReminder = filterState.filterReminder
     }
     plants = await getPlants({ filter })
+    if (!plants.find((p) => p.id === selectedPlantId)) return
+    scrollToSelectedPlant(0)
   })
 
   const debouncedSafeState = debounce(200, () => {

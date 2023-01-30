@@ -27,6 +27,7 @@
   import { HistoryElement, Plant } from '@my-garden/common/definitions'
   import { useNotificationsStore } from '../../stores/notifications'
   import { Severity } from '../../definitions'
+  import { usePlantsStore } from '../../stores/plants'
   const { mediaUrl, getResponsiveImageSourceSet } = $(useUpload())
   const { updatePlantStatus } = $(useMutations())
   const router = useRouter()
@@ -53,6 +54,7 @@
             detail: 'The Plant got successfully deleted.',
             life: 3000,
           })
+          usePlantsStore().selectedPlantId = undefined
           router.replace('/my-plants')
         }
       },
