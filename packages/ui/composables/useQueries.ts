@@ -60,10 +60,10 @@ export const useQueries = () => {
             { user: strapiuser?.id, status: 'active' },
             {
               $or: [
-                { name: { $containsi: filter } },
-                { botanicalName: { $containsi: filter } },
+                { name: { $containsi: filter.trim() } },
+                { botanicalName: { $containsi: filter.trim() } },
                 {
-                  tags: { name: { $containsi: filter } },
+                  tags: { name: { $containsi: filter.trim() } },
                 },
               ],
             },
