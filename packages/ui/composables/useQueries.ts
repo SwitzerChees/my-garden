@@ -54,6 +54,7 @@ export const useQueries = () => {
     const { ok, result } = await getSafeAPIResponse<Plant[]>(
       find('plants', {
         pagination: { limit: -1, start: 0 },
+        sort: ['createdAt:desc', 'name:asc'],
         filters: {
           $and: [
             { user: strapiuser?.id, status: 'active' },
