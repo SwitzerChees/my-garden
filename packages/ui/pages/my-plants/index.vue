@@ -52,12 +52,12 @@
   let filterReminder = $ref(false)
 
   const filteredAndOrderedPlants = $computed(() => {
-    const filterByReminder = (p: Plant) => {
+    const filterByReminder = filter<Plant>((p) => {
       const reminderSummary = getReminderSummary(p)
       if (needReminderAttention(reminderSummary.water) || needReminderAttention(reminderSummary.fertilize)) return true
       return false
-    }
-    const orderByReminderDays = orderBy(
+    })
+    const orderByReminderDays = orderBy<Plant>(
       (p: Plant) => {
         const reminderSummary = getReminderSummary(p)
         if (reminderSummary.water.nextInDays < 0 || reminderSummary.fertilize.nextInDays < 0) return -1
@@ -72,7 +72,7 @@
       },
       ['asc']
     )
-    if (filterReminder) return pipe(filterByReminder, orderByReminderDays)(plants)
+    if (filterReminder) return pipe(filterByReminder, orderByReminderDays)(plants) as Plant[]
     return orderByReminderDays(plants)
   })
 
@@ -102,7 +102,7 @@
   onMounted(async () => {
     const filterState = sessionStorage.getItem('filter') ? JSON.parse(sessionStorage.getItem('filter') as string) : undefined
     if (filterState) {
-      searchQuery = filterState.filter
+      searchQuery = filterState.searchQuery
       filterReminder = filterState.filterReminder
     }
     plants = await getPlants({ filter: searchQuery })
@@ -111,7 +111,7 @@
   })
 
   const debouncedSafeState = debounce(200, () => {
-    sessionStorage.setItem('filter', JSON.stringify({ filter, filterReminder }))
+    sessionStorage.setItem('filter', JSON.stringify({ searchQuery, filterReminder }))
   })
-  watch(() => [filter, filterReminder], debouncedSafeState)
+  watch(() => [searchQuery, filterReminder], debouncedSafeState)
 </script>
