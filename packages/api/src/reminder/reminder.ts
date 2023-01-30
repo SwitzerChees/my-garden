@@ -30,8 +30,8 @@ const daysBetweenDates = (date1: Date, date2: Date) => {
 }
 
 export const getReminderSummary = (plant: Plant): ReminderSummary => {
-  const { water = 0, fertilize = 0 } = plant.reminder
-  const { history } = plant
+  const { water = 0, fertilize = 0 } = plant.reminder || {}
+  const { history = [] } = plant
   const activeHistory = history.filter((h) => h.status === 'active')
   const today = new Date()
   const waterAction = mostRecentWaterAction(activeHistory)
