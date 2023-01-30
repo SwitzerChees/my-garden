@@ -4,7 +4,7 @@
 
 import { Plant } from '@my-garden/common/definitions'
 import { factories } from '@strapi/strapi'
-import ical, { ICalAlarmType } from 'ical-generator'
+import ical, { ICalAlarmType, ICalCalendarMethod } from 'ical-generator'
 import { getReminderSummary } from '../../../reminder/reminder'
 
 interface Event {
@@ -15,7 +15,7 @@ interface Event {
 
 export default factories.createCoreController('api::plant.plant', {
   async ical(ctx) {
-    const cal = ical()
+    const cal = ical({ method: ICalCalendarMethod.PUBLISH })
     const { token } = ctx.params
 
     const plantsFromUser: Plant[] = await strapi.entityService.findMany('api::plant.plant', {
@@ -59,9 +59,9 @@ export default factories.createCoreController('api::plant.plant', {
 
     for (const event of events) {
       const start = new Date(event.date)
-      start.setHours(9, 0, 0, 0)
+      start.setHours(12, 0, 0, 0)
       const end = new Date(start)
-      end.setHours(10, 0, 0, 0)
+      end.setHours(13, 0, 0, 0)
       let summary = '🪴 MyGarden:'
       if (event.water > 0) summary += ` ${event.water}💧`
       if (event.fertitlize > 0) summary += ` ${event.fertitlize} 🧪`
@@ -70,7 +70,7 @@ export default factories.createCoreController('api::plant.plant', {
         id,
         start,
         end,
-        alarms: [{ type: ICalAlarmType.display, trigger: 1, description: 'Care for your Plants 🪴🤒' }],
+        alarms: [{ type: ICalAlarmType.display, trigger: 900, description: 'Care for your Plants 🪴🤒' }],
         summary,
       })
     }
