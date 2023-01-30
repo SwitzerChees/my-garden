@@ -32,13 +32,13 @@ const getOrAddTags = async (user: number, newTags: Tag[]) => {
   })) as Tag[]
   const resultTags: Tag[] = []
   for (const tag of newTags) {
-    const existingTag = find({ name: tag.name })(allTags)
+    const existingTag = find({ name: tag.name.trim() })(allTags)
     if (existingTag) {
       resultTags.push(existingTag)
       continue
     }
     const newTag = await strapi.entityService.create('api::tag.tag', {
-      data: { name: tag.name, user },
+      data: { name: tag.name.trim(), user },
     })
     if (!newTag) continue
     resultTags.push(newTag)
