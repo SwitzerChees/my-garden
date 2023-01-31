@@ -24,11 +24,11 @@
       </Button>
     </div>
     <div class="absolute flex top-[5rem] md:-top-4 p-2 right-0 left-0 justify-center">
-      <span class="text-green-500 font-bold">{{ filteredAndOrderedPlants.length }} Plants</span>
+      <span class="text-green-500 font-bold">{{ orderedPlantsByReminder.length }} Plants</span>
     </div>
     <div v-if="!groupPlants" class="flex flex-col gap-6 pt-[7.5rem] md:pt-6 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <PlantCard
-        v-for="plant of filteredAndOrderedPlants"
+        v-for="plant of orderedPlantsByReminder"
         :id="`plant-${plant.id}`"
         :key="plant.id"
         :plant="plant"
@@ -67,7 +67,7 @@
 
   const plantGroups = $computed(() => getPlantsGroupedByReminder(plants))
 
-  const filteredAndOrderedPlants = $computed(() => {
+  const orderedPlantsByReminder = $computed(() => {
     const orderByReminderDays = orderBy<Plant>(
       (p: Plant) => {
         const reminderSummary = getReminderSummary(p)
