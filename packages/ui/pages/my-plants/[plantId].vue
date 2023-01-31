@@ -54,6 +54,7 @@
   const { getPlant } = $(useQueries())
   const { uploadUrl, progressUpload, beforeUpload } = $(useUpload())
   const route = useRoute()
+  const router = useRouter()
 
   let plant = $ref<Plant>()
   const { first } = lfp
@@ -92,7 +93,7 @@
   }
 
   const navigateHome = () => {
-    navigateTo('/my-plants')
+    router.back()
   }
 
   const items = ref([
