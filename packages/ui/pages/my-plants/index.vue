@@ -36,7 +36,7 @@
         @fertilized="addHistory(plant, $event)" />
     </div>
     <Accordion v-else v-model:active-index="activePlantGroup" class="pt-[7.5rem] md:pt-6" lazy multiple @tab-open="debouncedSafeState">
-      <AccordionTab v-for="plantGroup in plantGroups" :key="plantGroup.key" :header="plantGroup.key">
+      <AccordionTab v-for="plantGroup in plantGroups" :key="plantGroup.key" :header="`${plantGroup.key}`">
         <div class="flex flex-col gap-6 pt-3 md:pt-6 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <PlantCard
             v-for="plant of plantGroup.plants"
