@@ -12,6 +12,7 @@ export const relativeDate = (date?: string | Date) => {
   if (!date) return ''
   if (isNaN(Date.parse(date.toString()))) return date.toString()
   const now = new Date()
+  now.setHours(0, 0, 0, 0)
   const dateToCompare = new Date(date)
   const diff = dateToCompare.getTime() - now.getTime()
   const diffDays = Math.ceil(diff / (1000 * 3600 * 24))
