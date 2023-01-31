@@ -1,6 +1,7 @@
 import lfp from 'lodash/fp'
+import { formatDate } from '.'
 import { HistoryElement, Plant } from '@my-garden/common/definitions'
-const { first, orderBy, pipe } = lfp
+const { first, orderBy, pipe, uniqBy } = lfp
 
 const waterActionTypes = ['watered']
 const fertilizeActionTypes = ['fertilized']
@@ -9,6 +10,7 @@ interface ReminderSummaryEntry {
   days: number
   nextInDays: number
   doneToday: boolean
+  date: Date
 }
 interface ReminderSummary {
   water: ReminderSummaryEntry
@@ -55,11 +57,13 @@ export const getReminderSummary = (plant: Plant): ReminderSummary => {
       days: water,
       nextInDays: nextWaterInDays,
       doneToday: waterDoneToday,
+      date: waterNext,
     },
     fertilize: {
       days: fertilize,
       nextInDays: nextFertilizeInDays,
       doneToday: fertilizeDoneToday,
+      date: fertilizeNext,
     },
   }
 }
@@ -92,4 +96,41 @@ const mostRecentFertilizeAction = (history: HistoryElement[]) => {
   const fertilizeActions = history.filter((h) => fertilizeActionTypes.includes(h.action)) as HistoryElement[]
   if (fertilizeActions.length === 0) return
   return pipe(orderBy('createdAt', 'desc'), first)(fertilizeActions) as HistoryElement
+}
+
+export const getPlantsGroupedByReminder = (plants: Plant[]) => {
+  const plantsGroupedByReminder = plants.reduce((plantGroup, plant) => {
+    const reminderSummary = getReminderSummary(plant)
+    const waterDateKey = reminderSummary.water.days === 0 ? 'No Reminder' : reminderSummary.water.date.toISOString()
+    const fertilizeDateKey = reminderSummary.fertilize.days === 0 ? 'No Reminder' : reminderSummary.fertilize.date.toISOString()
+    if (!plantGroup[waterDateKey]) plantGroup[waterDateKey] = []
+    if (!plantGroup[fertilizeDateKey]) plantGroup[fertilizeDateKey] = []
+    plantGroup[waterDateKey].push(plant)
+    plantGroup[fertilizeDateKey].push(plant)
+    return plantGroup
+  }, {} as { [key: string]: Plant[] })
+  for (const key in plantsGroupedByReminder) {
+    plantsGroupedByReminder[key] = uniqBy<Plant>('id')(plantsGroupedByReminder[key])
+  }
+  const plantGroupArray = orderBy<{ key: string; plants: Plant[] }>('key', ['asc'])(
+    Object.keys(plantsGroupedByReminder).map((key) => ({
+      key,
+      plants: plantsGroupedByReminder[key],
+    }))
+  )
+  const noReminder = plantGroupArray.find((p) => p.key === 'No Reminder')
+  if (noReminder) {
+    plantGroupArray.splice(plantGroupArray.indexOf(noReminder), 1)
+    plantGroupArray.push(noReminder)
+  }
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const todayKey = today.toISOString()
+  const todayReminder = plantGroupArray.find((p) => p.key === todayKey)
+  if (todayReminder) {
+    todayReminder.key = 'Today'
+    plantGroupArray.splice(plantGroupArray.indexOf(todayReminder), 1)
+    plantGroupArray.unshift(todayReminder)
+  }
+  return plantGroupArray.map((p) => ({ key: formatDate(p.key), plants: p.plants }))
 }

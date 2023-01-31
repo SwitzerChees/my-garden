@@ -29,9 +29,10 @@
 <script setup lang="ts">
   import { HistoryElement } from '@my-garden/common/definitions'
   import { useConfirm } from 'primevue/useconfirm'
+  import { formatDate } from '@my-garden/common/utils'
   import { useNotificationsStore } from '../../stores/notifications'
   import { Severity } from '../../definitions'
-  import { formatDate, actionToIcon, capitalizeFirstLetter } from '~~/utils'
+  import { actionToIcon, capitalizeFirstLetter } from '~~/utils'
   const { mediaUrl, getResponsiveImageSourceSet } = $(useUpload())
   const { updateHistoryElementStatus } = $(useMutations())
   const confirm = useConfirm()

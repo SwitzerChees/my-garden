@@ -6,27 +6,27 @@
         <i class="pi pi-search" />
         <InputText v-model="searchQuery" type="text" placeholder="Search" class="w-full" @input="debouncedFilterPlants" />
       </span>
-      <Button v-if="searchQuery || filterReminder" class="p-button-text" @click="cleanFilter">
+      <Button v-if="searchQuery" class="p-button-text" @click="cleanFilter">
         <Icon name="material-symbols:close-rounded" size="1.5rem" />
       </Button>
-      <Button class="p-button-text" :class="filterReminder ? 'p-button-success' : ''" @click="filterReminder = !filterReminder">
-        <Icon name="carbon:reminder" size="1.5rem" />
+      <Button class="p-button-text" :class="groupPlants ? 'p-button-success' : ''" @click="groupPlants = !groupPlants">
+        <Icon name="uis:layer-group" size="1.5rem" />
         <Transition
           enter-active-class="animate__animated animate__backInRight animate__fast"
           leave-active-class="animate__animated animate__backOutRight animate__fast">
-          <Icon v-if="filterReminder" name="ic:baseline-filter-alt" size="0.9rem" class="absolute top-2 right-2" />
+          <Icon v-if="groupPlants" name="ic:sharp-radio-button-checked" size="0.9rem" class="absolute top-2 right-2" />
         </Transition>
         <Transition
           enter-active-class="animate__animated animate__backInRight animate__fast"
           leave-active-class="animate__animated animate__backOutRight animate__fast">
-          <Icon v-if="!filterReminder" name="ic:baseline-filter-alt-off" size="0.9rem" class="absolute top-2 right-2" />
+          <Icon v-if="!groupPlants" name="ic:sharp-radio-button-unchecked" size="0.9rem" class="absolute top-2 right-2" />
         </Transition>
       </Button>
     </div>
     <div class="absolute flex top-[5rem] md:-top-4 p-2 right-0 left-0 justify-center">
       <span class="text-green-500 font-bold">{{ filteredAndOrderedPlants.length }} Plants</span>
     </div>
-    <div class="flex flex-col gap-6 pt-[7.5rem] md:pt-6 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div v-if="!groupPlants" class="flex flex-col gap-6 pt-[7.5rem] md:pt-6 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <PlantCard
         v-for="plant of filteredAndOrderedPlants"
         :id="`plant-${plant.id}`"
@@ -35,28 +35,39 @@
         @watered="addHistory(plant, $event)"
         @fertilized="addHistory(plant, $event)" />
     </div>
+    <Accordion v-else v-model:active-index="activePlantGroup" class="pt-[7.5rem] md:pt-6" lazy multiple @tab-open="debouncedSafeState">
+      <AccordionTab v-for="plantGroup in plantGroups" :key="plantGroup.key" :header="plantGroup.key">
+        <div class="flex flex-col gap-6 pt-3 md:pt-6 grow md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <PlantCard
+            v-for="plant of plantGroup.plants"
+            :id="`plant-${plant.id}`"
+            :key="plant.id"
+            :plant="plant"
+            @watered="addHistory(plant, $event)"
+            @fertilized="addHistory(plant, $event)" />
+        </div>
+      </AccordionTab>
+    </Accordion>
   </div>
 </template>
 
 <script setup lang="ts">
   import lfp from 'lodash/fp'
   import { HistoryElement, Plant } from '@my-garden/common/definitions'
-  import { getReminderSummary, needReminderAttention } from '@my-garden/common/utils'
+  import { getReminderSummary, getPlantsGroupedByReminder } from '@my-garden/common/utils'
   import { usePlantsStore } from '../../stores/plants'
   const { getPlants } = $(useQueries())
-  const { debounce, filter, orderBy, pipe } = lfp
+  const { debounce, orderBy } = lfp
   let { plants } = $(usePlantsStore())
   const { selectedPlantId } = $(usePlantsStore())
 
   let searchQuery = $ref('')
-  let filterReminder = $ref(false)
+  let groupPlants = $ref(false)
+  let activePlantGroup = $ref([0])
+
+  const plantGroups = $computed(() => getPlantsGroupedByReminder(plants))
 
   const filteredAndOrderedPlants = $computed(() => {
-    const filterByReminder = filter<Plant>((p) => {
-      const reminderSummary = getReminderSummary(p)
-      if (needReminderAttention(reminderSummary.water) || needReminderAttention(reminderSummary.fertilize)) return true
-      return false
-    })
     const orderByReminderDays = orderBy<Plant>(
       (p: Plant) => {
         const reminderSummary = getReminderSummary(p)
@@ -72,7 +83,6 @@
       },
       ['asc']
     )
-    if (filterReminder) return pipe(filterByReminder, orderByReminderDays)(plants) as Plant[]
     return orderByReminderDays(plants)
   })
 
@@ -86,7 +96,6 @@
 
   const cleanFilter = async () => {
     searchQuery = ''
-    filterReminder = false
     plants = await getPlants({ filter: searchQuery })
   }
 
@@ -103,7 +112,8 @@
     const filterState = sessionStorage.getItem('filter') ? JSON.parse(sessionStorage.getItem('filter') as string) : undefined
     if (filterState) {
       searchQuery = filterState.searchQuery
-      filterReminder = filterState.filterReminder
+      groupPlants = filterState.groupPlants
+      activePlantGroup = filterState.activePlantGroup
     }
     plants = await getPlants({ filter: searchQuery })
     if (!plants.find((p) => p.id === selectedPlantId)) return
@@ -111,7 +121,7 @@
   })
 
   const debouncedSafeState = debounce(200, () => {
-    sessionStorage.setItem('filter', JSON.stringify({ searchQuery, filterReminder }))
+    sessionStorage.setItem('filter', JSON.stringify({ searchQuery, groupPlants, activePlantGroup }))
   })
-  watch(() => [searchQuery, filterReminder], debouncedSafeState)
+  watch(() => [searchQuery, groupPlants, activePlantGroup], debouncedSafeState)
 </script>
