@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-between gap-1 bg-gray-900 rounded-xl">
+  <div class="flex flex-col justify-between gap-1 bg-slate-900 border border-slate-800 rounded-xl">
     <div class="flex gap-2 px-4 pt-3 pb-2 cursor-pointer" @click="showPlant(plant.id)">
       <PlantImage :image="plant?.photo" :width="64" class="h-16 w-16 rounded-xl overflow-hidden" />
       <div class="flex flex-col justify-between overflow-hidden grow">
@@ -18,7 +18,7 @@
         </Button>
       </div>
     </div>
-    <div class="border-t border-gray-700"></div>
+    <div class="border-t border-slate-700"></div>
     <PlantReminder :plant="plant" class="p-4" @watered="emits('watered', $event)" @fertilized="emits('fertilized', $event)" />
   </div>
 </template>

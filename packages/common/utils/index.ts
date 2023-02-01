@@ -19,7 +19,7 @@ export const relativeDate = (date?: string | Date) => {
   if (diffDays === 0) return 'Today'
   if (diffDays === 1) return 'Tomorrow'
   if (diffDays === -1) return 'Yesterday'
-  if (diffDays < 0) return `${diffDays} ${diffDays === -1 ? 'day' : 'days'} ago`
+  if (diffDays < 0) return `${diffDays * -1} ${diffDays === -1 ? 'day' : 'days'} overdue`
   return `in ${diffDays} ${diffDays === 1 ? 'day' : 'days'}`
 }
 
