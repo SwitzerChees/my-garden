@@ -35,7 +35,7 @@
         </div>
         <div class="flex flex-col gap-0.5">
           <label for="note">Note</label>
-          <Textarea id="note" v-model="historyElement.note" :auto-resize="true" rows="4" />
+          <Textarea id="note" v-model="historyElement.note" :auto-resize="true" rows="6" />
         </div>
         <div class="flex justify-between pt-4">
           <Button class="p-button-text" @click="cancelNavigate">
