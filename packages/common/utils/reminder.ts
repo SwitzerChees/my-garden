@@ -18,7 +18,7 @@ const dateToday = () => {
   return today
 }
 
-const getReminderSummaryEntry = (plant: Plant, dayInterval, mostRecentActionFunction) => {
+const getReminderSummaryEntry = (plant: Plant, dayInterval: number, mostRecentActionFunction: Function) => {
   const today = dateToday()
   const history = plant.history || []
   const activeHistory = history.filter((h) => h.status === 'active')
