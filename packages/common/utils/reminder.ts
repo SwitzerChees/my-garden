@@ -12,46 +12,37 @@ export const needReminderAttention = (reminderSummaryEntry: ReminderSummaryEntry
   return days !== 0 && !doneToday && nextInDays <= 0
 }
 
-export const getReminderSummary = (plant: Plant): ReminderSummary => {
-  const { water = 0, fertilize = 0 } = plant.reminder || {}
-  const { history = [] } = plant
-  const activeHistory = history.filter((h) => h.status === 'active')
+const getReminderSummaryEntry = (plant: Plant, dayInterval, mostRecentActionFunction) => {
   const today = new Date()
-  const waterAction = mostRecentWaterAction(activeHistory)
-  const fertilizeAction = mostRecentFertilizeAction(activeHistory)
-  const waterNext = new Date(plant.createdAt || today)
-  if (waterAction) {
-    waterNext.setTime(new Date(waterAction.createdAt || today).getTime() + water * dayInMilliseconds)
+  const history = plant.history || []
+  const activeHistory = history.filter((h) => h.status === 'active')
+  const mostRecentAction = mostRecentActionFunction(activeHistory)
+  const dateNext = new Date(plant.createdAt || today)
+  if (mostRecentAction) {
+    dateNext.setTime(new Date(mostRecentAction.createdAt || today).getTime() + dayInterval * dayInMilliseconds)
   }
-  const nextWaterInDays = water > 0 ? daysBetweenDates(today, waterNext) : 0
-
-  const fertilizeNext = new Date(plant.createdAt || today)
-  if (fertilizeAction) {
-    fertilizeNext.setTime(new Date(fertilizeAction.createdAt || today).getTime() + fertilize * dayInMilliseconds)
-  }
-  const nextFertilizeInDays = fertilize > 0 ? daysBetweenDates(today, fertilizeNext) : 0
-
-  const waterDoneToday =
-    water === 0 ? false : waterAction ? new Date(waterAction.createdAt || today).toISOString() === new Date().toISOString() : false
-  const fertilizeDoneToday =
-    fertilize === 0
+  const nextInDays = dayInterval > 0 ? daysBetweenDates(today, dateNext) : 0
+  const doneToday =
+    dayInterval === 0
       ? false
-      : fertilizeAction
-      ? new Date(fertilizeAction.createdAt || today).toISOString() === new Date().toISOString()
+      : mostRecentAction
+      ? new Date(mostRecentAction.createdAt || today).toISOString() === today.toISOString()
       : false
   return {
-    water: {
-      days: water,
-      nextInDays: nextWaterInDays,
-      doneToday: waterDoneToday,
-      date: waterNext,
-    },
-    fertilize: {
-      days: fertilize,
-      nextInDays: nextFertilizeInDays,
-      doneToday: fertilizeDoneToday,
-      date: fertilizeNext,
-    },
+    days: dayInterval,
+    nextInDays,
+    doneToday,
+    date: dateNext,
+  }
+}
+
+export const getReminderSummary = (plant: Plant): ReminderSummary => {
+  const { water = 0, fertilize = 0 } = plant.reminder || {}
+  const waterEntry = getReminderSummaryEntry(plant, water, mostRecentWaterAction)
+  const fertilizeEntry = getReminderSummaryEntry(plant, fertilize, mostRecentFertilizeAction)
+  return {
+    water: waterEntry,
+    fertilize: fertilizeEntry,
   }
 }
 
