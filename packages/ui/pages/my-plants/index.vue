@@ -10,16 +10,16 @@
         <Icon name="material-symbols:close-rounded" size="1.5rem" />
       </Button>
       <Button class="p-button-text" :class="groupPlants ? 'p-button-success' : ''" @click="groupPlants = !groupPlants">
-        <Icon name="uis:layer-group" size="1.5rem" />
+        <Icon name="carbon:reminder" size="1.5rem" />
         <Transition
           enter-active-class="animate__animated animate__backInRight animate__fast"
           leave-active-class="animate__animated animate__backOutRight animate__fast">
-          <Icon v-if="groupPlants" name="ic:sharp-radio-button-checked" size="0.9rem" class="absolute top-2 right-2" />
+          <Icon v-if="groupPlants" name="uis:layer-group" size="0.9rem" class="absolute top-2 right-2" />
         </Transition>
         <Transition
           enter-active-class="animate__animated animate__backInRight animate__fast"
           leave-active-class="animate__animated animate__backOutRight animate__fast">
-          <Icon v-if="!groupPlants" name="ic:sharp-radio-button-unchecked" size="0.9rem" class="absolute top-2 right-2" />
+          <Icon v-if="!groupPlants" name="ic:outline-format-list-bulleted" size="0.9rem" class="absolute top-2 right-2" />
         </Transition>
       </Button>
     </div>
