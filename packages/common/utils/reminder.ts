@@ -40,12 +40,12 @@ export const getReminderSummary = (plant: Plant): ReminderSummary => {
   const today = new Date()
   const waterAction = mostRecentWaterAction(activeHistory)
   const fertilizeAction = mostRecentFertilizeAction(activeHistory)
-  const waterNext = new Date(plant.createdAt || today)
+  const waterNext = new Date(plant.updatedAt || today)
   if (waterAction) {
     waterNext.setTime(new Date(waterAction.createdAt || today).getTime() + water * dayInMilliseconds)
   }
   const nextWaterInDays = daysBetweenDates(today, waterNext)
-  const fertilizeNext = new Date(plant.createdAt || today)
+  const fertilizeNext = new Date(plant.updatedAt || today)
   if (fertilizeAction) {
     fertilizeNext.setTime(new Date(fertilizeAction.createdAt || today).getTime() + fertilize * dayInMilliseconds)
   }

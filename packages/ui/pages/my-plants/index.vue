@@ -71,6 +71,7 @@
     const orderByReminderDays = orderBy<Plant>(
       (p: Plant) => {
         const reminderSummary = getReminderSummary(p)
+        if (reminderSummary.water.days === 0 && reminderSummary.fertilize.days === 0) return 999
         if (reminderSummary.water.nextInDays < 0 || reminderSummary.fertilize.nextInDays < 0) return -1
         let sortValue = 999
         if (reminderSummary.water.days > 0) {
