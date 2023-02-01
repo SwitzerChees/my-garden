@@ -44,12 +44,14 @@ export const getReminderSummary = (plant: Plant): ReminderSummary => {
   if (waterAction) {
     waterNext.setTime(new Date(waterAction.createdAt || today).getTime() + water * dayInMilliseconds)
   }
-  const nextWaterInDays = daysBetweenDates(today, waterNext)
+  const nextWaterInDays = water > 0 ? daysBetweenDates(today, waterNext) : 0
+
   const fertilizeNext = new Date(plant.updatedAt || today)
   if (fertilizeAction) {
     fertilizeNext.setTime(new Date(fertilizeAction.createdAt || today).getTime() + fertilize * dayInMilliseconds)
   }
-  const nextFertilizeInDays = daysBetweenDates(today, fertilizeNext)
+  const nextFertilizeInDays = fertilize > 0 ? daysBetweenDates(today, fertilizeNext) : 0
+
   const waterDoneToday =
     water === 0 ? false : waterAction ? new Date(waterAction.createdAt || today).toISOString() === new Date().toISOString() : false
   const fertilizeDoneToday =
