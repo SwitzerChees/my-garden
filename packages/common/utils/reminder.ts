@@ -12,8 +12,14 @@ export const needReminderAttention = (reminderSummaryEntry: ReminderSummaryEntry
   return days !== 0 && !doneToday && nextInDays <= 0
 }
 
-const getReminderSummaryEntry = (plant: Plant, dayInterval, mostRecentActionFunction) => {
+const dateToday = () => {
   const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return today
+}
+
+const getReminderSummaryEntry = (plant: Plant, dayInterval, mostRecentActionFunction) => {
+  const today = dateToday()
   const history = plant.history || []
   const activeHistory = history.filter((h) => h.status === 'active')
   const mostRecentAction = mostRecentActionFunction(activeHistory)
@@ -90,7 +96,7 @@ export const getPlantsGroupedByReminder = (plants: Plant[]) => {
     plantGroupArray.splice(plantGroupArray.indexOf(noReminder), 1)
     plantGroupArray.push(noReminder)
   }
-  const today = new Date()
+  const today = dateToday()
   today.setHours(0, 0, 0, 0)
   const todayKey = today.toISOString()
   const todayReminder = plantGroupArray.find((p) => p.key === todayKey)
