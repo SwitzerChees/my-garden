@@ -19,6 +19,7 @@ export default {
   afterUpdate: async (ctx) => {
     if (!ctx.params.originalPlant) return
     const photo = ctx.params.originalPlant?.photo?.url !== ctx.params.data?.photo?.url ? ctx.params.data?.photo : undefined
+    if (!photo) return
     await strapi.entityService.create('api::history-element.history-element', {
       data: { action: 'updated', photo, plant: ctx.result.id },
     })

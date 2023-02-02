@@ -88,4 +88,7 @@ body {
     margin-left: 2rem !important;
     margin-right: 2rem !important;
   }
+  .p-toast-top-right {
+    top: 6rem !important;
+  }
 }

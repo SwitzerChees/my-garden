@@ -145,7 +145,7 @@
           severity: Severity.Success,
           summary: 'Plant Updated',
           detail: 'Successfully Updated Plant.',
-          life: 300000,
+          life: 3000,
         })
         return router.back()
       }
