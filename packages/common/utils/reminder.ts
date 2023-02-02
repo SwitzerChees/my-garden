@@ -1,5 +1,5 @@
 import lfp from 'lodash/fp'
-import { dateToday, dayInMilliseconds, daysBetweenDates, isoDateWithoutTime, relativeDate } from '.'
+import { dateToday, dayInMilliseconds, daysBetweenDates, isoDateWithoutTime, isValidDate, relativeDate } from '.'
 import { HistoryElement, Plant, ReminderSummary, ReminderSummaryEntry } from '@my-garden/common/definitions'
 const { first, orderBy, pipe, uniqBy } = lfp
 
@@ -111,7 +111,7 @@ export const getPlantsGroupedByReminder = (plants: Plant[]) => {
     plantGroupArray.splice(plantGroupArray.indexOf(todayReminder), 1)
     plantGroupArray.unshift(todayReminder)
   }
-  return plantGroupArray.map((p) => ({ key: relativeDate(p.key), plants: p.plants }))
+  return plantGroupArray.map((p) => ({ key: isValidDate(p.key) ? relativeDate(p.key) : p.key, plants: p.plants }))
 }
 
 export const getPlantsToday = (plants: Plant[]) => {
