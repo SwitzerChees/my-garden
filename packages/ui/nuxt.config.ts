@@ -72,4 +72,9 @@ export default defineNuxtConfig({
       background_color: '#0f172a',
     },
   },
+  strapi: {
+    cookie: {
+      maxAge: 60 * 60 * 24 * 30,
+    },
+  },
 } as any)

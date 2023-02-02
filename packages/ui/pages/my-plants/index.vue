@@ -115,19 +115,20 @@
   }
 
   onMounted(async () => {
-    const filterState = sessionStorage.getItem('filter') ? JSON.parse(sessionStorage.getItem('filter') as string) : undefined
-    if (filterState) {
-      searchQuery = filterState.searchQuery
-      groupPlants = filterState.groupPlants
-      activePlantGroup = filterState.activePlantGroup
+    const groupState = localStorage.getItem('group') ? JSON.parse(localStorage.getItem('group') as string) : undefined
+    if (groupState) {
+      groupPlants = groupState.groupPlants
+      activePlantGroup = groupState.activePlantGroup
     }
+    searchQuery = sessionStorage.getItem('searchquery') || ''
     plants = await getPlants({ filter: searchQuery })
     if (!plants.find((p) => p.id === selectedPlantId)) return
     scrollToSelectedPlant(0)
   })
 
   const debouncedSafeState = debounce(200, () => {
-    sessionStorage.setItem('filter', JSON.stringify({ searchQuery, groupPlants, activePlantGroup }))
+    sessionStorage.setItem('searchquery', searchQuery)
+    localStorage.setItem('group', JSON.stringify({ groupPlants, activePlantGroup }))
   })
   watch(() => [searchQuery, groupPlants, activePlantGroup], debouncedSafeState)
 </script>
