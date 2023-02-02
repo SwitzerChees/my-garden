@@ -1,5 +1,5 @@
 import lfp from 'lodash/fp'
-import { dayInMilliseconds, daysBetweenDates, relativeDate } from '.'
+import { dateToday, dayInMilliseconds, daysBetweenDates, isoDateWithoutTime, relativeDate } from '.'
 import { HistoryElement, Plant, ReminderSummary, ReminderSummaryEntry } from '@my-garden/common/definitions'
 const { first, orderBy, pipe, uniqBy } = lfp
 
@@ -12,13 +12,23 @@ export const needReminderAttention = (reminderSummaryEntry: ReminderSummaryEntry
   return days !== 0 && !doneToday && nextInDays <= 0
 }
 
-const dateToday = () => {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  return today
+const mostRecentWaterAction = (history: HistoryElement[]) => {
+  if (!history || history.length === 0) return
+  const waterActions = history.filter((h) => waterActionTypes.includes(h.action)) as HistoryElement[]
+  if (waterActions.length === 0) return
+  return pipe(orderBy('createdAt', 'desc'), first)(waterActions) as HistoryElement
 }
 
-const getReminderSummaryEntry = (plant: Plant, dayInterval: number, mostRecentActionFunction: Function) => {
+const mostRecentFertilizeAction = (history: HistoryElement[]) => {
+  if (!history || history.length === 0) return
+  const fertilizeActions = history.filter((h) => fertilizeActionTypes.includes(h.action)) as HistoryElement[]
+  if (fertilizeActions.length === 0) return
+  return pipe(orderBy('createdAt', 'desc'), first)(fertilizeActions) as HistoryElement
+}
+
+type MostRecentActionFunctionType = typeof mostRecentWaterAction | typeof mostRecentFertilizeAction
+
+const getReminderSummaryEntry = (plant: Plant, dayInterval: number, mostRecentActionFunction: MostRecentActionFunctionType) => {
   const today = dateToday()
   const history = plant.history || []
   const activeHistory = history.filter((h) => h.status === 'active')
@@ -29,11 +39,7 @@ const getReminderSummaryEntry = (plant: Plant, dayInterval: number, mostRecentAc
   }
   const nextInDays = dayInterval > 0 ? daysBetweenDates(today, dateNext) : 0
   const doneToday =
-    dayInterval === 0
-      ? false
-      : mostRecentAction
-      ? new Date(mostRecentAction.createdAt || today).toISOString() === today.toISOString()
-      : false
+    dayInterval === 0 ? false : mostRecentAction ? isoDateWithoutTime(mostRecentAction.createdAt) === today.toISOString() : false
   return {
     days: dayInterval,
     nextInDays,
@@ -57,25 +63,21 @@ export const getReminderDays = (days?: number) => {
   return `every ${days} days`
 }
 
-const mostRecentWaterAction = (history: HistoryElement[]) => {
-  if (!history || history.length === 0) return
-  const waterActions = history.filter((h) => waterActionTypes.includes(h.action)) as HistoryElement[]
-  if (waterActions.length === 0) return
-  return pipe(orderBy('createdAt', 'desc'), first)(waterActions) as HistoryElement
-}
-
-const mostRecentFertilizeAction = (history: HistoryElement[]) => {
-  if (!history || history.length === 0) return
-  const fertilizeActions = history.filter((h) => fertilizeActionTypes.includes(h.action)) as HistoryElement[]
-  if (fertilizeActions.length === 0) return
-  return pipe(orderBy('createdAt', 'desc'), first)(fertilizeActions) as HistoryElement
-}
-
 export const getPlantsGroupedByReminder = (plants: Plant[]) => {
   const plantsGroupedByReminder = plants.reduce((plantGroup, plant) => {
     const reminderSummary = getReminderSummary(plant)
-    const waterDateKey = reminderSummary.water.days === 0 ? 'No Reminder' : reminderSummary.water.date.toISOString()
-    const fertilizeDateKey = reminderSummary.fertilize.days === 0 ? 'No Reminder' : reminderSummary.fertilize.date.toISOString()
+    const waterDateKey =
+      reminderSummary.water.days === 0
+        ? 'No Reminder'
+        : reminderSummary.water.doneToday
+        ? 'Done Today'
+        : reminderSummary.water.date.toISOString()
+    const fertilizeDateKey =
+      reminderSummary.fertilize.days === 0
+        ? 'No Reminder'
+        : reminderSummary.fertilize.doneToday
+        ? 'Done Today'
+        : reminderSummary.fertilize.date.toISOString()
     if (!plantGroup[waterDateKey]) plantGroup[waterDateKey] = []
     if (!plantGroup[fertilizeDateKey]) plantGroup[fertilizeDateKey] = []
     plantGroup[waterDateKey].push(plant)
@@ -91,13 +93,17 @@ export const getPlantsGroupedByReminder = (plants: Plant[]) => {
       plants: plantsGroupedByReminder[key],
     }))
   )
+  const doneToday = plantGroupArray.find((p) => p.key === 'Done Today')
+  if (doneToday) {
+    plantGroupArray.splice(plantGroupArray.indexOf(doneToday), 1)
+    plantGroupArray.push(doneToday)
+  }
   const noReminder = plantGroupArray.find((p) => p.key === 'No Reminder')
   if (noReminder) {
     plantGroupArray.splice(plantGroupArray.indexOf(noReminder), 1)
     plantGroupArray.push(noReminder)
   }
   const today = dateToday()
-  today.setHours(0, 0, 0, 0)
   const todayKey = today.toISOString()
   const todayReminder = plantGroupArray.find((p) => p.key === todayKey)
   if (todayReminder) {

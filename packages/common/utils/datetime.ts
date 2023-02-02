@@ -12,6 +12,20 @@ export const formatDate = (date?: string | Date) => {
   })
 }
 
+export const isoDateWithoutTime = (date?: string | Date) => {
+  if (!date) return ''
+  if (isNaN(Date.parse(date.toString()))) return date.toString()
+  const dateToFormat = new Date(date)
+  dateToFormat.setHours(0, 0, 0, 0)
+  return dateToFormat.toISOString()
+}
+
+export const dateToday = () => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return today
+}
+
 export const relativeDate = (date?: string | Date) => {
   if (!date) return ''
   if (isNaN(Date.parse(date.toString()))) return date.toString()
