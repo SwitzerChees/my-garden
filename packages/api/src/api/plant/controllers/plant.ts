@@ -5,13 +5,7 @@
 import { Plant } from '@my-garden/common/definitions'
 import { factories } from '@strapi/strapi'
 import ical, { ICalAlarmType, ICalCalendarMethod } from 'ical-generator'
-import { getReminderSummary } from '../../../reminder/reminder'
-
-interface Event {
-  date: Date
-  water: number
-  fertitlize: number
-}
+import { dateToday, getPlantsGroupedByReminder, getReminderSummary, isoDateWithoutTime, isValidDate } from '../../../utils'
 
 export default factories.createCoreController('api::plant.plant', {
   async ical(ctx) {
@@ -29,42 +23,28 @@ export default factories.createCoreController('api::plant.plant', {
       populate: ['history'],
     })
 
-    const events: Event[] = []
+    const plantGroups = getPlantsGroupedByReminder(plantsFromUser)
+    const today = dateToday().toISOString()
 
-    for (const plant of plantsFromUser) {
-      const reminderSummary = getReminderSummary(plant)
-      if (reminderSummary.water.days > 0) {
-        const nextInDate = new Date()
-        nextInDate.setDate(nextInDate.getDate() + reminderSummary.water.nextInDays)
-        nextInDate.setHours(0, 0, 0, 0)
-        let event = events.find((e: Event) => e.date.getTime() === nextInDate.getTime())
-        if (!event) {
-          event = { date: nextInDate, water: 0, fertitlize: 0 }
-          events.push(event)
-        }
-        event.water += 1
-      }
-      if (reminderSummary.fertilize.days > 0) {
-        const nextInDate = new Date()
-        nextInDate.setDate(nextInDate.getDate() + reminderSummary.fertilize.nextInDays)
-        nextInDate.setHours(0, 0, 0, 0)
-        let event = events.find((e: Event) => e.date.getTime() === nextInDate.getTime())
-        if (!event) {
-          event = { date: nextInDate, water: 0, fertitlize: 0 }
-          events.push(event)
-        }
-        event.fertitlize += 1
-      }
-    }
-
-    for (const event of events) {
-      const start = new Date(event.date)
+    for (const plantGroup of plantGroups) {
+      if (!isValidDate(plantGroup.key)) continue
+      const start = new Date(plantGroup.key)
       start.setHours(12, 0, 0, 0)
       const end = new Date(start)
       end.setHours(13, 0, 0, 0)
+      let { needWater = 0, needFertilizer = 0 } = {}
       let summary = '🪴 MyGarden:'
-      if (event.water > 0) summary += ` ${event.water}💧`
-      if (event.fertitlize > 0) summary += ` ${event.fertitlize} 🧪`
+      for (const plant of plantGroup.plants) {
+        const reminderSummary = getReminderSummary(plant)
+        if (!reminderSummary.water.doneToday && isoDateWithoutTime(reminderSummary.water.date) === today) {
+          needWater += 1
+        }
+        if (!reminderSummary.fertilize.doneToday && isoDateWithoutTime(reminderSummary.fertilize.date) === today) {
+          needFertilizer += 1
+        }
+      }
+      if (needWater > 0) summary += ` ${needWater}💧`
+      if (needFertilizer > 0) summary += ` ${needFertilizer} 🧪`
       const id = `my-plant-event-${start.getTime()}`
       cal.createEvent({
         id,

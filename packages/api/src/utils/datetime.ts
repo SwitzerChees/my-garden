@@ -1,4 +1,4 @@
-import { ReminderSummaryEntry } from '../definitions'
+import { ReminderSummaryEntry } from '@my-garden/common/definitions'
 
 export const dayInMilliseconds = 1000 * 3600 * 24
 

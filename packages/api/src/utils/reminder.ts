@@ -1,6 +1,6 @@
 import lfp from 'lodash/fp'
-import { dateToday, dayInMilliseconds, daysBetweenDates, isoDateWithoutTime, relativeDate } from '.'
 import { HistoryElement, Plant, ReminderSummary, ReminderSummaryEntry } from '@my-garden/common/definitions'
+import { dateToday, dayInMilliseconds, daysBetweenDates, isoDateWithoutTime, relativeDate } from '.'
 const { first, orderBy, pipe, uniqBy } = lfp
 
 const waterActionTypes = ['watered']

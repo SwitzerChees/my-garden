@@ -1,7 +1,7 @@
 import { Plant, TelegramConfig } from '@my-garden/common/definitions'
 import { Strapi } from '@strapi/strapi'
 import axios from 'axios'
-import { getReminderSummary } from './reminder'
+import { dateToday, getPlantsToday, getReminderSummary, isoDateWithoutTime } from '../utils'
 
 export const sendReminders = async (strapi: Strapi) => {
   try {
@@ -17,17 +17,21 @@ export const sendReminders = async (strapi: Strapi) => {
     }
     const telegramBotUrl = `https://api.telegram.org/bot${telegramConfig.apiToken}/sendMessage`
     let { needWater = 0, needFertilizer = 0 } = {}
-    for (const plant of allPlants) {
+    const todayPlants = getPlantsToday(allPlants)
+    const today = dateToday().toISOString()
+    for (const plant of todayPlants) {
       const reminderSummary = getReminderSummary(plant)
-      if (reminderSummary.water.days > 0 && !reminderSummary.water.doneToday && reminderSummary.water.nextInDays <= 0) {
+      if (!reminderSummary.water.doneToday && isoDateWithoutTime(reminderSummary.water.date) === today) {
         needWater += 1
       }
-      if (reminderSummary.fertilize.days > 0 && !reminderSummary.fertilize.doneToday && reminderSummary.fertilize.nextInDays <= 0) {
+      if (!reminderSummary.fertilize.doneToday && isoDateWithoutTime(reminderSummary.fertilize.date) === today) {
         needFertilizer += 1
       }
     }
     if (needWater > 0 || needFertilizer > 0) {
-      const message = `${needWater} 🪴 need water 💧 and ${needFertilizer} 🪴 need fertilizer 🌱`
+      let message = 'Your 🪴 need your attention'
+      if (needWater > 0) message += `\n${needWater} 💧`
+      if (needFertilizer > 0) message += `\n${needFertilizer} 🧪`
       const { status } = await axios.get(telegramBotUrl, {
         params: {
           chat_id: telegramConfig.chatId,
