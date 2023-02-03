@@ -1,7 +1,7 @@
 import lfp from 'lodash/fp'
 import { HistoryElement, Plant, ReminderSummary, ReminderSummaryEntry } from '@my-garden/common/definitions'
 import { dateToday, dayInMilliseconds, daysBetweenDates, isoDateWithoutTime, isValidDate, relativeDate } from '.'
-const { first, orderBy, pipe, uniqBy } = lfp
+const { first, orderBy, pipe, uniqBy, flatten, filter, map } = lfp
 
 const waterActionTypes = ['watered']
 const fertilizeActionTypes = ['fertilized']
@@ -63,7 +63,11 @@ export const getReminderDays = (days?: number) => {
   return `every ${days} days`
 }
 
-export const getPlantsGroupedByReminder = (plants: Plant[], asDate = false) => {
+interface PlantGroup {
+  key: string
+  plants: Plant[]
+}
+export const getPlantsGroupedByReminder = (plants: Plant[], asDate = false): PlantGroup[] => {
   const plantsGroupedByReminder = plants.reduce((plantGroup, plant) => {
     const reminderSummary = getReminderSummary(plant)
     const waterDateKey =
@@ -106,7 +110,7 @@ export const getPlantsGroupedByReminder = (plants: Plant[], asDate = false) => {
   const today = dateToday()
   const todayKey = today.toISOString()
   const todayReminder = plantGroupArray.find((p) => p.key === todayKey)
-  if (todayReminder) {
+  if (todayReminder && !asDate) {
     todayReminder.key = 'Today'
     plantGroupArray.splice(plantGroupArray.indexOf(todayReminder), 1)
     plantGroupArray.unshift(todayReminder)
@@ -114,9 +118,12 @@ export const getPlantsGroupedByReminder = (plants: Plant[], asDate = false) => {
   return plantGroupArray.map((p) => ({ key: isValidDate(p.key) ? (asDate ? p.key : relativeDate(p.key)) : p.key, plants: p.plants }))
 }
 
-export const getPlantsToday = (plants: Plant[]) => {
-  const plantGrouspByReminder = getPlantsGroupedByReminder(plants)
-  const todayReminder = plantGrouspByReminder.find((p) => p.key === 'Today')
-  if (todayReminder) return todayReminder.plants
-  return []
+export const getPlantsToRemind = (plants: Plant[]) => {
+  const today = dateToday()
+  const plantGrouspByReminder = getPlantsGroupedByReminder(plants, true)
+  return pipe(
+    filter((p: PlantGroup) => new Date(isoDateWithoutTime(p.key)) <= today),
+    map((p: PlantGroup) => p.plants),
+    flatten
+  )(plantGrouspByReminder)
 }
