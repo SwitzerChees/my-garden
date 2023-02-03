@@ -2,7 +2,7 @@
   <div class="flex flex-col justify-center items-center gap-8 grow md:pt-8">
     <div class="flex flex-col md:flex-row gap-4 max-w-5xl">
       <div class="flex flex-col max-w-xl justify-center">
-        <img src="logo.png" class="w-28 self-center rounded-md m-4" />
+        <img src="/logo.png" class="w-28 self-center rounded-md m-4" />
         <h1 class="text-3xl font-bold">MyGarden</h1>
         <h3 class="text-lg">Transform Your Green Thumb with this amazing Personal Plant Manager!</h3>
         <p class="pt-4 text-justify">
@@ -21,10 +21,10 @@
           </Button>
         </div>
       </div>
-      <img src="mobile.png" class="w-64 ml-4 rounded-md shadow-2xl self-center" />
+      <img src="/mobile.png" class="w-64 ml-4 rounded-md shadow-2xl self-center" />
     </div>
     <div class="flex md:flex-row gap-4 max-w-5xl flex-col-reverse">
-      <img src="desktop.png" class="md:w-[32rem] rounded-md shadow-2xl self-center" />
+      <img src="/desktop.png" class="md:w-[32rem] rounded-md shadow-2xl self-center" />
       <div class="flex flex-col max-w-xl justify-center">
         <Icon name="carbon:reminder" size="5rem" class="self-center m-4 text-green-500" />
         <h1 class="text-3xl font-bold">Grouped Reminders</h1>
@@ -53,7 +53,7 @@
           your plant's journey and watch as they grow and flourish.
         </p>
       </div>
-      <img src="mobile_details.png" class="w-64 ml-4 rounded-md shadow-2xl self-center" />
+      <img src="/mobile_details.png" class="w-64 ml-4 rounded-md shadow-2xl self-center" />
     </div>
   </div>
 </template>

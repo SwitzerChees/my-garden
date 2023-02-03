@@ -51,11 +51,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  image: {
-    strapi: {
-      baseURL: 'http://localhost:133722/uploads/',
-    },
-  },
   pwa: {
     workbox: {
       enabled: false,
@@ -70,6 +65,7 @@ export default defineNuxtConfig({
       lang: 'en',
       useWebmanifestExtension: false,
       background_color: '#0f172a',
+      start_url: '/my-plants',
     },
   },
   strapi: {
