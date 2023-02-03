@@ -5,7 +5,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss', // https://tailwindcss.nuxtjs.org/
     'nuxt-icon', // https://icones.js.org/
     '@pinia/nuxt', // https://pinia.vuejs.org/
-    '@nuxt/image-edge', // https://v1.image.nuxtjs.org/
     '@nuxtjs/strapi', // https://strapi.nuxtjs.org/
     '@kevinmarrec/nuxt-pwa', // https://github.com/kevinmarrec/nuxt-pwa-module
   ],
