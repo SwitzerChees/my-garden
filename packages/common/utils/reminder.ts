@@ -96,7 +96,7 @@ export const getPlantsGroupedByReminder = (plants: Plant[]) => {
   const doneToday = plantGroupArray.find((p) => p.key === 'Done Today')
   if (doneToday) {
     plantGroupArray.splice(plantGroupArray.indexOf(doneToday), 1)
-    plantGroupArray.push(doneToday)
+    plantGroupArray.unshift(doneToday)
   }
   const noReminder = plantGroupArray.find((p) => p.key === 'No Reminder')
   if (noReminder) {
