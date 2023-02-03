@@ -1,7 +1,7 @@
 export default defineNuxtRouteMiddleware((to) => {
   const user = $(useStrapiUser())
   // Redirect to login if not logged in
-  if (!user && to.name !== 'login' && to.name !== 'privacy-policy') {
+  if (!user && to.name !== 'login' && to.name !== 'privacy-policy' && to.name !== 'index') {
     useCookie('redirect', { path: '/' }).value = to.fullPath
     return navigateTo('/login')
   }
