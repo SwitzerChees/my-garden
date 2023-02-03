@@ -63,7 +63,7 @@ export const getReminderDays = (days?: number) => {
   return `every ${days} days`
 }
 
-export const getPlantsGroupedByReminder = (plants: Plant[]) => {
+export const getPlantsGroupedByReminder = (plants: Plant[], asDate = false) => {
   const plantsGroupedByReminder = plants.reduce((plantGroup, plant) => {
     const reminderSummary = getReminderSummary(plant)
     const waterDateKey =
@@ -111,7 +111,7 @@ export const getPlantsGroupedByReminder = (plants: Plant[]) => {
     plantGroupArray.splice(plantGroupArray.indexOf(todayReminder), 1)
     plantGroupArray.unshift(todayReminder)
   }
-  return plantGroupArray.map((p) => ({ key: isValidDate(p.key) ? relativeDate(p.key) : p.key, plants: p.plants }))
+  return plantGroupArray.map((p) => ({ key: isValidDate(p.key) ? (asDate ? p.key : relativeDate(p.key)) : p.key, plants: p.plants }))
 }
 
 export const getPlantsToday = (plants: Plant[]) => {

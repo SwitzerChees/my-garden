@@ -5,7 +5,7 @@
 import { Plant } from '@my-garden/common/definitions'
 import { factories } from '@strapi/strapi'
 import ical, { ICalAlarmType, ICalCalendarMethod } from 'ical-generator'
-import { dateToday, getPlantsGroupedByReminder, getReminderSummary, isoDateWithoutTime, isValidDate } from '../../../utils'
+import { getPlantsGroupedByReminder, getReminderSummary, isValidDate } from '../../../utils'
 
 export default factories.createCoreController('api::plant.plant', {
   async ical(ctx) {
@@ -23,8 +23,7 @@ export default factories.createCoreController('api::plant.plant', {
       populate: ['history'],
     })
 
-    const plantGroups = getPlantsGroupedByReminder(plantsFromUser)
-    const today = dateToday().toISOString()
+    const plantGroups = getPlantsGroupedByReminder(plantsFromUser, true)
 
     for (const plantGroup of plantGroups) {
       if (!isValidDate(plantGroup.key)) continue
@@ -36,18 +35,17 @@ export default factories.createCoreController('api::plant.plant', {
       let summary = '🪴 MyGarden:'
       for (const plant of plantGroup.plants) {
         const reminderSummary = getReminderSummary(plant)
-        if (!reminderSummary.water.doneToday && isoDateWithoutTime(reminderSummary.water.date) === today) {
+        if (!reminderSummary.water.doneToday) {
           needWater += 1
         }
-        if (!reminderSummary.fertilize.doneToday && isoDateWithoutTime(reminderSummary.fertilize.date) === today) {
+        if (!reminderSummary.fertilize.doneToday) {
           needFertilizer += 1
         }
       }
+      if (needWater === 0 && needFertilizer === 0) continue
       if (needWater > 0) summary += ` ${needWater}💧`
       if (needFertilizer > 0) summary += ` ${needFertilizer} 🧪`
-      const id = `my-plant-event-${start.getTime()}`
       cal.createEvent({
-        id,
         start,
         end,
         alarms: [{ type: ICalAlarmType.display, trigger: 900, description: 'Care for your Plants 🪴🤒' }],
