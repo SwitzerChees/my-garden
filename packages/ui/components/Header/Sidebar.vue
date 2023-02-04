@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col bg-slate-900 w-[5rem] items-center gap-2">
-    <div class="p-2 md:p-3 rounded-full w-14 h-14 bg-slate-800 cursor-pointer flex justify-center items-center mt-2" @click="navigateHome">
+    <div
+      class="p-2 md:p-3 rounded-full w-14 h-14 bg-slate-800 cursor-pointer flex justify-center items-center mt-2 z-50"
+      @click="navigateHome">
       <img :src="logoUrl" class="object-cover w-8 h-8 rounded-xl" />
     </div>
     <div class="h-20 pt-2">
@@ -45,7 +47,7 @@
   }
 
   const navigateHome = () => {
-    navigateTo('/my-plants')
+    navigateTo('/')
   }
 
   const navigateMyPlants = () => {
