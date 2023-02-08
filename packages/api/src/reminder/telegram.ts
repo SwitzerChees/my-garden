@@ -1,7 +1,7 @@
 import { Plant, TelegramConfig } from '@my-garden/common/definitions'
+import { getPlantsToRemind, getReminderSummary } from '@my-garden/common'
 import { Strapi } from '@strapi/strapi'
 import axios from 'axios'
-import { getPlantsToRemind, getReminderSummary } from '../utils'
 
 export const sendReminders = async (strapi: Strapi) => {
   try {

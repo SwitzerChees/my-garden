@@ -5,7 +5,7 @@
 import { Plant } from '@my-garden/common/definitions'
 import { factories } from '@strapi/strapi'
 import ical, { ICalAlarmType, ICalCalendarMethod } from 'ical-generator'
-import { getPlantsGroupedByReminder, getReminderSummary, isValidDate } from '../../../utils'
+import { getPlantsGroupedByReminder, getReminderSummary, isValidDate } from '@my-garden/common'
 
 export default factories.createCoreController('api::plant.plant', {
   async ical(ctx) {
