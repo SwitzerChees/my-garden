@@ -20,6 +20,7 @@ RUN yarn typecheck:ui
 RUN yarn lint
 # yarn build
 RUN yarn build:ui
+RUN yarn build:common
 
 # Install and execute node-prune
 # RUN apt update && apt install curl -y
@@ -43,6 +44,9 @@ COPY --from=build /app/packages/ui/node_modules /app/packages/ui/node_modules
 COPY --from=build /app/packages/ui/package.json /app/packages/ui/package.json
 COPY --from=build /app/packages/ui/.nuxt /app/packages/ui/.nuxt
 COPY --from=build /app/packages/ui/.output /app/packages/ui/.output
+
+# Copy files for common
+COPY --from=build /app/packages/common /app/packages/common
 
 # Copy files for api
 COPY --from=build /app/packages/api /app/packages/api
