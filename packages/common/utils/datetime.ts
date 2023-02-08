@@ -7,7 +7,7 @@ export const isValidDate = (date?: string | Date): date is Date => {
   if (isNaN(Date.parse(date.toString()))) return false
   return true
 }
-
+//
 export const formatDate = (date?: string | Date) => {
   if (!isValidDate(date)) return ''
   return new Date(date).toLocaleString('de-CH', {

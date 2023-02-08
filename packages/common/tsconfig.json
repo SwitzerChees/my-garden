@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "outDir": "./lib/",
-    "rootDir": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
     "esModuleInterop": true,
     "composite": true
-  },
-  "include": ["./", "./**/*.ts", "./**/*.js", "src/**/*.json"]
+  }
 }

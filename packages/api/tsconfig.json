@@ -9,6 +9,7 @@
       "@my-garden/*": ["@my-garden/*"]
     }
   },
+  "references": [{ "path": "../common" }],
   "include": ["./", "./**/*.ts", "./**/*.js", "src/**/*.json"],
   "exclude": ["node_modules/", "build/", "dist/", ".cache/", ".tmp/", "src/admin/", "**/*.test.*", "src/plugins/**"]
 }

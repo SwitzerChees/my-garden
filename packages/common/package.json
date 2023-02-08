@@ -2,8 +2,5 @@
   "name": "@my-garden/common",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "index.js",
-  "scripts": {
-    "build": "tsc tsconfig.json"
-  }
+  "main": "./dist/index.js"
 }

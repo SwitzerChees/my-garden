@@ -6,12 +6,12 @@
   ],
   "scripts": {
     "dev:ui": "yarn workspace @my-garden/ui dev",
-    "dev:api": "yarn workspace @my-garden/api dev",
+    "dev:api": "tsc-watch -b ./tsconfig.packages.json --onSuccess \"yarn start:api\"",
     "lint": "yarn lint:ui && yarn lint:api",
     "lint:ui": "yarn workspace @my-garden/ui lint",
     "lint:api": "yarn workspace @my-garden/api lint",
     "build:ui": "yarn workspace @my-garden/ui build",
-    "build:api": "yarn workspace @my-garden/api build",
+    "build:api": "tsc -b ./tsconfig.packages.json && yarn workspace @my-garden/api build",
     "build": "yarn build:ui && yarn build:api",
     "start:ui": "yarn workspace @my-garden/ui start",
     "start:api": "yarn workspace @my-garden/api start",
@@ -30,6 +30,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "husky": "^8.0.0",
-    "pretty-quick": "^3.1.3"
+    "pretty-quick": "^3.1.3",
+    "tsc-watch": "^6.0.0"
   }
 }
