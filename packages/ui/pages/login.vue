@@ -3,10 +3,7 @@
     <div class="flex flex-col w-full px-6 md:w-96 gap-8 justify-center">
       <img :src="logoUrl" class="object-cover w-16 h-16 rounded-xl self-center" />
       <div class="flex justify-center">
-        <div class="flex items-center gap-1 pr-2 rounded-sm cursor-pointer" style="background-color: #4285f4" @click="googleLogin">
-          <img src="/google-icon.svg" class="object-cover w-12 h-12 rounded-xl" />
-          <span class="text-sm whitespace-nowrap font-semibold roboto">Sign in with Google</span>
-        </div>
+        <img src="/google-signin-button.png" class="h-12 rounded-xl cursor-pointer" @click="googleLogin" />
       </div>
       <span class="self-center">OR</span>
       <div class="flex flex-col gap-4 rounded-lg">
