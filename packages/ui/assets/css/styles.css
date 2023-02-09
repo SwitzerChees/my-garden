@@ -4,6 +4,10 @@ body {
   font-weight: 400;
 }
 
+.roboto {
+  font-family: 'Roboto', sans-serif;
+}
+
 .p-breadcrumb {
   padding: 0.407rem;
 }

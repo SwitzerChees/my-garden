@@ -3,12 +3,10 @@
     <div class="flex flex-col w-full px-6 md:w-96 gap-8 justify-center">
       <img :src="logoUrl" class="object-cover w-16 h-16 rounded-xl self-center" />
       <div class="flex justify-center">
-        <Button @click="googleLogin">
-          <div class="flex items-center gap-1">
-            <Icon name="ion:logo-google" size="1.5rem" />
-            <span class="text-sm font-bold uppercase whitespace-nowrap">Login with Google</span>
-          </div>
-        </Button>
+        <div class="flex items-center gap-1 pr-2 rounded-sm cursor-pointer" style="background-color: #4285f4" @click="googleLogin">
+          <img src="/google-icon.svg" class="object-cover w-12 h-12 rounded-xl" />
+          <span class="text-sm whitespace-nowrap font-semibold roboto">Sign in with Google</span>
+        </div>
       </div>
       <span class="self-center">OR</span>
       <div class="flex flex-col gap-4 rounded-lg">
