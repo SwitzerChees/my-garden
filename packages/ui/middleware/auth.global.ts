@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware((to) => {
   if (user && to.name === 'login') {
     const cookie = useCookie('redirect', { path: '/' })
     if (cookie.value) {
-      const redirect = cookie.value
+      const redirect = cookie.value === '/profile' ? '/my-plants' : cookie.value
       cookie.value = ''
       return navigateTo(redirect)
     }
