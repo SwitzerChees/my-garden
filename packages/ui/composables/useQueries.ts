@@ -20,6 +20,7 @@ export const useQueries = () => {
           name: {
             $containsi: query,
           },
+          user: strapiuser?.id,
         },
       })
     )
