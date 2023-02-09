@@ -3,7 +3,15 @@
     <NuxtPage />
   </NuxtLayout>
 </template>
-
+<script setup lang="ts">
+  useServerSeoMeta({
+    title: 'MyGarden',
+    ogTitle: 'MyGarden',
+    description: 'Transform Your Green Thumb with this amazing Personal Plant Manager!',
+    ogDescription: 'Transform Your Green Thumb with this amazing Personal Plant Manager!',
+    ogImage: 'https://mygarden.hackerman.ch/logo.png',
+  })
+</script>
 <style>
   .slide-left-enter-active,
   .slide-left-leave-active {
