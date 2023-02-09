@@ -9,7 +9,7 @@
       <Transition
         enter-active-class="animate__animated animate__backInLeft animate__fast"
         leave-active-class="animate__animated animate__backOutLeft animate__fast">
-        <Button v-if="showPlantButton && !isLoginPage" v-tooltip.right="newPlantTooltip" class="p-button-text" @click="navigateNewPlant">
+        <Button v-if="showPlantButton && isLoggedIn" v-tooltip.right="newPlantTooltip" class="p-button-text" @click="navigateNewPlant">
           <Icon name="material-symbols:potted-plant-sharp" size="1.5rem" />
           <Transition
             enter-active-class="animate__animated animate__backInLeft animate__fast"
@@ -20,12 +20,12 @@
         </Button>
       </Transition>
     </div>
-    <Button v-if="!isLoginPage" v-tooltip.right="'Plants'" class="p-button-text" @click="navigateMyPlants">
+    <Button v-if="isLoggedIn" v-tooltip.right="'Plants'" class="p-button-text" @click="navigateMyPlants">
       <div class="flex items-center gap-2">
         <Icon name="teenyicons:plant-outline" size="1.2rem" />
       </div>
     </Button>
-    <Button v-if="!isLoginPage" v-tooltip.right="'Profile'" class="p-button-text" @click="navigateProfile">
+    <Button v-if="isLoggedIn" v-tooltip.right="'Profile'" class="p-button-text" @click="navigateProfile">
       <div class="flex items-center gap-2">
         <Icon name="pajamas:profile" size="1.2rem" />
       </div>
@@ -36,6 +36,12 @@
 <script setup lang="ts">
   const { logoUrl } = $(useDefaultImages())
   const route = useRoute()
+
+  const user = $(useStrapiUser())
+
+  const isLoggedIn = $computed(() => {
+    return user
+  })
 
   const navigateNewPlant = () => {
     const { plantId } = route.params
@@ -57,10 +63,6 @@
   const navigateProfile = () => {
     navigateTo('/profile')
   }
-
-  const isLoginPage = $computed(() => {
-    return route.path.startsWith('/login')
-  })
 
   let showEditing = $ref(false)
   let showPlantButton = $ref(false)
