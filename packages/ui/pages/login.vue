@@ -5,8 +5,8 @@
       <div class="flex justify-center">
         <img src="/google-signin-button.png" class="h-12 rounded-xl cursor-pointer" @click="googleLogin" />
       </div>
-      <span class="self-center">OR</span>
-      <div class="flex flex-col gap-4 rounded-lg">
+      <span v-if="isDev" class="self-center">OR</span>
+      <div v-if="isDev" class="flex flex-col gap-4 rounded-lg">
         <div class="flex flex-col gap-0.5">
           <label for="name">E-Mail</label>
           <InputText id="name" v-model="email" type="text" @keyup.enter="loginStrapi" />
@@ -32,6 +32,8 @@
   const { setToken, setUser, login, getProviderAuthenticationUrl, authenticateProvider } = useStrapiAuth()
   const { getSafeAPIResponse } = useAPI()
   const route = useRoute()
+  const config = useRuntimeConfig()
+  const isDev = config.isDev
 
   const email = $ref('')
   const password = $ref('')

@@ -13,6 +13,7 @@ export default defineNuxtConfig({
       url: 'http://0.0.0.0:1337',
     },
     public: {
+      isDev: process.env.NODE_ENV !== 'production',
       baseUrl: 'http://localhost:3000',
       strapi: {
         url: 'http://localhost:1337',
