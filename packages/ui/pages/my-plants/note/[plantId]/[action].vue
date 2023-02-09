@@ -44,7 +44,7 @@
               <span class="text-sm font-bold uppercase whitespace-nowrap">Back</span>
             </div>
           </Button>
-          <Button @click="addNoteNavigate">
+          <Button :disabled="isLoading" @click="addNoteNavigate">
             <div class="flex items-center gap-1">
               <Icon name="prime:save" size="1.5rem" />
               <span class="text-sm font-bold uppercase whitespace-nowrap">Ok</span>
@@ -60,7 +60,7 @@
   import lfp from 'lodash/fp'
   import { Photo, HistoryElementType } from '@my-garden/common/definitions'
   import { capitalizeFirstLetter, actionToIcon } from '~~/utils'
-  const { addHistoryElement } = $(useMutations())
+  const { addHistoryElement, isLoading } = $(useMutations())
   const { mediaUrl, uploadUrl, progressUpload, beforeUpload, getResponsiveImageSourceSet } = $(useUpload())
   const router = useRouter()
   const { first } = lfp

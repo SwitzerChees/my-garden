@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex flex-col justify-between gap-1 p-6 bg-gray-900 rounded-xl">
     <div class="absolute right-2 top-2">
-      <Button class="p-button-text z-20" @click="deletePlant(plant)">
+      <Button :disabled="isLoading" class="p-button-text z-20" @click="deletePlant(plant)">
         <div class="flex items-center gap-1">
           <Icon name="mingcute:delete-2-line" size="1.2rem" />
         </div>
@@ -29,7 +29,7 @@
   import { Severity } from '../../definitions'
   import { usePlantsStore } from '../../stores/plants'
   const { mediaUrl, getResponsiveImageSourceSet } = $(useUpload())
-  const { updatePlantStatus } = $(useMutations())
+  const { updatePlantStatus, isLoading } = $(useMutations())
   const router = useRouter()
   const confirm = useConfirm()
   const notificationsStore = useNotificationsStore()

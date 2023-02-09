@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "concurrently \"yarn dev:api\" \"sleep 6 && yarn dev:ui\"",
     "dev:ui": "yarn workspace @my-garden/ui dev",
-    "dev:api": "tsc-watch -b ./packages/api/tsconfig.json --onSuccess \"yarn start:api\"",
+    "dev:api": "tsc-watch -b ./packages/api/tsconfig.json --onSuccess \"yarn workspace @my-garden/api dev\"",
     "lint": "yarn lint:ui && yarn lint:api",
     "lint:ui": "yarn workspace @my-garden/ui lint",
     "lint:api": "yarn workspace @my-garden/api lint",

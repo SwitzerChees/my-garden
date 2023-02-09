@@ -13,7 +13,7 @@
             >{{ getReminderInDays(reminderSummary.water) }}</span
           >
         </div>
-        <Button v-if="plant.reminder.water && !reminderSummary.water.doneToday" @click="waterAction">
+        <Button v-if="plant.reminder.water && !reminderSummary.water.doneToday" :disabled="isLoading" @click="waterAction">
           <Icon name="mdi:watering-can" size="1.5rem" />
         </Button>
       </div>
@@ -29,7 +29,7 @@
             >{{ getReminderInDays(reminderSummary.fertilize) }}</span
           >
         </div>
-        <Button v-if="plant.reminder.fertilize && !reminderSummary.fertilize.doneToday" @click="fertilizeAction">
+        <Button v-if="plant.reminder.fertilize && !reminderSummary.fertilize.doneToday" :disabled="isLoading" @click="fertilizeAction">
           <Icon name="healthicons:nutrition" size="1.5rem" />
         </Button>
       </div>
@@ -40,7 +40,7 @@
 <script setup lang="ts">
   import { Plant } from '@my-garden/common/definitions'
   import { getReminderInDays, getReminderDays, getReminderSummary } from '@my-garden/common/utils'
-  const { addHistoryElement } = $(useMutations())
+  const { addHistoryElement, isLoading } = $(useMutations())
 
   const props = defineProps<{ plant: Plant }>()
 

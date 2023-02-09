@@ -94,7 +94,7 @@
               <span class="text-sm font-bold uppercase whitespace-nowrap">Back</span>
             </div>
           </Button>
-          <Button @click="addPlantNavigate">
+          <Button :disabled="isLoading" @click="addPlantNavigate">
             <div class="flex items-center gap-1">
               <Icon name="prime:save" size="1.5rem" />
               <span class="text-sm font-bold uppercase whitespace-nowrap">Ok</span>
@@ -114,7 +114,7 @@
   const { uploadUrl, progressUpload, mediaUrl, getMediaFromResult, beforeUpload, getResponsiveImageSourceSet } = $(useUpload())
   const { getTags, getPlant } = $(useQueries())
   const route = useRoute()
-  const { addOrUpdatePlant } = $(useMutations())
+  const { addOrUpdatePlant, isLoading } = $(useMutations())
   const notificationsStore = useNotificationsStore()
 
   let plant = $ref<Plant>({ name: '', botanicalName: '', tags: [], history: [], reminder: { water: 0, fertilize: 0 }, status: 'active' })

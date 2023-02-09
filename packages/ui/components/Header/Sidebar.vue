@@ -3,7 +3,7 @@
     <div
       class="p-2 md:p-3 rounded-full w-14 h-14 bg-slate-800 cursor-pointer flex justify-center items-center mt-2 z-50"
       @click="navigateHome">
-      <img :src="logoUrl" class="object-cover w-8 h-8 rounded-xl" />
+      <img src="/logo.png" class="object-cover w-8 h-8 rounded-xl" />
     </div>
     <div class="h-20 pt-2">
       <Transition
@@ -34,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-  const { logoUrl } = $(useDefaultImages())
   const route = useRoute()
 
   const user = $(useStrapiUser())

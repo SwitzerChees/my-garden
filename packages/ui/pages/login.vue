@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col justify-center items-center grow pt-8">
     <div class="flex flex-col w-full px-6 md:w-96 gap-8 justify-center">
-      <img :src="logoUrl" class="object-cover w-16 h-16 rounded-xl self-center" />
+      <img src="/logo.png" class="object-cover w-16 h-16 rounded-xl self-center" />
       <div class="flex justify-center">
         <img src="/google-signin-button.png" class="h-12 rounded-xl cursor-pointer" @click="googleLogin" />
       </div>
@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-  const { logoUrl } = $(useDefaultImages())
   const { setToken, setUser, login, getProviderAuthenticationUrl, authenticateProvider } = useStrapiAuth()
   const { getSafeAPIResponse } = useAPI()
   const route = useRoute()

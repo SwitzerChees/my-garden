@@ -9,7 +9,7 @@ export const useUpload = () => {
 
   const runtimeConfig: RuntimeConfig = useRuntimeConfig()
   const uploadUrl = runtimeConfig.public.strapi.url + '/api/upload'
-  const { plantUrl } = $(useDefaultImages())
+  const plantUrl = '/plant.png'
   const mediaUrl = (mediaFormat?: MediaFormat) => {
     if (!mediaFormat?.url) return plantUrl
     return runtimeConfig.public.strapi.url + mediaFormat?.url
