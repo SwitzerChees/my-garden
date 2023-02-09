@@ -63,6 +63,17 @@ export const getReminderDays = (days?: number) => {
   return `every ${days} days`
 }
 
+export const calculateNeedAttention = (plants: Plant[]) => {
+  const plantsWithReminder = filter<Plant>((p) => p.reminder && (p.reminder.water > 0 || p.reminder.fertilize > 0))(plants)
+  let { needWater = 0, needFertilizer = 0 } = {}
+  for (const plant of plantsWithReminder) {
+    const reminderSummary = getReminderSummary(plant)
+    if (needReminderAttention(reminderSummary.water)) needWater++
+    if (needReminderAttention(reminderSummary.fertilize)) needFertilizer++
+  }
+  return { needWater, needFertilizer }
+}
+
 interface PlantGroup {
   key: string
   plants: Plant[]

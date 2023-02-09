@@ -1,5 +1,5 @@
 import { Plant, TelegramConfig } from '@my-garden/common/definitions'
-import { getPlantsToRemind, getReminderSummary } from '@my-garden/common'
+import { calculateNeedAttention, getPlantsToRemind } from '@my-garden/common'
 import { Strapi } from '@strapi/strapi'
 import axios from 'axios'
 
@@ -16,17 +16,8 @@ export const sendReminders = async (strapi: Strapi) => {
       return
     }
     const telegramBotUrl = `https://api.telegram.org/bot${telegramConfig.apiToken}/sendMessage`
-    let { needWater = 0, needFertilizer = 0 } = {}
     const plantsToRemind = getPlantsToRemind(allPlants)
-    for (const plant of plantsToRemind) {
-      const reminderSummary = getReminderSummary(plant)
-      if (!reminderSummary.water.doneToday && reminderSummary.water.nextInDays <= 0) {
-        needWater += 1
-      }
-      if (!reminderSummary.fertilize.doneToday && reminderSummary.fertilize.nextInDays <= 0) {
-        needFertilizer += 1
-      }
-    }
+    const { needWater = 0, needFertilizer = 0 } = calculateNeedAttention(plantsToRemind)
     if (needWater === 0 && needFertilizer === 0) return
     let message = 'Your 🪴 need your attention'
     if (needWater > 0) message += `\n${needWater} 💧`

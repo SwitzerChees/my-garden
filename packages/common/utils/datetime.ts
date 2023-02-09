@@ -30,6 +30,12 @@ export const dateToday = () => {
   return today
 }
 
+export const addDays = (date: Date, days: number) => {
+  const newDate = new Date(date)
+  newDate.setTime(newDate.getTime() + days * dayInMilliseconds)
+  return newDate
+}
+
 export const relativeDate = (date?: string | Date) => {
   if (!isValidDate(date)) return ''
   const now = new Date()
