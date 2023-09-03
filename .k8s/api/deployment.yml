@@ -116,6 +116,6 @@ spec:
 
       volumes:
         - name: strapi-data
-          hostPath:
-            path: /opt/strapi-mygarden
-            type: Directory
+          nfs:
+            server: 192.168.1.80
+            path: /mnt/user/k3s-ssd/strapi-mygarden
