@@ -1,4 +1,4 @@
-FROM node:lts-slim as build
+FROM node:18.18.2 as build
 
 # Create app directory
 WORKDIR /app
