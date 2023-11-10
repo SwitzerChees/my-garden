@@ -1,4 +1,4 @@
-import { StrapiObject } from '.'
+import { PushSubscription, StrapiObject } from '.'
 
 export interface User extends StrapiObject {
   username: string
@@ -6,4 +6,5 @@ export interface User extends StrapiObject {
   provider: string
   confirmed: boolean
   blocked: boolean
+  pushSubscriptions: PushSubscription[]
 }

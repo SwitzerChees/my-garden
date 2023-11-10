@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     'nuxt-icon', // https://icones.js.org/
     '@pinia/nuxt', // https://pinia.vuejs.org/
     '@nuxtjs/strapi', // https://strapi.nuxtjs.org/
-    '@kevinmarrec/nuxt-pwa', // https://github.com/kevinmarrec/nuxt-pwa-module
+    '@vite-pwa/nuxt', // https://vite-pwa-org.netlify.app/
   ],
   runtimeConfig: {
     strapi: {
@@ -37,7 +37,19 @@ export default defineNuxtConfig({
     pageTransition: { name: 'fade', mode: 'out-in' },
     head: {
       title: 'MyGarden',
-      meta: [{ name: 'description', content: 'Transform Your Green Thumb with this amazing Personal Plant Manager!' }],
+      meta: [
+        { name: 'description', content: 'Transform Your Green Thumb with this amazing Personal Plant Manager!' },
+        { name: 'theme-color', content: '#0f172a' },
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/icon.png' },
+        {
+          rel: 'apple-touch-icon',
+          href: '/icon.png',
+          sizes: '180x180',
+        },
+        { rel: 'manifest', href: '/manifest.webmanifest' },
+      ],
     },
   },
   server: {
@@ -51,20 +63,31 @@ export default defineNuxtConfig({
     },
   },
   pwa: {
+    injectRegister: 'inline',
+    strategies: 'generateSW',
     workbox: {
-      enabled: false,
-    },
-    meta: {
-      theme_color: '#0f172a',
-      nativeUI: true,
+      importScripts: ['/notifications-sw.js'],
+      globPatterns: ['**/*.{js,css,png,jpg,jpeg,svg,gif,json,woff2,woff,eot,ttf}'],
+      navigateFallback: null,
     },
     manifest: {
       name: 'MyGarden',
       short_name: 'MyGarden',
       lang: 'en',
-      useWebmanifestExtension: false,
       background_color: '#0f172a',
       start_url: '/my-plants',
+      icons: [
+        {
+          src: '/icon.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any',
+        },
+      ],
+      theme_color: '#0f172a',
+    },
+    devOptions: {
+      enabled: false,
     },
   },
   strapi: {

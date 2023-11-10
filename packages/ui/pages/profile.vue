@@ -33,8 +33,8 @@
             </div>
           </Button>
         </div>
-        <span class="font-bold text-center pt-8">Notification</span>
-        <div class="flex justify-center pt-4">
+        <span v-if="showActivatePushNotification" class="font-bold text-center pt-8">Notification</span>
+        <div v-if="showActivatePushNotification" class="flex justify-center pt-4">
           <Button @click="activatePushNotification">
             <div class="flex items-center gap-1">
               <Icon name="basil:notification-outline" size="1.5rem" />
