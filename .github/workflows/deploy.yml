@@ -11,6 +11,8 @@ env:
   LETSENCRYPT_STAGE: prod
   BASE_URL: mygarden.hackerman.ch
   STRAPI_URL: mygarden-api.hackerman.ch
+  VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+  VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
   DB_HOST: postgresql.postgresql.svc.cluster.local
   DB_PORT: 5432
   DB_NAME: mygarden

@@ -100,6 +100,16 @@ spec:
                 secretKeyRef:
                   name: strapi-envs
                   key: base_url
+            - name: VAPID_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: strapi-envs
+                  key: vapid_public_key
+            - name: VAPID_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: strapi-envs
+                  key: vapid_private_key
           ports:
             - name: http
               containerPort: 1337
