@@ -7,7 +7,7 @@ export default ({ strapi }: { strapi: Strapi }) => ({
     const toUpdate: { username?: string; password?: string } = {}
     if (ctx.request.body.username) toUpdate.username = ctx.request.body.username
     if (ctx.request.body.password) toUpdate.password = ctx.request.body.password
-    await strapi.entityService.update('plugin::users-permissions.user', userId, { data: toUpdate })
+    await strapi.entityService.update('plugin::users-permissions.user', userId, { data: toUpdate as any })
     ctx.send()
   },
   createIcs(ctx) {

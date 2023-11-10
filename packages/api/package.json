@@ -11,11 +11,15 @@
   },
   "dependencies": {
     "@my-garden/common": "1.0.0",
-    "@strapi/plugin-i18n": "4.6.0",
-    "@strapi/plugin-users-permissions": "4.6.0",
-    "@strapi/strapi": "4.6.0",
+    "@strapi/plugin-i18n": "4.15.2",
+    "@strapi/plugin-users-permissions": "4.15.2",
+    "@strapi/strapi": "4.15.2",
     "ical-generator": "^3.6.1",
     "pg": "8.6.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1",
     "web-push": "^3.6.6"
   },
   "author": {

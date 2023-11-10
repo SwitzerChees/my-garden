@@ -5,38 +5,38 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"yarn dev:api\" \"sleep 6 && yarn dev:ui\"",
-    "dev:ui": "yarn workspace @my-garden/ui dev",
-    "dev:api": "tsc-watch -b ./packages/api/tsconfig.json --onSuccess \"yarn workspace @my-garden/api dev\"",
-    "lint": "yarn lint:ui && yarn lint:api",
-    "lint:ui": "yarn workspace @my-garden/ui lint",
-    "lint:api": "yarn workspace @my-garden/api lint",
-    "build:ui": "yarn workspace @my-garden/ui build",
+    "build": "yarn build:ui && yarn build:api",
     "build:api": "yarn workspace @my-garden/api build",
     "build:common": "yarn workspace @my-garden/common build",
-    "build": "yarn build:ui && yarn build:api",
-    "start:ui": "yarn workspace @my-garden/ui start",
-    "start:api": "yarn workspace @my-garden/api start",
-    "typecheck:ui": "yarn workspace @my-garden/ui typecheck",
-    "prettify": "prettier --write \"**/*.{js,ts,html,css,json,md,vue}\"",
-    "prepare": "husky install",
+    "build:ui": "yarn workspace @my-garden/ui build",
     "cleanup": "rm -rf ./node_modules && yarn cleanup:ui && yarn cleanup:api",
+    "cleanup:api": "rm -rf ./packages/api/node_modules ./packages/api/.cache ./packages/api/dist",
     "cleanup:ui": "rm -rf ./packages/ui/node_modules ./packages/ui/.nuxt",
-    "cleanup:api": "rm -rf ./packages/api/node_modules ./packages/api/.cache ./packages/api/dist"
+    "dev": "concurrently \"yarn dev:api\" \"sleep 6 && yarn dev:ui\"",
+    "dev:api": "tsc-watch -b ./packages/api/tsconfig.json --onSuccess \"yarn workspace @my-garden/api dev\"",
+    "dev:ui": "yarn workspace @my-garden/ui dev",
+    "lint": "yarn lint:ui && yarn lint:api",
+    "lint:api": "yarn workspace @my-garden/api lint",
+    "lint:ui": "yarn workspace @my-garden/ui lint",
+    "prepare": "husky install",
+    "prettify": "prettier --write \"**/*.{js,ts,html,css,json,md,vue}\"",
+    "start:api": "yarn workspace @my-garden/api start",
+    "start:ui": "yarn workspace @my-garden/ui start",
+    "typecheck:ui": "yarn workspace @my-garden/ui typecheck"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
-    "axios": "^1.2.3"
+    "axios": "^1.2.3",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "prettier": "^2.8.3",
-    "eslint": "^8.32.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/eslint-plugin": "6.7.5",
+    "@typescript-eslint/parser": "6.7.5",
+    "concurrently": "8.2.1",
+    "eslint": "8.51.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-prettier": "5.0.0",
     "husky": "^8.0.0",
-    "pretty-quick": "^3.1.3",
-    "tsc-watch": "^6.0.0",
-    "concurrently": "^7.6.0"
+    "prettier": "3.0.3",
+    "tsc-watch": "^6.0.0"
   }
 }

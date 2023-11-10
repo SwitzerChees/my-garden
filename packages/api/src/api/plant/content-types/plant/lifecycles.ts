@@ -26,11 +26,11 @@ export default {
   },
 }
 
-const getOrAddTags = async (user: number, newTags: Tag[]) => {
+const getOrAddTags = async (userId: number, newTags: Tag[]) => {
   const allTags = (await strapi.entityService.findMany('api::tag.tag', {
     fields: ['id', 'name'],
-    filters: { user },
-  })) as Tag[]
+    filters: { user: { id: { $eq: userId } } },
+  })) as unknown as Tag[]
   const resultTags: Tag[] = []
   for (const tag of newTags) {
     const existingTag = find({ name: tag.name.trim() })(allTags)
@@ -38,9 +38,9 @@ const getOrAddTags = async (user: number, newTags: Tag[]) => {
       resultTags.push(existingTag)
       continue
     }
-    const newTag = await strapi.entityService.create('api::tag.tag', {
-      data: { name: tag.name.trim(), user },
-    })
+    const newTag = (await strapi.entityService.create('api::tag.tag', {
+      data: { name: tag.name.trim(), user: userId },
+    })) as unknown as Tag
     if (!newTag) continue
     resultTags.push(newTag)
   }

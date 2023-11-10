@@ -34,7 +34,7 @@ export const useMutations = () => {
       create('history-elements', {
         ...historyElement,
         plant: plantId,
-      })
+      }),
     )
     isLoading = false
     if (!ok || !result) return

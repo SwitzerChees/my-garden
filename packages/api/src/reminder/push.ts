@@ -1,22 +1,25 @@
-import { Plant, User } from '@my-garden/common/definitions'
-import { calculateNeedAttention, getPlantsToRemind } from '@my-garden/common'
 import { Strapi } from '@strapi/strapi'
 import webpush from 'web-push'
+import { Plant, User } from '@my-garden/common/definitions'
+import { calculateNeedAttention, getPlantsToRemind } from '@my-garden/common'
 
 export const sendPushReminders = async (strapi: Strapi) => {
   try {
-    const allPlants: Plant[] = await strapi.entityService.findMany('api::plant.plant', {
+    const allPlants = (await strapi.entityService.findMany('api::plant.plant', {
       limit: -1,
       filters: { status: 'active' },
       populate: ['history', 'user.pushSubscriptions'],
-    })
-    const plantsByUser = allPlants.reduce((acc, plant) => {
-      if (!plant.user) return acc
-      const userId = plant.user.id
-      if (!acc[userId]) acc[userId] = { user: plant.user, plants: [] }
-      acc[userId].plants.push(plant)
-      return acc
-    }, {} as Record<number, { user: User; plants: Plant[] }>)
+    })) as unknown as Plant[]
+    const plantsByUser = allPlants.reduce(
+      (acc, plant) => {
+        if (!plant.user) return acc
+        const userId = plant.user.id
+        if (!acc[userId]) acc[userId] = { user: plant.user, plants: [] }
+        acc[userId].plants.push(plant)
+        return acc
+      },
+      {} as Record<number, { user: User; plants: Plant[] }>,
+    )
     for (const userId in plantsByUser) {
       const { user, plants } = plantsByUser[userId]
       const plantsToRemind = getPlantsToRemind(plants)

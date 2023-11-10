@@ -22,7 +22,7 @@ export const useQueries = () => {
           },
           user: strapiuser?.id,
         },
-      })
+      }),
     )
     if (!ok) return []
     const tags = result
@@ -45,7 +45,7 @@ export const useQueries = () => {
           },
           photo: true,
         },
-      })
+      }),
     )
     if (!ok) return
     return result
@@ -79,7 +79,7 @@ export const useQueries = () => {
           },
           photo: true,
         },
-      })
+      }),
     )
     if (!ok) return []
     return result

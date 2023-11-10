@@ -12,7 +12,7 @@ export default factories.createCoreController('api::plant.plant', {
     const cal = ical({ method: ICalCalendarMethod.PUBLISH })
     const { token } = ctx.params
 
-    const plantsFromUser: Plant[] = await strapi.entityService.findMany('api::plant.plant', {
+    const plantsFromUser = (await strapi.entityService.findMany('api::plant.plant', {
       limit: -1,
       filters: {
         status: 'active',
@@ -21,7 +21,7 @@ export default factories.createCoreController('api::plant.plant', {
         },
       },
       populate: ['history'],
-    })
+    })) as unknown as Plant[]
 
     const plantGroups = getPlantsGroupedByReminder(plantsFromUser, true)
 

@@ -87,7 +87,7 @@
         }
         return sortValue
       },
-      ['asc']
+      ['asc'],
     )
     return orderByReminderDays(plants)
   })
