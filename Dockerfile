@@ -28,7 +28,7 @@ RUN yarn build:common
 # RUN node-prune
 
 # Use production image
-FROM node:lts-slim
+FROM node:18.18.2
 
 WORKDIR /app
 
