@@ -33,6 +33,15 @@
             </div>
           </Button>
         </div>
+        <span class="font-bold text-center pt-8">Notification</span>
+        <div class="flex justify-center pt-4">
+          <Button @click="activatePushNotification">
+            <div class="flex items-center gap-1">
+              <Icon name="basil:notification-outline" size="1.5rem" />
+              <span class="text-sm font-bold uppercase whitespace-nowrap">Activate Push-Notifications</span>
+            </div>
+          </Button>
+        </div>
         <!-- <span class="font-bold text-center pt-8">Calendar</span>
         <span class="text-center text-green-400"
           >Generate a ICS-Calendar subscription to automatically import your Reminders as Appointements into your Calendar of choice.</span
@@ -59,15 +68,26 @@
   const { logout, setUser } = useStrapiAuth()
   const client = useStrapiClient()
   const { getSafeAPIResponse } = useAPI()
+  const { create } = useStrapi()
+  const { addNotification } = useNotificationsStore()
   const router = useRouter()
-  const notificationsStore = useNotificationsStore()
 
   let password = $ref('')
   let username = $ref('')
 
+  const showActivatePushNotification = ref(false)
+
   const navigateBack = () => {
     router.back()
   }
+
+  onMounted(() => {
+    if (!user?.username) return
+    username = user?.username
+    if (localStorage.getItem('push-subscription') !== 'true') {
+      showActivatePushNotification.value = true
+    }
+  })
 
   const updateProfile = async () => {
     const request = client('/profile/update', {
@@ -80,13 +100,58 @@
       user.username = username
       password = ''
       setUser(user)
-      notificationsStore.addNotification({
+      addNotification({
         severity: Severity.Success,
         summary: 'Profile Updated',
         detail: 'The Profile got successfully updated.',
         life: 3000,
       })
     }
+  }
+
+  const activatePushNotification = () => {
+    navigator.serviceWorker.ready.then(async (serviceWorker) => {
+      if (!serviceWorker.pushManager) {
+        return
+      }
+      const permission = await Notification.requestPermission()
+      if (permission !== 'granted') {
+        addNotification({
+          severity: Severity.Error,
+          summary: 'Permission denied',
+          detail: 'You denied the permission to send you notifications.',
+          life: 3000,
+        })
+        showActivatePushNotification.value = false
+        return
+      }
+      const request = client('/push-subscriptions/vapid-token', {
+        method: 'GET',
+      })
+      const { ok, result: vapidPublickey } = await getSafeAPIResponse<string>(request)
+      if (!ok) return
+      try {
+        if (!user?.id) return
+        const subscriptionOptions = {
+          userVisibleOnly: true,
+          applicationServerKey: vapidPublickey,
+        }
+        const subscriptionResult = await serviceWorker.pushManager.subscribe(subscriptionOptions)
+        const subscription = subscriptionResult.toJSON()
+        const request = create('push-subscriptions', { user: user.id, subscription } as any)
+        const { ok } = await getSafeAPIResponse(request)
+        if (!ok) return
+        localStorage.setItem('push-subscription', 'true')
+        showActivatePushNotification.value = false
+      } catch (e) {
+        addNotification({
+          severity: Severity.Error,
+          summary: 'Subscription failed',
+          detail: 'The subscription to the push notification service failed.',
+          life: 3000,
+        })
+      }
+    })
   }
 
   const logoutUser = () => {

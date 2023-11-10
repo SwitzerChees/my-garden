@@ -65,6 +65,12 @@
     },
     "icalToken": {
       "type": "string"
+    },
+    "pushSubscriptions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::push-subscription.push-subscription",
+      "mappedBy": "user"
     }
   }
 }
