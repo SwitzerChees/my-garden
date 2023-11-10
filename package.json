@@ -19,7 +19,10 @@
     "start:api": "yarn workspace @my-garden/api start",
     "typecheck:ui": "yarn workspace @my-garden/ui typecheck",
     "prettify": "prettier --write \"**/*.{js,ts,html,css,json,md,vue}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "cleanup": "rm -rf ./node_modules && yarn cleanup:ui && yarn cleanup:api",
+    "cleanup:ui": "rm -rf ./packages/ui/node_modules ./packages/ui/.nuxt",
+    "cleanup:api": "rm -rf ./packages/api/node_modules ./packages/api/.cache ./packages/api/dist"
   },
   "dependencies": {
     "lodash": "^4.17.21",
