@@ -8,7 +8,7 @@
     <FooterBar v-if="isLoggedIn" class="md:hidden fixed -bottom-0.5 left-0 right-0 z-50 p-2" />
     <div class="mx-6 md:ml-28 mt-2 border-t border-gray-700"></div>
     <span class="px-20 md:pl-40 pt-6 pb-20 text-center"
-      >MyGarden created for 🪴 with a lot of ☕️ and ❤️ <br /><NuxtLink to="/privacy-policy"> Privacy Policy</NuxtLink></span
+      >MyGarden 2.0 created for 🪴 with a lot of ☕️ and ❤️ <br /><NuxtLink to="/privacy-policy"> Privacy Policy</NuxtLink></span
     >
 
     <Notifications />
